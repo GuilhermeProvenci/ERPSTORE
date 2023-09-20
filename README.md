@@ -24,7 +24,7 @@ Para instalar e executar o ERPSTORE, siga estas etapas:
 
 1. Clone este repositório:
 
-   git clone https://github.com/seu-usuario/erpstore.git
+   git clone https://github.com/GuilhermeProvenci/ERPSTORE
 
 2. Configure o banco de dados de acordo com suas necessidades.
 
