@@ -3,8 +3,8 @@ object form_consulta_padrao: Tform_consulta_padrao
   Top = 0
   Align = alClient
   BorderStyle = bsNone
-  ClientHeight = 462
-  ClientWidth = 711
+  ClientHeight = 516
+  ClientWidth = 833
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,22 +19,25 @@ object form_consulta_padrao: Tform_consulta_padrao
   object pnl_principal: TPanel
     Left = 0
     Top = 0
-    Width = 711
-    Height = 462
+    Width = 833
+    Height = 516
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitWidth = 711
+    ExplicitHeight = 462
     object pnl_cabecalho: TPanel
       Left = 0
       Top = 0
-      Width = 711
+      Width = 833
       Height = 57
       Align = alTop
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 0
+      ExplicitWidth = 711
       object btn_fechar: TSpeedButton
-        Left = 641
+        Left = 763
         Top = 0
         Width = 70
         Height = 56
@@ -127,7 +130,7 @@ object form_consulta_padrao: Tform_consulta_padrao
       object pnl_separa_topo: TPanel
         Left = 0
         Top = 56
-        Width = 711
+        Width = 833
         Height = 1
         Margins.Left = 10
         Margins.Top = 0
@@ -138,20 +141,23 @@ object form_consulta_padrao: Tform_consulta_padrao
         Color = clSilver
         ParentBackground = False
         TabOrder = 0
+        ExplicitWidth = 711
       end
     end
     object pnl_Rodape: TPanel
       Left = 0
-      Top = 424
-      Width = 711
+      Top = 478
+      Width = 833
       Height = 38
       Align = alBottom
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 1
+      ExplicitTop = 424
+      ExplicitWidth = 711
       object lbl_duplo_clique: TLabel
         AlignWithMargins = True
-        Left = 416
+        Left = 538
         Top = 0
         Width = 285
         Height = 38
@@ -168,6 +174,7 @@ object form_consulta_padrao: Tform_consulta_padrao
         Font.Style = []
         ParentFont = False
         Layout = tlCenter
+        ExplicitLeft = 416
         ExplicitHeight = 13
       end
       object lbl_excluir: TLabel
@@ -199,13 +206,14 @@ object form_consulta_padrao: Tform_consulta_padrao
     object pnl_pesquisa: TPanel
       Left = 0
       Top = 57
-      Width = 711
+      Width = 833
       Height = 72
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 2
+      ExplicitWidth = 711
       DesignSize = (
-        711
+        833
         72)
       object lbl_texto: TLabel
         Left = 19
@@ -223,7 +231,7 @@ object form_consulta_padrao: Tform_consulta_padrao
       object edt_consulta: TEdit
         Left = 19
         Top = 32
-        Width = 521
+        Width = 643
         Height = 25
         Anchors = [akLeft, akTop, akRight]
         CharCase = ecUpperCase
@@ -235,9 +243,10 @@ object form_consulta_padrao: Tform_consulta_padrao
         ParentFont = False
         TabOrder = 0
         OnKeyDown = edt_consultaKeyDown
+        ExplicitWidth = 521
       end
       object btn_inserir: TButton
-        Left = 562
+        Left = 684
         Top = 32
         Width = 129
         Height = 25
@@ -251,22 +260,25 @@ object form_consulta_padrao: Tform_consulta_padrao
         ParentFont = False
         TabOrder = 1
         OnClick = btn_inserirClick
+        ExplicitLeft = 562
       end
     end
     object pnl_dbgrid: TPanel
       Left = 0
       Top = 129
-      Width = 711
-      Height = 295
+      Width = 833
+      Height = 349
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 3
+      ExplicitWidth = 711
+      ExplicitHeight = 295
       object dbg_registros: TDBGrid
         AlignWithMargins = True
         Left = 20
         Top = 41
-        Width = 671
-        Height = 244
+        Width = 793
+        Height = 298
         Margins.Left = 20
         Margins.Top = 0
         Margins.Right = 20
@@ -296,7 +308,7 @@ object form_consulta_padrao: Tform_consulta_padrao
         AlignWithMargins = True
         Left = 20
         Top = 0
-        Width = 671
+        Width = 793
         Height = 41
         Margins.Left = 20
         Margins.Top = 0
@@ -307,6 +319,7 @@ object form_consulta_padrao: Tform_consulta_padrao
         Color = 8404992
         ParentBackground = False
         TabOrder = 1
+        ExplicitWidth = 671
         object lbl_resultado: TLabel
           AlignWithMargins = True
           Left = 15
