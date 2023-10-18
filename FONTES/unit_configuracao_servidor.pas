@@ -37,7 +37,6 @@ type
     edt_senha_atual: TEdit;
     pnl_separacao: TPanel;
     btn_salvar: TSpeedButton;
-    Button1: TButton;
     procedure btn_fecharClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btn_salvarClick(Sender: TObject);

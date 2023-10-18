@@ -6,10 +6,10 @@ object form_conexao: Tform_conexao
   Width = 397
   object FDConnection: TFDConnection
     Params.Strings = (
-      'Database=marimodas'
+      'Database=ERPSTORE'
       'User_Name=root'
-      'Password=masterkey'
       'DriverID=mySQL')
+    Connected = True
     LoginPrompt = False
     Left = 48
     Top = 56

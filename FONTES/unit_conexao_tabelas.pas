@@ -38,8 +38,8 @@ type
     qryConsultaEstoquequantidade_em_estoque: TIntegerField;
     qryConsultaProdutosid: TFDAutoIncField;
     qryConsultaProdutosnome: TStringField;
-    qryConsultaProdutosdescricao: TMemoField;
-    qryConsultaProdutospreco: TBCDField;
+    qryConsultaProdutostamanho: TStringField;
+    qryConsultaProdutospreco: TFMTBCDField;
     procedure qryConsultaCSTBeforeOpen(DataSet: TDataSet);
   private
     { Private declarations }

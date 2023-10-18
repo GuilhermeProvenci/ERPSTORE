@@ -432,7 +432,7 @@ object form_configuracao_servidor: Tform_configuracao_servidor
       TabOrder = 4
     end
     object edt_senha_novo: TEdit
-      Tag = 99
+      Tag = 98
       Left = 220
       Top = 202
       Width = 187
@@ -534,15 +534,6 @@ object form_configuracao_servidor: Tform_configuracao_servidor
       Height = 1
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 11
-    end
-    object Button1: TButton
-      Left = 544
-      Top = 198
-      Width = 75
-      Height = 25
-      Caption = 'Button1'
-      TabOrder = 12
-      OnClick = Button1Click
     end
   end
 end

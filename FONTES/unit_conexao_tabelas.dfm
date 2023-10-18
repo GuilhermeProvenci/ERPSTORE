@@ -43,7 +43,6 @@ object form_conexao_tabelas: Tform_conexao_tabelas
       FieldName = 'id'
       Origin = 'id'
       ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = True
     end
     object qryConsultaProdutosnome: TStringField
       FieldName = 'nome'
@@ -51,18 +50,18 @@ object form_conexao_tabelas: Tform_conexao_tabelas
       Required = True
       Size = 255
     end
-    object qryConsultaProdutosdescricao: TMemoField
-      AutoGenerateValue = arDefault
-      FieldName = 'descricao'
-      Origin = 'descricao'
-      BlobType = ftMemo
+    object qryConsultaProdutostamanho: TStringField
+      FieldName = 'tamanho'
+      Origin = 'tamanho'
+      Required = True
+      Size = 4
     end
-    object qryConsultaProdutospreco: TBCDField
+    object qryConsultaProdutospreco: TFMTBCDField
       FieldName = 'preco'
       Origin = 'preco'
       Required = True
-      Precision = 10
-      Size = 2
+      Precision = 20
+      Size = 0
     end
   end
   object qryConsultaCondicional: TFDQuery
@@ -100,7 +99,6 @@ object form_conexao_tabelas: Tform_conexao_tabelas
     end
   end
   object qryConsultaEstoque: TFDQuery
-    Active = True
     Connection = form_conexao.FDConnection
     SQL.Strings = (
       'select * from estoque')
