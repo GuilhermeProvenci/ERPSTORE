@@ -61,6 +61,7 @@ var
   form_cadastro_condicional: Tform_cadastro_condicional;
   qryEstoque :   TFDQuery;
   qryInsertCond: TFDQuery;
+  clienteID, condicionalID: Integer;
 
 implementation
 
@@ -77,8 +78,6 @@ end;
 
 procedure Tform_cadastro_condicional.cbb_clientesChange(Sender: TObject);
 begin
-
-
   with qryClientes do
   begin
     Close;
@@ -87,31 +86,44 @@ begin
     ParamByName('nome').Value := cbb_clientes.Items[cbb_clientes.ItemIndex];
     Open;
   end;
+
   edt_cod_clie.Clear;
   edt_cod_clie.Text := qryClientes.FieldByName('id').AsString;
 
 
+  clienteID := StrToIntDef(edt_cod_clie.Text, 0);
 
-with qryCond do
+
+  with qryCond do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('Select id, cliente_id, data_entregue, data_devolucao, nome_cliente from condicional where cliente_id = :id_cliente');
+    ParamByName('id_cliente').DataType := ftInteger;
+    ParamByName('id_cliente').Value := clienteID;
+    Open;
+  end;
+
+
+  condicionalID := qryCond.FieldByName('id').AsInteger;
+
+
+
+with qryCondPendente do
 begin
-  close;
-  sql.Clear;
-  sql.add('Select id, cliente_id, data_entregue, data_devolucao, nome_cliente from condicional where cliente_id = :id');
+  Close;
+  SQL.Clear;
+  SQL.Add('Select * from condicional_pendente where id_condicional = :id');
+
+  // Especifique o tipo de dados do parâmetro :id
   ParamByName('id').DataType := ftInteger;
-  ParamByName('id').Value := strtoint(edt_cod_clie.Text);
-  open;
-end;
 
-with qryCondPendente do //tem que ter algo pendente já, ai é foda
-begin
-  close;
-  sql.Clear;
-  sql.add('Select * from condicional_pendente where id_condicional = :id');
-  ParamByName('id').Value := qryCond.FieldByName('id').Value;
-  open;
+  ParamByName('id').Value := qryCond.FieldByName('id').AsInteger; // Agora você pode acessar o ID do condicional
+  Open;
 end;
 
 end;
+
 
 procedure Tform_cadastro_condicional.cbb_produtosChange(Sender: TObject);
 begin
@@ -230,8 +242,6 @@ procedure Tform_cadastro_condicional.pnl_addClick(Sender: TObject);
  var
 saldoEstoque : integer;
 begin
-
-
     qryEstoque.close;
     qryEstoque.SQL.Clear;
     qryEstoque.SQL.Text := 'SELECT id, produto_id, nome_produto, quantidade_em_estoque FROM estoque WHERE produto_id = :id';
@@ -250,7 +260,8 @@ begin
         qryInsertCond.ParamByName('id_produto').AsInteger := strtoint(edt_cod_prod.Text);
         qryInsertCond.ParamByName('nome_produto').AsString := cbb_produtos.Items[cbb_produtos.ItemIndex];
         qryInsertCond.ParamByName('quantidade_condicional').AsInteger := trunc(edt_qtt.Value);
-        qryInsertCond.ParamByName('id_condicional').AsInteger := qryCond.FieldByName('id').Value;
+        qryInsertCond.ParamByName('id_condicional').DataType := ftInteger;
+        qryInsertCond.ParamByName('id_condicional').value := condicionalID;
         qryInsertCond.ParamByName('nome_cliente').AsString := qryClientes.FieldByName('nome').asstring;
         qryInsertCond.ExecSQL;
 
@@ -266,6 +277,7 @@ begin
 
         CriarMensagem('aviso','Inserção realizada com sucesso!');
         qryCondPendente.Refresh;
+        dbg_registros.Refresh;
     end
     else
     begin

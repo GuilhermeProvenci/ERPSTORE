@@ -26,8 +26,6 @@ object form_cadastro_condicional: Tform_cadastro_condicional
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 936
-    ExplicitHeight = 537
     DesignSize = (
       952
       576)
@@ -91,7 +89,6 @@ object form_cadastro_condicional: Tform_cadastro_condicional
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitWidth = 936
       object lbl_titulo: TLabel
         AlignWithMargins = True
         Left = 15
@@ -191,7 +188,6 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Color = clSilver
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 936
       end
     end
     object edt_qtt: TNumberBox
@@ -218,7 +214,6 @@ object form_cadastro_condicional: Tform_cadastro_condicional
       ParentFont = False
       TabOrder = 2
       OnClick = pnl_addClick
-      ExplicitTop = 400
     end
     object edt_cod_clie: TEdit
       Left = 27
@@ -251,7 +246,6 @@ object form_cadastro_condicional: Tform_cadastro_condicional
       Height = 409
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 6
-      ExplicitWidth = 582
       object dbg_registros: TDBGrid
         Left = 1
         Top = 1
@@ -284,7 +278,6 @@ object form_cadastro_condicional: Tform_cadastro_condicional
       ParentFont = False
       TabOrder = 7
       OnClick = Panel1Click
-      ExplicitTop = 456
     end
   end
   object cbb_produtos: TComboBox
@@ -325,7 +318,7 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         'select id, id_produto, nome_produto, quantidade_condicional, id_' +
         'condicional from condicional_pendente'
       'where id_condicional = :id')
-    Left = 608
+    Left = 592
     Top = 8
     ParamData = <
       item

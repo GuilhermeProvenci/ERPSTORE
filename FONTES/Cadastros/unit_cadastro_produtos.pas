@@ -30,8 +30,13 @@ implementation
 uses unit_conexao_tabelas, unit_conexao;
 
 procedure Tform_cadastro_produtos.pnl_salvarClick(Sender: TObject);
+VAR
+nomeprod: string;
 begin
+  nomeprod := edt_nome.Text;
   inherited;
+
+
 
 
   with qryProd do
@@ -48,7 +53,7 @@ begin
     sql.Clear;
     sql.Add('Insert into estoque (produto_id, nome_produto ) values (:id, :nome)') ;
     ParamByName('id').Value := qryProd.FieldByName('id').Value;
-    ParamByName('nome').Value := qryProd.FieldByName('nome').asstring;
+    ParamByName('nome').Value := nomeprod;
     ExecSQL;
   end;
 

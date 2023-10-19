@@ -49,12 +49,12 @@ inherited form_consulta_produtos: Tform_consulta_produtos
           end
           item
             Expanded = False
-            FieldName = 'tamanho'
+            FieldName = 'preco'
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'preco'
+            FieldName = 'tamanho'
             Visible = True
           end>
       end
