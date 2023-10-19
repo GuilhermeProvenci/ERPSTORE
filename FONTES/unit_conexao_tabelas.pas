@@ -12,7 +12,6 @@ type
   Tform_conexao_tabelas = class(TDataModule)
     qryConsultaClientes: TFDQuery;
     qryConsultaProdutos: TFDQuery;
-    qryConsultaCondicional: TFDQuery;
     qryConsultaCST: TFDQuery;
     qryConsultaCSTID_CST: TIntegerField;
     qryConsultaCSTFG_TIPO: TStringField;
@@ -25,21 +24,22 @@ type
     DataSourceClientes: TDataSource;
     DataSourceProdutos: TDataSource;
     DataSourceCondicional: TDataSource;
-    qryConsultaCondicionalid: TFDAutoIncField;
-    qryConsultaCondicionalcliente_id: TIntegerField;
-    qryConsultaCondicionaldata_entregue: TDateTimeField;
-    qryConsultaCondicionaldata_devolucao: TDateTimeField;
-    qryConsultaCondicionalnome_cliente: TStringField;
     qryConsultaEstoque: TFDQuery;
     dsEstoque: TDataSource;
     qryConsultaEstoqueid: TFDAutoIncField;
     qryConsultaEstoqueproduto_id: TIntegerField;
     qryConsultaEstoquenome_produto: TStringField;
     qryConsultaEstoquequantidade_em_estoque: TIntegerField;
+    qryConsultaCondicional: TFDQuery;
+    qryConsultaCondicionalid: TFDAutoIncField;
+    qryConsultaCondicionalcliente_id: TIntegerField;
+    qryConsultaCondicionaldata_entregue: TDateField;
+    qryConsultaCondicionaldata_devolucao: TDateField;
+    qryConsultaCondicionalnome_cliente: TStringField;
     qryConsultaProdutosid: TFDAutoIncField;
     qryConsultaProdutosnome: TStringField;
     qryConsultaProdutostamanho: TStringField;
-    qryConsultaProdutospreco: TFMTBCDField;
+    qryConsultaProdutospreco: TBCDField;
     procedure qryConsultaCSTBeforeOpen(DataSet: TDataSet);
   private
     { Private declarations }

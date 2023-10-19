@@ -54,48 +54,14 @@ object form_conexao_tabelas: Tform_conexao_tabelas
       FieldName = 'tamanho'
       Origin = 'tamanho'
       Required = True
-      Size = 4
+      Size = 5
     end
-    object qryConsultaProdutospreco: TFMTBCDField
+    object qryConsultaProdutospreco: TBCDField
       FieldName = 'preco'
       Origin = 'preco'
       Required = True
-      Precision = 20
-      Size = 0
-    end
-  end
-  object qryConsultaCondicional: TFDQuery
-    Connection = form_conexao.FDConnection
-    SQL.Strings = (
-      'select * from condicional')
-    Left = 40
-    Top = 184
-    object qryConsultaCondicionalid: TFDAutoIncField
-      FieldName = 'id'
-      Origin = 'id'
-      ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = True
-    end
-    object qryConsultaCondicionalcliente_id: TIntegerField
-      AutoGenerateValue = arDefault
-      FieldName = 'cliente_id'
-      Origin = 'cliente_id'
-    end
-    object qryConsultaCondicionaldata_entregue: TDateTimeField
-      AutoGenerateValue = arDefault
-      FieldName = 'data_entregue'
-      Origin = 'data_entregue'
-    end
-    object qryConsultaCondicionaldata_devolucao: TDateTimeField
-      AutoGenerateValue = arDefault
-      FieldName = 'data_devolucao'
-      Origin = 'data_devolucao'
-    end
-    object qryConsultaCondicionalnome_cliente: TStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'nome_cliente'
-      Origin = 'nome_cliente'
-      Size = 100
+      Precision = 10
+      Size = 2
     end
   end
   object qryConsultaEstoque: TFDQuery
@@ -106,25 +72,32 @@ object form_conexao_tabelas: Tform_conexao_tabelas
     Top = 40
     object qryConsultaEstoqueid: TFDAutoIncField
       FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = True
     end
     object qryConsultaEstoqueproduto_id: TIntegerField
       FieldName = 'produto_id'
+      Origin = 'produto_id'
       Required = True
     end
     object qryConsultaEstoquenome_produto: TStringField
+      AutoGenerateValue = arDefault
       FieldName = 'nome_produto'
+      Origin = 'nome_produto'
       Size = 255
     end
     object qryConsultaEstoquequantidade_em_estoque: TIntegerField
       FieldName = 'quantidade_em_estoque'
+      Origin = 'quantidade_em_estoque'
+      Required = True
     end
   end
   object qryConsultaCST: TFDQuery
     BeforeOpen = qryConsultaCSTBeforeOpen
     Connection = form_conexao.FDConnection
-    Left = 680
-    Top = 168
+    Left = 792
+    Top = 56
     object qryConsultaCSTID_CST: TIntegerField
       FieldName = 'ID_CST'
       Origin = 'ID_CST'
@@ -159,12 +132,46 @@ object form_conexao_tabelas: Tform_conexao_tabelas
   end
   object DataSourceCondicional: TDataSource
     DataSet = qryConsultaCondicional
-    Left = 168
-    Top = 184
+    Left = 144
+    Top = 200
   end
   object dsEstoque: TDataSource
     DataSet = qryConsultaEstoque
     Left = 448
     Top = 40
+  end
+  object qryConsultaCondicional: TFDQuery
+    Connection = form_conexao.FDConnection
+    SQL.Strings = (
+      'select * from condicional')
+    Left = 40
+    Top = 192
+    object qryConsultaCondicionalid: TFDAutoIncField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object qryConsultaCondicionalcliente_id: TIntegerField
+      FieldName = 'cliente_id'
+      Origin = 'cliente_id'
+      Required = True
+    end
+    object qryConsultaCondicionaldata_entregue: TDateField
+      AutoGenerateValue = arDefault
+      FieldName = 'data_entregue'
+      Origin = 'data_entregue'
+    end
+    object qryConsultaCondicionaldata_devolucao: TDateField
+      FieldName = 'data_devolucao'
+      Origin = 'data_devolucao'
+      Required = True
+    end
+    object qryConsultaCondicionalnome_cliente: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'nome_cliente'
+      Origin = 'nome_cliente'
+      Size = 255
+    end
   end
 end
