@@ -28,6 +28,7 @@ uses
 
   procedure maxID(const TableName: string; Edit: TEdit);
   procedure limpaEDit(Form : Tform);
+  procedure CalcDoisCamp(const SQLQuery: string; const ParametrosSaida: array of PChar);
 
 
 type
@@ -247,6 +248,34 @@ begin
   //retorno para a funcao
   Result := Limpos;
 end;
+
+
+procedure CalcDoisCamp(const SQLQuery: string; const ParametrosSaida: array of PChar);
+var
+  Query: TFDQuery; // Você pode usar o componente TADOQuery para acessar bancos de dados ADO
+  I: Integer;
+begin
+  Query := TFDQuery.Create(nil);
+  try
+    Query.Connection := form_conexao.FDConnection;
+    Query.SQL.Text := SQLQuery;
+
+    Query.Open;
+
+    // Verifique se a consulta retornou resultados
+    if not Query.IsEmpty then
+    begin
+      // Percorra os parâmetros de saída e atribua os valores dos campos da consulta
+      for I := 0 to Min(Length(ParametrosSaida), Query.FieldCount) - 1 do
+      begin
+        StrPCopy(ParametrosSaida[I], Query.Fields[I].AsString);
+      end;
+    end;
+  finally
+    Query.Free;
+  end;
+end;
+
 
 //funcao que retorna uma string sem os caracteres especiais caso exista
 function RemoveCaracteres( AString: String ): String;
