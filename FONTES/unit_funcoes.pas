@@ -5,7 +5,7 @@ interface
 uses
   Vcl.Forms, Vcl.ExtCtrls, Vcl.Graphics, Vcl.StdCtrls,
   Vcl.DBCtrls, Vcl.Mask, Winapi.Windows, Vcl.DBGrids, Vcl.Grids, Data.DB, FireDAC.Comp.Client,
-  System.Classes, Vcl.Controls, unit_cadastro_padrao;
+  System.Classes, System.Math, Vcl.Controls, unit_cadastro_padrao;
 
   function SomenteNumeros( AString: String ): String;
   function RemoveCaracteres( AString: String ): String;
@@ -29,6 +29,9 @@ uses
   procedure maxID(const TableName: string; Edit: TEdit);
   procedure limpaEDit(Form : Tform);
   procedure CalcDoisCamp(const SQLQuery: string; const ParametrosSaida: array of PChar);
+
+  procedure ChamarUpdateGenerico(const NomeTabela: string; AContainer: TWinControl);
+procedure AtualizarGenerica(const NomeTabela: string; const NomesCamposAtualizar: string; Valores: array of string; const Condicao: string; NomesCampos: TStringList);
 
 
 type
@@ -275,6 +278,84 @@ begin
     Query.Free;
   end;
 end;
+
+procedure ChamarUpdateGenerico(const NomeTabela: string; AContainer: TWinControl);
+var
+  NomesCampos: TStringList;
+  i: Integer;
+  NomesCamposAtualizar: string;
+  Valores: array of string;
+  ControlesValores: TArray<TControl>;
+  Condicao: string;
+begin
+  NomesCampos := TStringList.Create;
+  try
+    NomeCampos(NomeTabela, NomesCampos);
+
+    // Crie uma string com os nomes dos campos que serão atualizados
+    NomesCamposAtualizar := '';
+    for i := 0 to NomesCampos.Count - 1 do
+    begin
+      NomesCamposAtualizar := NomesCamposAtualizar + NomesCampos[i] + ' = :' + NomesCampos[i];
+      if i < NomesCampos.Count - 1 then
+        NomesCamposAtualizar := NomesCamposAtualizar + ', ';
+    end;
+
+    // Preencha o array de ControlesValores com os controles que têm a tag 99
+    ControlesValores := AcharEdit99(AContainer);
+
+    // Preencha o array de valores com os valores dos controles
+    SetLength(Valores, Length(ControlesValores));
+    for i := 0 to High(ControlesValores) do
+    begin
+      if ControlesValores[i] is TEdit then
+        Valores[i] := TEdit(ControlesValores[i]).Text
+      else if ControlesValores[i] is TDBLookupComboBox then
+        Valores[i] := TDBLookupComboBox(ControlesValores[i]).Text // ou KeyValue, dependendo do que você deseja
+      else if ControlesValores[i] is TDateTimePicker then
+        Valores[i] := FormatDateTime('yyyy/mm/dd', TDateTimePicker(ControlesValores[i]).DateTime);
+    end;
+
+    Condicao := NomesCampos[0] + ' = ' + QuotedStr(Valores[0]); // Adicione QuotedStr para lidar com strings
+
+    // Chame a função AtualizarGenerica passando os campos a serem atualizados, os valores dos controles, a condição e a lista de nomes de campos
+ AtualizarGenerica(NomeTabela, NomesCamposAtualizar, Valores, Condicao, NomesCampos);
+
+
+  finally
+    NomesCampos.Free;
+  end;
+end;
+
+procedure AtualizarGenerica(const NomeTabela: string; const NomesCamposAtualizar: string; Valores: array of string; const Condicao: string; NomesCampos: TStringList);
+var
+  qryAtualizar: TFDQuery;
+  SQLAtualizar: string;
+  i: Integer;
+begin
+  qryAtualizar := TFDQuery.Create(nil);
+  try
+    qryAtualizar.Connection := unit_conexao.form_conexao.FDConnection;
+
+    // Crie a instrução SQL de atualização
+    SQLAtualizar := 'UPDATE ' + NomeTabela + ' SET ' + NomesCamposAtualizar + ' WHERE ' + Condicao;
+
+    qryAtualizar.SQL.Text := SQLAtualizar;
+
+    // Defina os parâmetros com nomes correspondentes aos nomes dos campos da tabela
+    for i := 0 to NomesCampos.Count - 1 do
+    begin
+      qryAtualizar.ParamByName(NomesCampos[i]).Value := Valores[i];
+    end;
+
+
+    qryAtualizar.ExecSQL;
+  finally
+    qryAtualizar.Free;
+  end;
+end;
+
+
 
 
 //funcao que retorna uma string sem os caracteres especiais caso exista

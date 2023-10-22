@@ -35,6 +35,8 @@ type
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
+  FModoEdicao: Boolean;
+
   public
     { Public declarations }
   end;
@@ -88,16 +90,23 @@ begin
 end;
 
 procedure Tform_cadastro_padrao.pnl_salvarClick(Sender: TObject);
-var
-i : integer;
 begin
-    ValidarCampoObrigatorios(Self);
+  ValidarCampoObrigatorios(Self);
 
+  if FModoEdicao then
+  begin
+    ChamarUpdateGenerico(NomeTabela, self);
+  end
+  else
+  begin
     ChamarInsertGenerico(NomeTabela, self);
     limpaEDit(Self);
     maxID(NomeTabela, edt_codigo);
-    CriarMensagem('aviso', 'Registro Salvo com sucesso');
+  end;
+
+  CriarMensagem('aviso', 'Registro Salvo com sucesso');
 end;
+
 
 
 end.
