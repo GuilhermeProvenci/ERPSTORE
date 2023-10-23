@@ -24,8 +24,6 @@ object form_consulta_padrao: Tform_consulta_padrao
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 711
-    ExplicitHeight = 462
     object pnl_cabecalho: TPanel
       Left = 0
       Top = 0
@@ -35,7 +33,6 @@ object form_consulta_padrao: Tform_consulta_padrao
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 711
       object btn_fechar: TSpeedButton
         Left = 763
         Top = 0
@@ -141,7 +138,6 @@ object form_consulta_padrao: Tform_consulta_padrao
         Color = clSilver
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 711
       end
     end
     object pnl_Rodape: TPanel
@@ -153,8 +149,6 @@ object form_consulta_padrao: Tform_consulta_padrao
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 1
-      ExplicitTop = 424
-      ExplicitWidth = 711
       object lbl_duplo_clique: TLabel
         AlignWithMargins = True
         Left = 538
@@ -174,7 +168,6 @@ object form_consulta_padrao: Tform_consulta_padrao
         Font.Style = []
         ParentFont = False
         Layout = tlCenter
-        ExplicitLeft = 416
         ExplicitHeight = 13
       end
       object lbl_excluir: TLabel
@@ -211,7 +204,6 @@ object form_consulta_padrao: Tform_consulta_padrao
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 2
-      ExplicitWidth = 711
       DesignSize = (
         833
         72)
@@ -243,7 +235,6 @@ object form_consulta_padrao: Tform_consulta_padrao
         ParentFont = False
         TabOrder = 0
         OnKeyDown = edt_consultaKeyDown
-        ExplicitWidth = 521
       end
       object btn_inserir: TButton
         Left = 684
@@ -260,7 +251,6 @@ object form_consulta_padrao: Tform_consulta_padrao
         ParentFont = False
         TabOrder = 1
         OnClick = btn_inserirClick
-        ExplicitLeft = 562
       end
     end
     object pnl_dbgrid: TPanel
@@ -271,8 +261,6 @@ object form_consulta_padrao: Tform_consulta_padrao
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 3
-      ExplicitWidth = 711
-      ExplicitHeight = 295
       object dbg_registros: TDBGrid
         AlignWithMargins = True
         Left = 20
@@ -301,6 +289,7 @@ object form_consulta_padrao: Tform_consulta_padrao
         TitleFont.Name = 'Segoe UI Semibold'
         TitleFont.Style = []
         OnDrawColumnCell = dbg_registrosDrawColumnCell
+        OnDblClick = dbg_registrosDblClick
         OnKeyDown = dbg_registrosKeyDown
         OnTitleClick = dbg_registrosTitleClick
       end
@@ -319,7 +308,6 @@ object form_consulta_padrao: Tform_consulta_padrao
         Color = 8404992
         ParentBackground = False
         TabOrder = 1
-        ExplicitWidth = 671
         object lbl_resultado: TLabel
           AlignWithMargins = True
           Left = 15

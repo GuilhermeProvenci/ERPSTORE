@@ -38,14 +38,16 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure dbg_registrosTitleClick(Column: TColumn);
     procedure FormCreate(Sender: TObject);
+    procedure dbg_registrosDblClick(Sender: TObject);
   private
     { Private declarations }
     sSQL : TStrings;
     NomeCampo : String;
     TipoCampo : TFieldType;
+    vID : Integer;
   public
     { Public declarations }
-    procedure CriaForm(const Nome : string);
+    procedure CriaForm(const Nome: string; ModoEdicao: Boolean);
     var
     NomeForm: string;
   end;
@@ -60,6 +62,8 @@ implementation
 uses unit_funcoes, unit_principal, unit_cadastro_clientes, unit_cadastro_produtos,
   ClassMap, unit_cadastro_condicional, unit_cadastro_estoque;
 
+
+
 procedure Tform_consulta_padrao.btn_fecharClick(Sender: TObject);
 begin
   //FECHA O FORM
@@ -68,20 +72,43 @@ end;
 
 procedure Tform_consulta_padrao.btn_inserirClick(Sender: TObject);
 begin
-  CriaForm(NomeForm);
+// Abrir a tela de cadastro em modo de inserção
+CriaForm(NomeForm, False);
+
 end;
 
-procedure Tform_consulta_padrao.CriaForm(const Nome: string);
+procedure Tform_consulta_padrao.CriaForm(const Nome: string; ModoEdicao: Boolean);
 var
-Tela : TForm;
-Classe : TFormClass;
-Begin
-     // Chamada da função FindClass do Delphi que procura uma classe registrada.
-     Classe := TFormClass(FindClass(Nome));
-     Tela := Classe.Create(Application);
-     Tela.ShowModal;
+  Tela: TForm;
+  Classe: TFormClass;
+begin
+  // Chamada da função FindClass do Delphi que procura uma classe registrada.
+  Classe := TFormClass(FindClass(Nome));
+  Tela := Classe.Create(Application);
+
+  if ModoEdicao then
+  begin
+   (Tela as Tform_cadastro_padrao).ID := vID;
+   (Tela as Tform_cadastro_padrao).ModoEdicao := true;
+  end;
+
+  Tela.ShowModal;
 end;
 
+
+
+procedure Tform_consulta_padrao.dbg_registrosDblClick(Sender: TObject);
+begin
+  // Verifica se há registros no DataSet
+  if not ds_consulta.DataSet.IsEmpty then
+  begin
+    // Obtém o ID da linha selecionada
+    vID := ds_consulta.DataSet.FieldByName('ID').AsInteger;
+    // Abrir o formulário em modo de edição
+    CriaForm(NomeForm, True);
+
+  end;
+end;
 
 procedure Tform_consulta_padrao.dbg_registrosDrawColumnCell(Sender: TObject;
   const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);

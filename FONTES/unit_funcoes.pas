@@ -31,7 +31,7 @@ uses
   procedure CalcDoisCamp(const SQLQuery: string; const ParametrosSaida: array of PChar);
 
   procedure ChamarUpdateGenerico(const NomeTabela: string; AContainer: TWinControl);
-procedure AtualizarGenerica(const NomeTabela: string; const NomesCamposAtualizar: string; Valores: array of string; const Condicao: string; NomesCampos: TStringList);
+  procedure AtualizarGenerica(const NomeTabela: string; const NomesCamposAtualizar: string; Valores: array of string; const Condicao: string; NomesCampos: TStringList);
 
 
 type
@@ -61,8 +61,6 @@ begin
     end;
   end;
 end;
-
-
 
 
 function AcharEdit99(AContainer: TWinControl): TArray<TControl>;
@@ -354,7 +352,6 @@ begin
     qryAtualizar.Free;
   end;
 end;
-
 
 
 
