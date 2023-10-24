@@ -44,6 +44,186 @@ implementation
 
 uses unit_mensagem, unit_conexao, Vcl.Dialogs, Vcl.ComCtrls, System.SysUtils;
 
+
+// Executar a manutenção, verificando se insere ou faz update em uma Tabela
+function ManuDadoTabe(Tabe: string; Chav, Valo: array of string; Camp: string = '';
+  Por_Comp: Boolean = False; iComp: TObject = nil; iWher: string = ''): Int64;
+var
+  i: Integer;
+  NovoCamp, Wher: string;
+  vQuery: TFDQuery;
+  MergedArr: Array of string;
+  ChavEmpty: Boolean;
+begin
+  if (Length(Chav) = 0) and (iWher.Trim = '') then
+    Result := InseDadoTabe(Tabe, Valo, Camp, Por_Comp, iComp)
+  else
+  begin
+    iWher := iWher.Trim;
+
+    NovoCamp := Camp;
+    if Camp = '' then
+      NovoCamp := 'CODI' + Copy(Tabe, 5, MaxInt);
+
+    vQuery := TFDQuery.Create(nil);
+    try
+      vQuery.Connection := TFDConnection(iComp); // Substitua pelo seu objeto de conexão
+
+      ChavEmpty := True;
+      for i := 0 to Length(Chav) - 1 do
+        if not Chav[i].Trim.IsEmpty then
+        begin
+          ChavEmpty := False;
+          Break;
+        end;
+
+      if ChavEmpty then
+        Wher := ''
+      else if (Length(Chav) = 2) and (AnsiUpperCase(Chav[0]) = AnsiUpperCase(NovoCamp)) and IsDigit(Chav[1]) then
+      begin
+        Result := StrToInt(Chav[1]);
+        if Result > 0 then
+        begin
+          Wher := 'WHERE ' + NovoCamp + ' = ' + IntToStr(Result);
+          if not iWher.IsEmpty then
+            Wher := Wher + ' AND ' + iWher;
+          Result := CalcInte(vQuery, 'SELECT ' + NovoCamp + ' FROM ' + Tabe + ' ' + Wher, 0);
+        end
+        else
+        begin
+          Chav[0] := '';
+          Chav[1] := '';
+        end;
+      end
+      else if (Length(Chav) = 2) and (AnsiUpperCase(Chav[0]) = AnsiUpperCase(NovoCamp)) and (AnsiUpperCase(Chav[1]) = 'NULL') then
+      begin
+        Result := 0;
+        Chav[0] := '';
+        Chav[1] := '';
+      end
+      else
+      begin
+        SetLength(MergedArr, Length(Chav));
+        Wher := '';
+        i := 0;
+        while i <= (Length(Chav) - 1) do
+        begin
+          if Wher <> '' then
+            Wher := Wher + ' AND ';
+          if AnsiUpperCase(Chav[i + 1]) = 'NULL' then
+            Wher := Wher + '(' + Chav[i] + ' IS NULL'
+          else
+            Wher := Wher + '(' + Chav[i] + ' = ' + QuotedStr(Chav[i + 1]);
+          Inc(i);
+          Wher := Wher + ')';
+          Inc(i);
+        end;
+      end;
+
+      if Result = 0 then
+      begin
+        SetLength(MergedArr, Length(Chav) + Length(Valo));
+        for I := 0 to Length(Chav) - 1 do
+          MergedArr[i] := Chav[i];
+        for I := 0 to Length(Valo) - 1 do
+          MergedArr[Length(Chav) + i] := Valo[i];
+        Result := InseDadoTabe(Tabe, MergedArr, Camp, Por_Comp, iComp);
+      end
+      else
+      begin
+        // Substitua 'CampoID' pelo nome da coluna da chave primária
+        AlteDadoTabe(Tabe, Valo, 'WHERE CampoID = ' + IntToStr(Result), Por_Comp, iComp);
+      end;
+    finally
+      vQuery.Free;
+    end;
+  end;
+
+  if Result <> 0 then
+  begin
+    // Substitua 'TrigPrin' pelo nome da função para executar as triggers
+    TrigPrin(Tabe, IntToStr(Result), iComp);
+  end;
+end;
+
+// Executar o UPDATE em uma Tabela
+procedure AlteDadoTabe(Tabe: string; Valo: array of string; Wher: string;
+  Por_Comp: Boolean = False; iComp: TObject = nil; Apat: Boolean = False);
+var
+  i: Integer;
+  SeleCamp, ApatCamp: string;
+  vQuery: TFDQuery;
+begin
+  SeleCamp := '';
+  i := 0;
+
+  while i <= (Length(Valo) - 1) do
+  begin
+    if Valo[i].Trim = '' then
+      Inc(i, 2)
+    else
+    begin
+      SeleCamp := SeleCamp + ', ' + Valo[i];
+      Inc(i);
+      if not Por_Comp then
+        SeleCamp := SeleCamp + ' = ' + Valo[i];
+      Inc(i);
+    end;
+  end;
+  SeleCamp := Copy(SeleCamp, 3, Length(SeleCamp) - 2);
+
+  vQuery := TFDQuery.Create(nil);
+  try
+    vQuery.Connection := TFDConnection(iComp); // Substitua pelo seu objeto de conexão
+
+    if not Por_Comp then
+    begin
+      vQuery.ExecSQL('UPDATE ' + Tabe + ' SET ' + SeleCamp + ' ' + Wher);
+    end
+    else
+    begin
+      if Apat then
+        ApatCamp := 'APAT' + AnsiUpperCase(Copy(Tabe, 5, 100));
+
+      vQuery.SQL.Clear;
+      vQuery.SQL.Add('SELECT ' + SeleCamp + SeStri(Apat, ', ' + ApatCamp, '') + ' FROM ' + Tabe);
+      vQuery.SQL.Add(Wher);
+      vQuery.Open;
+      vQuery.Edit;
+
+      if Apat then
+        vQuery.FieldByName(ApatCamp).AsInteger := Abs(vQuery.FieldByName(ApatCamp).AsInteger + 1);
+
+      i := 0;
+      while i <= (Length(Valo) - 1) do
+      begin
+        if Valo[i + 1] <> '' then
+        begin
+          if AnsiUpperCase(Valo[i + 1]) = 'NULL' then
+            vQuery.FieldByName(Valo[i]).Clear
+          else if (vQuery.FieldByName(Valo[i]).DataType = ftFloat) then
+            vQuery.FieldByName(Valo[i]).AsFloat := StrToFloat(StringReplace(Valo[i + 1], '.', ',', []))
+          else
+          begin
+            Valo[i + 1] := StringReplace(Valo[i + 1], '''''', '%$%$%$%$%$%$', '');
+            Valo[i + 1] := StringReplace(Valo[i + 1], '''', '', '');
+            Valo[i + 1] := StringReplace(Valo[i + 1], '%$%$%$%$%$%$', '''', '');
+            if AnsiUpperCase(Valo[i + 1]) = 'NULL' then
+              vQuery.FieldByName(Valo[i]).Clear
+            else
+              vQuery.FieldByName(Valo[i]).AsString := Valo[i + 1];
+          end;
+        end;
+        Inc(i, 2);
+      end;
+      vQuery.Post;
+    end;
+  finally
+    vQuery.Free;
+  end;
+end;
+
+
 procedure limpaEDit(Form: TForm);
 var
   i: Integer;
