@@ -44,8 +44,80 @@ implementation
 
 uses unit_mensagem, unit_conexao, Vcl.Dialogs, Vcl.ComCtrls, System.SysUtils;
 
+function getQry(sql: String; qryName: String='qryGetQry'; iComp: TObject=nil): TsgQuery;
+begin
+  Result := GetQry(nil, SQL, QryName, iComp);
+end;
+function getQry(iOwner: TComponent; sql: String; qryName: String='qryGetQry'; iComp: TObject=nil): TsgQuery;
+begin
+  Result := CriaQuery(iOwner, iComp, qryName);
+  Result.SQL.Text := sql;
+  Result.Open;
+end;
+Function CriaQuery(iOwner: TComponent; const iComp: TObject = nil; iName: String = ''; iTag: Integer = 888): TsgQuery;
+var
+  vQuer: TsgQuery;
+  vComp: TObject;
 
-// Executar a manutenção, verificando se insere ou faz update em uma Tabela
+  procedure CriaQuery_Cria();
+  begin
+    vQuer      := TsgQuery.Create(iOwner);
+    if iName = '' then
+      vQuer.Name := 'Qry_DmPlus_CriaQuery'
+    else
+      vQuer.Name := iName;
+    vQuer.Tag  := iTag;
+  end;
+
+begin
+  vComp  := iComp;
+  if not Assigned(vComp) then
+    vComp := GetPsgTrans();
+  if not Assigned(vComp) then
+    CriaQuery_Cria
+  else if (vComp.ClassType = TsgQuery) then
+  begin
+    vQuer := TsgQuery(vComp);
+    if vQuer.Tag = 888 then  //Quando reusa a Query, estÃ¡ sendo eliminada no Finally, com isso, nÃ£o elimina
+      vQuer.Tag := 0;
+    vQuer.Close;
+    vQuer.SQL.Clear;
+  end
+  else
+  begin
+    CriaQuery_Cria;
+    if ((vComp is tsgADOConnection) or (vComp is TADOConnection) or (vComp is TFDConnection)) then
+    begin
+      vQuer.Connection    := TSgADOConnection(vComp);
+      vQuer.sgTransaction := TsgTransaction(vComp);
+    end
+    else if ((vComp is TsgTransaction) or (vComp is TFDTransaction)) then
+      vQuer.sgTransaction := TsgTransaction(vComp)
+  end;
+  vQuer.EnableBCD := False;
+  Result := vQuer;
+
+//***
+{Como usar
+var
+  vQuer: TsgQuery;
+begin
+  vQuer := CriaQuery(iComp);
+  try
+    with vQuer do
+    begin
+      Name := 'Qry';
+    end;
+  finally
+    vQuer.Close;
+    if vQuer.Tag = 888 then
+      FreeAndNil(vQuer);
+  end;
+end;
+}
+end;
+
+// Executar a manutenï¿½ï¿½o, verificando se insere ou faz update em uma Tabela
 function ManuDadoTabe(Tabe: string; Chav, Valo: array of string; Camp: string = '';
   Por_Comp: Boolean = False; iComp: TObject = nil; iWher: string = ''): Int64;
 var
@@ -67,7 +139,7 @@ begin
 
     vQuery := TFDQuery.Create(nil);
     try
-      vQuery.Connection := TFDConnection(iComp); // Substitua pelo seu objeto de conexão
+      vQuery.Connection := TFDConnection(iComp); // Substitua pelo seu objeto de conexï¿½o
 
       ChavEmpty := True;
       for i := 0 to Length(Chav) - 1 do
@@ -131,7 +203,7 @@ begin
       end
       else
       begin
-        // Substitua 'CampoID' pelo nome da coluna da chave primária
+        // Substitua 'CampoID' pelo nome da coluna da chave primï¿½ria
         AlteDadoTabe(Tabe, Valo, 'WHERE CampoID = ' + IntToStr(Result), Por_Comp, iComp);
       end;
     finally
@@ -141,7 +213,7 @@ begin
 
   if Result <> 0 then
   begin
-    // Substitua 'TrigPrin' pelo nome da função para executar as triggers
+    // Substitua 'TrigPrin' pelo nome da funï¿½ï¿½o para executar as triggers
     TrigPrin(Tabe, IntToStr(Result), iComp);
   end;
 end;
@@ -174,7 +246,7 @@ begin
 
   vQuery := TFDQuery.Create(nil);
   try
-    vQuery.Connection := TFDConnection(iComp); // Substitua pelo seu objeto de conexão
+    vQuery.Connection := TFDConnection(iComp); // Substitua pelo seu objeto de conexï¿½o
 
     if not Por_Comp then
     begin
@@ -230,7 +302,7 @@ var
 begin
   for i := 0 to Form.ComponentCount - 1 do
   begin
-    // Testando se é TEdit
+    // Testando se ï¿½ TEdit
     if (Form.Components[i] is TEdit) then
     begin
       (Form.Components[i] as TEdit).Text := '';
@@ -295,7 +367,7 @@ var
 begin
   qryInserir := TFDQuery.Create(nil);
   try
-    qryInserir.Connection := unit_conexao.form_conexao.FDConnection; // Defina aqui a sua conexão
+    qryInserir.Connection := unit_conexao.form_conexao.FDConnection; // Defina aqui a sua conexï¿½o
 
     qryInserir.SQL.Text := 'INSERT INTO ' + NomeTabela + '(' + NomesCampos + ') VALUES (';
     for i := 0 to High(Valores) do
@@ -306,7 +378,7 @@ begin
     end;
     qryInserir.SQL.Add(')');
 
-    // Definir os valores como parâmetros
+    // Definir os valores como parï¿½metros
     for i := 0 to High(Valores) do
     begin
       qryInserir.Params[i].Value := Valores[i];
@@ -327,8 +399,8 @@ var
 begin
   qry := TFDQuery.Create(nil);
   try
-    qry.Connection := unit_conexao.form_conexao.FDConnection; // Defina aqui a sua conexão
-    qry.SQL.Text := 'SELECT * FROM ' + NomeTabela + ' WHERE 1 = 0'; // Não traz dados, apenas estrutura
+    qry.Connection := unit_conexao.form_conexao.FDConnection; // Defina aqui a sua conexï¿½o
+    qry.SQL.Text := 'SELECT * FROM ' + NomeTabela + ' WHERE 1 = 0'; // Nï¿½o traz dados, apenas estrutura
     qry.Open;
 
     for i := 0 to qry.FieldDefs.Count - 1 do
@@ -352,7 +424,7 @@ begin
   try
     NomeCampos(NomeTabela, NomesCampos);
 
-    // Crie uma string com os nomes dos campos separados por vírgula
+    // Crie uma string com os nomes dos campos separados por vï¿½rgula
     NomesCamposInserir := '';
     for i := 0 to NomesCampos.Count - 1 do
     begin
@@ -361,7 +433,7 @@ begin
         NomesCamposInserir := NomesCamposInserir + ', ';
     end;
 
-    // Preencha o array de ControlesValores com os controles que têm a tag 99
+    // Preencha o array de ControlesValores com os controles que tï¿½m a tag 99
     ControlesValores := AcharEdit99(AContainer);
 
     // Preencha o array de valores com os valores dos controles
@@ -371,14 +443,14 @@ begin
       if ControlesValores[i] is TEdit then
         Valores[i] := TEdit(ControlesValores[i]).Text
       else if ControlesValores[i] is TDBLookupComboBox then
-        Valores[i] := TDBLookupComboBox(ControlesValores[i]).Text // ou KeyValue, dependendo do que você deseja
+        Valores[i] := TDBLookupComboBox(ControlesValores[i]).Text // ou KeyValue, dependendo do que vocï¿½ deseja
          else if ControlesValores[i] is TDateTimePicker then
            Valores[i] := FormatDateTime('yyyy/mm/dd' ,TDateTimePicker(ControlesValores[i]).DateTime);
     end;
 
 
 
-    // Chame a função InserirGenerica passando os campos resultantes e os valores dos controles
+    // Chame a funï¿½ï¿½o InserirGenerica passando os campos resultantes e os valores dos controles
     InsertGenerico(NomeTabela, NomesCamposInserir, Valores);
   finally
     NomesCampos.Free;
@@ -392,7 +464,7 @@ var
 begin
   qrySelect := TFDQuery.Create(nil);
   try
-   qrySelect.Connection := unit_conexao.form_conexao.FDConnection; // Defina aqui a sua conexão
+   qrySelect.Connection := unit_conexao.form_conexao.FDConnection; // Defina aqui a sua conexï¿½o
     qrySelect.SQL.Text := 'SELECT max(id) as id FROM ' + TableName;
     qrySelect.Open;
 
@@ -420,7 +492,7 @@ begin
   for I := 1 to Length( AString ) do
   begin
 
-  //verifico se é um numero
+  //verifico se ï¿½ um numero
     if Pos ( Copy( AString, I, 1 ), '0123456789') > 0 then
       Limpos := Limpos + Copy( AString, i, 1 ); //so copia para a variavel se for numero
 
@@ -433,7 +505,7 @@ end;
 
 procedure CalcDoisCamp(const SQLQuery: string; const ParametrosSaida: array of PChar);
 var
-  Query: TFDQuery; // Você pode usar o componente TADOQuery para acessar bancos de dados ADO
+  Query: TFDQuery; // Vocï¿½ pode usar o componente TADOQuery para acessar bancos de dados ADO
   I: Integer;
 begin
   Query := TFDQuery.Create(nil);
@@ -446,7 +518,7 @@ begin
     // Verifique se a consulta retornou resultados
     if not Query.IsEmpty then
     begin
-      // Percorra os parâmetros de saída e atribua os valores dos campos da consulta
+      // Percorra os parï¿½metros de saï¿½da e atribua os valores dos campos da consulta
       for I := 0 to Min(Length(ParametrosSaida), Query.FieldCount) - 1 do
       begin
         StrPCopy(ParametrosSaida[I], Query.Fields[I].AsString);
@@ -470,7 +542,7 @@ begin
   try
     NomeCampos(NomeTabela, NomesCampos);
 
-    // Crie uma string com os nomes dos campos que serão atualizados
+    // Crie uma string com os nomes dos campos que serï¿½o atualizados
     NomesCamposAtualizar := '';
     for i := 0 to NomesCampos.Count - 1 do
     begin
@@ -479,7 +551,7 @@ begin
         NomesCamposAtualizar := NomesCamposAtualizar + ', ';
     end;
 
-    // Preencha o array de ControlesValores com os controles que têm a tag 99
+    // Preencha o array de ControlesValores com os controles que tï¿½m a tag 99
     ControlesValores := AcharEdit99(AContainer);
 
     // Preencha o array de valores com os valores dos controles
@@ -489,14 +561,14 @@ begin
       if ControlesValores[i] is TEdit then
         Valores[i] := TEdit(ControlesValores[i]).Text
       else if ControlesValores[i] is TDBLookupComboBox then
-        Valores[i] := TDBLookupComboBox(ControlesValores[i]).Text // ou KeyValue, dependendo do que você deseja
+        Valores[i] := TDBLookupComboBox(ControlesValores[i]).Text // ou KeyValue, dependendo do que vocï¿½ deseja
       else if ControlesValores[i] is TDateTimePicker then
         Valores[i] := FormatDateTime('yyyy/mm/dd', TDateTimePicker(ControlesValores[i]).DateTime);
     end;
 
     Condicao := NomesCampos[0] + ' = ' + QuotedStr(Valores[0]); // Adicione QuotedStr para lidar com strings
 
-    // Chame a função AtualizarGenerica passando os campos a serem atualizados, os valores dos controles, a condição e a lista de nomes de campos
+    // Chame a funï¿½ï¿½o AtualizarGenerica passando os campos a serem atualizados, os valores dos controles, a condiï¿½ï¿½o e a lista de nomes de campos
  AtualizarGenerica(NomeTabela, NomesCamposAtualizar, Valores, Condicao, NomesCampos);
 
 
@@ -515,12 +587,12 @@ begin
   try
     qryAtualizar.Connection := unit_conexao.form_conexao.FDConnection;
 
-    // Crie a instrução SQL de atualização
+    // Crie a instruï¿½ï¿½o SQL de atualizaï¿½ï¿½o
     SQLAtualizar := 'UPDATE ' + NomeTabela + ' SET ' + NomesCamposAtualizar + ' WHERE ' + Condicao;
 
     qryAtualizar.SQL.Text := SQLAtualizar;
 
-    // Defina os parâmetros com nomes correspondentes aos nomes dos campos da tabela
+    // Defina os parï¿½metros com nomes correspondentes aos nomes dos campos da tabela
     for i := 0 to NomesCampos.Count - 1 do
     begin
       qryAtualizar.ParamByName(NomesCampos[i]).Value := Valores[i];
@@ -548,8 +620,8 @@ begin
   for I := 1 to Length( AString ) do
   begin
 
-  //verifico se é um caracter especial
-    if Pos ( Copy( AString, I, 1 ), '"!%$#@&¨*().,;:/<>[]{}=+-_\|') = 0 then
+  //verifico se ï¿½ um caracter especial
+    if Pos ( Copy( AString, I, 1 ), '"!%$#@&ï¿½*().,;:/<>[]{}=+-_\|') = 0 then
       Limpos := Limpos + Copy( AString, i, 1 ); //so copia para a variavel se nao for caracter
 
   end;
@@ -560,7 +632,7 @@ end;
 
 
 //funcao que percorre todos os componentes do form vericando
-//qual é obrigatorio e qual nao esta preenchido
+//qual ï¿½ obrigatorio e qual nao esta preenchido
 procedure ValidarCampoObrigatorios ( Form : TForm );
 var
   i:Integer;
@@ -571,7 +643,7 @@ begin
   for I := 0 to Form.ComponentCount - 1 do
   begin
 
-    //se o tag = 99 entao indicara que é componente obrigatorio
+    //se o tag = 99 entao indicara que ï¿½ componente obrigatorio
     if ( Form.Components[i].Tag = 99 ) then
     begin
       //testando o Tedit
@@ -582,7 +654,7 @@ begin
          ( ( form.Components[i] as TEdit ).Text = '' ) then //se ele estiver habilitado
       begin
          CriarMensagem ('aviso','O Campo ' + ( form.Components[i] as TEdit ).Hint +
-                         ' é de preenchimento obrigatório!'); //avisa o usuario
+                         ' ï¿½ de preenchimento obrigatï¿½rio!'); //avisa o usuario
 
         ( form.Components[i] as TEdit ).SetFocus; //poe o foco no componente
 
@@ -598,7 +670,7 @@ begin
          ( ( form.Components[i] as TDBEdit ).Text = '' ) then //se ele estiver habilitado
       begin
          CriarMensagem ('aviso','O Campo ' + ( form.Components[i] as TDBEdit ).Hint +
-                         ' é de preenchimento obrigatório!'); //avisa o usuario
+                         ' ï¿½ de preenchimento obrigatï¿½rio!'); //avisa o usuario
 
         ( form.Components[i] as TDBEdit ).SetFocus; //poe o foco no componente
 
@@ -615,7 +687,7 @@ begin
          ( ( form.Components[i] as TComboBox ).Text = '' ) then //se ele estiver habilitado
       begin
          CriarMensagem ('aviso','O Campo ' + ( form.Components[i] as TComboBox ).Hint +
-                         ' é de preenchimento obrigatório!'); //avisa o usuario
+                         ' ï¿½ de preenchimento obrigatï¿½rio!'); //avisa o usuario
 
         ( form.Components[i] as TComboBox ).SetFocus; //poe o foco no componente
 
@@ -631,7 +703,7 @@ begin
          ( ( form.Components[i] as TDBComboBox ).Text = '' ) then //se ele estiver habilitado
       begin
          CriarMensagem ('aviso','O Campo ' + ( form.Components[i] as TDBComboBox ).Hint +
-                         ' é de preenchimento obrigatório!'); //avisa o usuario
+                         ' ï¿½ de preenchimento obrigatï¿½rio!'); //avisa o usuario
 
         ( form.Components[i] as TDBComboBox ).SetFocus; //poe o foco no componente
 
@@ -647,7 +719,7 @@ begin
          ( ( form.Components[i] as TDBlookUpComboBox ).Text = '' ) then //se ele estiver habilitado
       begin
          CriarMensagem ('aviso','O Campo ' + ( form.Components[i] as TDBlookUpComboBox ).Hint +
-                         ' é de preenchimento obrigatório!'); //avisa o usuario
+                         ' ï¿½ de preenchimento obrigatï¿½rio!'); //avisa o usuario
 
         ( form.Components[i] as TDBlookUpComboBox ).SetFocus; //poe o foco no componente
 
@@ -663,7 +735,7 @@ begin
          ( ( form.Components[i] as TMemo ).Text = '' ) then //se ele estiver habilitado
       begin
          CriarMensagem ('aviso','O Campo ' + ( form.Components[i] as TMemo ).Hint +
-                         ' é de preenchimento obrigatório!'); //avisa o usuario
+                         ' ï¿½ de preenchimento obrigatï¿½rio!'); //avisa o usuario
 
         ( form.Components[i] as TMemo ).SetFocus; //poe o foco no componente
 
@@ -679,7 +751,7 @@ begin
          ( RemoveCaracteres ( ( form.Components[i] as TMaskEdit ).Text ) = '' ) then //se ele estiver habilitado
       begin
          CriarMensagem ('aviso','O Campo ' + ( form.Components[i] as TMaskEdit ).Hint +
-                         ' é de preenchimento obrigatório!'); //avisa o usuario
+                         ' ï¿½ de preenchimento obrigatï¿½rio!'); //avisa o usuario
 
         ( form.Components[i] as TMaskEdit ).SetFocus; //poe o foco no componente
 
@@ -709,7 +781,7 @@ begin
        begin
          ( Form.Components[i] as TLabel ).Font.Color := $000080FF;
          ( Form.Components[i] as TLabel ).Font.Style := [fsBold];
-       end else //nao tem a mesma tage entao é label dos outros botoes
+       end else //nao tem a mesma tage entao ï¿½ label dos outros botoes
        begin
          ( Form.Components[i] as TLabel ).Font.Color := clWhite;
          ( Form.Components[i] as TLabel ).Font.Style := [];
@@ -758,11 +830,11 @@ begin
       NovaSenha := NovaSenha + chr( ( Ord( Chave[x] ) xor Ord( Senha[y] ) ) );
     end;
 
-    //A senha passada por parametro recebe o resultado das opeaçoes logicas
+    //A senha passada por parametro recebe o resultado das opeaï¿½oes logicas
     Senha := NovaSenha;
   end;
 
-  //o resultado da senha é passado para o retorno da funcao
+  //o resultado da senha ï¿½ passado para o retorno da funcao
   Result := Senha;
 end;
 
@@ -810,7 +882,7 @@ begin
     ( Sender as TDbgrid ).Canvas.Brush.Color := clwhite;//$00F9F9F9;
 
 
-  //mudando a cor da seleção
+  //mudando a cor da seleï¿½ï¿½o
   if ( gdSelected in State ) then
   begin
     ( Sender as TDbgrid ).Canvas.Brush.Color := $00FFE8CC; //cor da linha
@@ -883,7 +955,7 @@ begin
 
     if ( UpperCase( xDBGrid.Fields[I].FieldName ) = 'DESCRICAO' ) or
        ( UpperCase( xDBGrid.Fields[I].FieldName ) = 'NOME' )  then
-      xDBGrid.Fields[I].Tag := 30 //pode ser qualquer valor, é so pra diferenciar a coluna
+      xDBGrid.Fields[I].Tag := 30 //pode ser qualquer valor, ï¿½ so pra diferenciar a coluna
     else
       xDBGrid.Fields[I].Tag := 0;
 
