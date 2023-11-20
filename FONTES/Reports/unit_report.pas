@@ -5,18 +5,31 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, unit_conexao_tabelas, ppProd, ppClass,
-  ppReport, ppComm, ppRelatv, ppDB, ppDBPipe, Vcl.ExtCtrls;
+  ppReport, ppComm, ppRelatv, ppDB, ppDBPipe, Vcl.ExtCtrls, ppCtrls, ppPrnabl,
+  ppBands, ppCache, ppDesignLayer, ppParameter;
 
 type
-  TForm1 = class(TForm)
+  Tfrm_report = class(TForm)
     Panel2: TPanel;
-    Panel1: TPanel;
-    Panel3: TPanel;
     ppDBPipeline1: TppDBPipeline;
     ppReport1: TppReport;
+    ppHeaderBand1: TppHeaderBand;
+    ppDetailBand1: TppDetailBand;
+    ppFooterBand1: TppFooterBand;
+    ppTitleBand1: TppTitleBand;
+    ppLabel1: TppLabel;
+    ppLabel2: TppLabel;
+    ppLabel3: TppLabel;
+    ppDBText3: TppDBText;
+    ppDBText4: TppDBText;
+    ppLabel4: TppLabel;
+    ppDBText1: TppDBText;
+    ppDBText2: TppDBText;
+    ppLabel5: TppLabel;
 
     procedure Panel2MouseEnter(Sender: TObject);
     procedure Panel2MouseLeave(Sender: TObject);
+    procedure Panel2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -24,13 +37,18 @@ type
   end;
 
 var
-  Form1: TForm1;
+  frm_report: Tfrm_report;
 
 implementation
 
 {$R *.dfm}
 
-procedure TForm1.Panel2MouseEnter(Sender: TObject);
+procedure Tfrm_report.Panel2Click(Sender: TObject);
+begin
+ppReport1.Print;
+end;
+
+procedure Tfrm_report.Panel2MouseEnter(Sender: TObject);
 begin
       Panel2.Color := clNavy;
       Panel2.Font.Style := [fsBold];
@@ -38,7 +56,7 @@ begin
 
 end;
 
-procedure TForm1.Panel2MouseLeave(Sender: TObject);
+procedure Tfrm_report.Panel2MouseLeave(Sender: TObject);
 begin
       Panel2.Color := $00C08000;
       Panel2.Font.Style := [];

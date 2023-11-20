@@ -1,9 +1,9 @@
-object Form1: TForm1
+object frm_report: Tfrm_report
   Left = 0
   Top = 0
-  Caption = 'Form1'
-  ClientHeight = 540
-  ClientWidth = 1021
+  Caption = 'frm_report'
+  ClientHeight = 146
+  ClientWidth = 207
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,13 +14,13 @@ object Form1: TForm1
   PixelsPerInch = 96
   TextHeight = 13
   object Panel2: TPanel
-    Left = 72
-    Top = 80
+    Left = 8
+    Top = 24
     Width = 185
     Height = 41
     Cursor = crHandPoint
     BevelOuter = bvNone
-    Caption = 'Inserir'
+    Caption = 'Imprimir'
     Color = 12615680
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
@@ -30,56 +30,51 @@ object Form1: TForm1
     ParentBackground = False
     ParentFont = False
     TabOrder = 0
-    OnMouseEnter = Panel2MouseEnter
-    OnMouseLeave = Panel2MouseLeave
-  end
-  object Panel1: TPanel
-    Left = 288
-    Top = 80
-    Width = 185
-    Height = 41
-    Cursor = crHandPoint
-    BevelOuter = bvNone
-    Caption = 'Inserir'
-    Color = 12615680
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWhite
-    Font.Height = -13
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ParentBackground = False
-    ParentFont = False
-    TabOrder = 1
-    OnMouseEnter = Panel2MouseEnter
-    OnMouseLeave = Panel2MouseLeave
-  end
-  object Panel3: TPanel
-    Left = 512
-    Top = 80
-    Width = 185
-    Height = 41
-    Cursor = crHandPoint
-    BevelOuter = bvNone
-    Caption = 'Inserir'
-    Color = 12615680
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWhite
-    Font.Height = -13
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ParentBackground = False
-    ParentFont = False
-    TabOrder = 2
+    OnClick = Panel2Click
     OnMouseEnter = Panel2MouseEnter
     OnMouseLeave = Panel2MouseLeave
   end
   object ppDBPipeline1: TppDBPipeline
     DataSource = form_conexao_tabelas.DsPaises
     UserName = 'DBPipeline1'
-    Left = 144
-    Top = 432
+    Left = 72
+    Top = 96
+    object ppDBPipeline1ppField1: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'id'
+      FieldName = 'id'
+      FieldLength = 0
+      DataType = dtLongint
+      DisplayWidth = 10
+      Position = 0
+    end
+    object ppDBPipeline1ppField2: TppField
+      FieldAlias = 'nome'
+      FieldName = 'nome'
+      FieldLength = 100
+      DisplayWidth = 100
+      Position = 1
+    end
+    object ppDBPipeline1ppField3: TppField
+      FieldAlias = 'capital'
+      FieldName = 'capital'
+      FieldLength = 100
+      DisplayWidth = 100
+      Position = 2
+    end
+    object ppDBPipeline1ppField4: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'populacao'
+      FieldName = 'populacao'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 3
+    end
   end
   object ppReport1: TppReport
+    AutoStop = False
+    DataPipeline = ppDBPipeline1
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.PaperName = 'A4'
@@ -92,6 +87,7 @@ object Form1: TForm1
     PrinterSetup.mmPaperHeight = 297000
     PrinterSetup.mmPaperWidth = 210000
     PrinterSetup.PaperSize = 9
+    Template.FileName = 'D:\DelphiPaises\FONTES\Reports\relatorios\paises.rtm'
     ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
     DeviceType = 'Screen'
     DefaultFileDeviceType = 'PDF'
@@ -159,9 +155,223 @@ object Form1: TForm1
     CloudDriveSettings.OneDriveSettings.OAuth2.RedirectURI = 'http://localhost'
     CloudDriveSettings.OneDriveSettings.OAuth2.RedirectPort = 0
     CloudDriveSettings.OneDriveSettings.DirectorySupport = True
-    Left = 208
-    Top = 432
+    Left = 136
+    Top = 96
     Version = '22.01'
     mmColumnWidth = 0
+    DataPipelineName = 'ppDBPipeline1'
+    object ppTitleBand1: TppTitleBand
+      Border.mmPadding = 0
+      mmBottomOffset = 0
+      mmHeight = 17463
+      mmPrintPosition = 0
+      object ppLabel1: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'Label1'
+        Border.mmPadding = 0
+        Caption = 'Relat'#243'rio Paises'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 20
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        Transparent = True
+        mmHeight = 8467
+        mmLeft = 64294
+        mmTop = 5556
+        mmWidth = 74613
+        BandType = 1
+        LayerName = Foreground
+      end
+    end
+    object ppHeaderBand1: TppHeaderBand
+      Border.mmPadding = 0
+      mmBottomOffset = 0
+      mmHeight = 13229
+      mmPrintPosition = 0
+      object ppLabel2: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'Label2'
+        Border.mmPadding = 0
+        Caption = 'C'#243'digo Pais'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        Transparent = True
+        mmHeight = 5027
+        mmLeft = 2117
+        mmTop = 4233
+        mmWidth = 24606
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel3: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'Label3'
+        Border.mmPadding = 0
+        Caption = 'Nome'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        Transparent = True
+        mmHeight = 5027
+        mmLeft = 42069
+        mmTop = 4233
+        mmWidth = 11906
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel4: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'Label4'
+        Border.mmPadding = 0
+        Caption = 'Capital'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        Transparent = True
+        mmHeight = 5027
+        mmLeft = 75406
+        mmTop = 4233
+        mmWidth = 14023
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel5: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'Label5'
+        Border.mmPadding = 0
+        Caption = 'Popula'#231#227'o'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        Transparent = True
+        mmHeight = 5027
+        mmLeft = 107686
+        mmTop = 4233
+        mmWidth = 21696
+        BandType = 0
+        LayerName = Foreground
+      end
+    end
+    object ppDetailBand1: TppDetailBand
+      Border.mmPadding = 0
+      mmBottomOffset = 0
+      mmHeight = 13229
+      mmPrintPosition = 0
+      object ppDBText3: TppDBText
+        DesignLayer = ppDesignLayer1
+        UserName = 'DBText3'
+        Border.mmPadding = 0
+        DataField = 'id'
+        DataPipeline = ppDBPipeline1
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = [fsBold]
+        Transparent = True
+        DataPipelineName = 'ppDBPipeline1'
+        mmHeight = 5027
+        mmLeft = 5556
+        mmTop = 5027
+        mmWidth = 17198
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText4: TppDBText
+        DesignLayer = ppDesignLayer1
+        UserName = 'DBText4'
+        Border.mmPadding = 0
+        DataField = 'nome'
+        DataPipeline = ppDBPipeline1
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = [fsBold]
+        Transparent = True
+        DataPipelineName = 'ppDBPipeline1'
+        mmHeight = 5027
+        mmLeft = 44979
+        mmTop = 3969
+        mmWidth = 17198
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText1: TppDBText
+        DesignLayer = ppDesignLayer1
+        UserName = 'DBText1'
+        Border.mmPadding = 0
+        DataField = 'capital'
+        DataPipeline = ppDBPipeline1
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = [fsBold]
+        Transparent = True
+        DataPipelineName = 'ppDBPipeline1'
+        mmHeight = 5027
+        mmLeft = 77258
+        mmTop = 5027
+        mmWidth = 17198
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText2: TppDBText
+        DesignLayer = ppDesignLayer1
+        UserName = 'DBText2'
+        Border.mmPadding = 0
+        DataField = 'populacao'
+        DataPipeline = ppDBPipeline1
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = [fsBold]
+        Transparent = True
+        DataPipelineName = 'ppDBPipeline1'
+        mmHeight = 5027
+        mmLeft = 111125
+        mmTop = 5027
+        mmWidth = 17198
+        BandType = 4
+        LayerName = Foreground
+      end
+    end
+    object ppFooterBand1: TppFooterBand
+      Border.mmPadding = 0
+      mmBottomOffset = 0
+      mmHeight = 21960
+      mmPrintPosition = 0
+    end
+    object ppDesignLayers1: TppDesignLayers
+      object ppDesignLayer1: TppDesignLayer
+        UserName = 'Foreground'
+        LayerType = ltBanded
+        Index = 0
+      end
+    end
+    object ppParameterList1: TppParameterList
+    end
   end
 end
