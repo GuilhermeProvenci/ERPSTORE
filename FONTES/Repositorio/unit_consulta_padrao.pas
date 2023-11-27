@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Forms,
   Vcl.Controls, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
   Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, FireDAC.Comp.Client,
-  unit_cadastro_padrao;
+  unit_cadastro_padrao, unit_report;
 
 type
   Tform_consulta_padrao = class(TForm)
@@ -27,6 +27,7 @@ type
     lbl_resultado: TLabel;
     ds_consulta: TDataSource;
     lbl_titulo: TLabel;
+    Button1: TButton;
     procedure btn_fecharClick(Sender: TObject);
     procedure btn_inserirClick(Sender: TObject);
     procedure dbg_registrosDrawColumnCell(Sender: TObject; const Rect: TRect;
@@ -39,6 +40,7 @@ type
     procedure dbg_registrosTitleClick(Column: TColumn);
     procedure FormCreate(Sender: TObject);
     procedure dbg_registrosDblClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
     sSQL : TStrings;
@@ -50,6 +52,7 @@ type
     procedure CriaForm(const Nome: string; ModoEdicao: Boolean);
     var
     NomeForm: string;
+    NomeReport: string;
   end;
 
 var
@@ -75,6 +78,14 @@ begin
 // Abrir a tela de cadastro em modo de inserção
 CriaForm(NomeForm, False);
 
+end;
+
+procedure Tform_consulta_padrao.Button1Click(Sender: TObject);
+begin
+frm_report := Tfrm_report.Create(self);
+frm_report.NomeReport := UpperCase(NomeReport);
+frm_report.ShowModal;
+FreeAndNil(frm_report);
 end;
 
 procedure Tform_consulta_padrao.CriaForm(const Nome: string; ModoEdicao: Boolean);
@@ -254,6 +265,7 @@ var
 begin
   NomeForm := Self.Name;
   Delete(NomeForm, 1, Length('form_consulta_'));
+  NomeReport := NomeForm;
   NomeForm := 'Tform_cadastro_' + NomeForm;
 
 

@@ -8,11 +8,12 @@ uses
   ppReport, ppComm, ppRelatv, ppDB, ppDBPipe, Vcl.ExtCtrls, ppCtrls, ppPrnabl,
   ppBands, ppCache, ppDesignLayer, ppParameter, unit_funcoes;
 
+
 type
   Tfrm_report = class(TForm)
     Panel2: TPanel;
     ppDBPipeline1: TppDBPipeline;
-    ppReport1: TppReport;
+    Clientes: TppReport;
     ppHeaderBand1: TppHeaderBand;
     ppDetailBand1: TppDetailBand;
     ppFooterBand1: TppFooterBand;
@@ -27,7 +28,7 @@ type
     ppDBText2: TppDBText;
     ppLabel5: TppLabel;
     ppDBPipeline2: TppDBPipeline;
-    ppReport2: TppReport;
+    Produtos: TppReport;
     ppTitleBand2: TppTitleBand;
     ppLabel6: TppLabel;
     ppHeaderBand2: TppHeaderBand;
@@ -42,16 +43,34 @@ type
     ppDesignLayers2: TppDesignLayers;
     ppDesignLayer2: TppDesignLayer;
     ppParameterList2: TppParameterList;
+    ppLabel10: TppLabel;
+    ppDBText8: TppDBText;
+    ppShape1: TppShape;
+    ppLine1: TppLine;
+    ppLine2: TppLine;
+    ppLine3: TppLine;
+    ppShape2: TppShape;
+    ppShape3: TppShape;
+    ppShape4: TppShape;
+    ppLine4: TppLine;
+    ppLine5: TppLine;
+    ppLine6: TppLine;
+    ppLine7: TppLine;
+    ppLine8: TppLine;
+    ppLine9: TppLine;
+    ppLine10: TppLine;
+    ppLine11: TppLine;
+    ppLine12: TppLine;
 
     procedure Panel2MouseEnter(Sender: TObject);
     procedure Panel2MouseLeave(Sender: TObject);
     procedure Panel2Click(Sender: TObject);
   private
     { Private declarations }
-    FFormPai: string;
+    FNomeReport: string;
   public
     { Public declarations }
-    property FormPai: string read FFormPai write FFormPai;
+    property NomeReport: string read FNomeReport write FNomeReport;
   end;
 
 var
@@ -62,13 +81,15 @@ implementation
 {$R *.dfm}
 
 procedure Tfrm_report.Panel2Click(Sender: TObject);
+var
+  Relatorio: TppReport;
 begin
-  if FormPai = UpperCase('TForm_cadastro_paises' ) then
-    ppReport1.Print
-  else if FormPai = UpperCase('TForm_cadastro_estados' )then
-    ppReport2.Print
-  else CriarMensagem('aviso','Consulta não possui formulário');
+  Relatorio := TppReport(FindComponent(NomeReport));
 
+  if Assigned(Relatorio) then
+    Relatorio.Print
+  else
+    CriarMensagem('aviso', 'Consulta não possui formulário');
 end;
 
 procedure Tfrm_report.Panel2MouseEnter(Sender: TObject);

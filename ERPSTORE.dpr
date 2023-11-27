@@ -20,7 +20,8 @@ uses
   unit_consulta_condicional in 'FONTES\Consultas\unit_consulta_condicional.pas' {form_consulta_condicional},
   unit_cadastro_condicional in 'FONTES\Cadastros\unit_cadastro_condicional.pas' {form_cadastro_condicional},
   unit_consulta_estoque in 'FONTES\Consultas\unit_consulta_estoque.pas' {form_consulta_estoque},
-  unit_cadastro_estoque in 'FONTES\Cadastros\unit_cadastro_estoque.pas' {form_cadastro_estoque};
+  unit_cadastro_estoque in 'FONTES\Cadastros\unit_cadastro_estoque.pas' {form_cadastro_estoque},
+  unit_report in 'FONTES\Reports\unit_report.pas' {form_cadastro_estoque};
 
 {$R *.res}
 

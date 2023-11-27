@@ -223,7 +223,7 @@ object form_consulta_padrao: Tform_consulta_padrao
       object edt_consulta: TEdit
         Left = 19
         Top = 32
-        Width = 643
+        Width = 542
         Height = 25
         Anchors = [akLeft, akTop, akRight]
         CharCase = ecUpperCase
@@ -251,6 +251,22 @@ object form_consulta_padrao: Tform_consulta_padrao
         ParentFont = False
         TabOrder = 1
         OnClick = btn_inserirClick
+      end
+      object Button1: TButton
+        Left = 567
+        Top = 32
+        Width = 111
+        Height = 25
+        Anchors = [akTop, akRight]
+        Caption = 'Relat'#243'rio'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Segoe UI Semibold'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 2
+        OnClick = Button1Click
       end
     end
     object pnl_dbgrid: TPanel

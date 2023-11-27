@@ -42,12 +42,16 @@ inherited form_consulta_estoque: Tform_consulta_estoque
       Width = 869
       ExplicitWidth = 869
       inherited edt_consulta: TEdit
-        Width = 679
-        ExplicitWidth = 679
+        Width = 578
+        ExplicitWidth = 578
       end
       inherited btn_inserir: TButton
         Left = 720
         ExplicitLeft = 720
+      end
+      inherited Button1: TButton
+        Left = 603
+        ExplicitLeft = 603
       end
     end
     inherited pnl_dbgrid: TPanel

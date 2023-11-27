@@ -3,6 +3,7 @@ object form_conexao_tabelas: Tform_conexao_tabelas
   Height = 485
   Width = 871
   object qryConsultaClientes: TFDQuery
+    Active = True
     Connection = form_conexao.FDConnection
     SQL.Strings = (
       'select *'
@@ -31,6 +32,7 @@ object form_conexao_tabelas: Tform_conexao_tabelas
     end
   end
   object qryConsultaProdutos: TFDQuery
+    Active = True
     Connection = form_conexao.FDConnection
     SQL.Strings = (
       'select *'
@@ -43,6 +45,7 @@ object form_conexao_tabelas: Tform_conexao_tabelas
       FieldName = 'id'
       Origin = 'id'
       ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
     end
     object qryConsultaProdutosnome: TStringField
       FieldName = 'nome'
@@ -122,18 +125,18 @@ object form_conexao_tabelas: Tform_conexao_tabelas
   end
   object DataSourceClientes: TDataSource
     DataSet = qryConsultaClientes
-    Left = 104
+    Left = 128
     Top = 40
   end
   object DataSourceProdutos: TDataSource
     DataSet = qryConsultaProdutos
-    Left = 136
+    Left = 160
     Top = 112
   end
   object DataSourceCondicional: TDataSource
     DataSet = qryConsultaCondicional
-    Left = 144
-    Top = 200
+    Left = 160
+    Top = 184
   end
   object dsEstoque: TDataSource
     DataSet = qryConsultaEstoque
