@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, unit_conexao_tabelas, ppProd, ppClass,
   ppReport, ppComm, ppRelatv, ppDB, ppDBPipe, Vcl.ExtCtrls, ppCtrls, ppPrnabl,
-  ppBands, ppCache, ppDesignLayer, ppParameter;
+  ppBands, ppCache, ppDesignLayer, ppParameter, unit_funcoes;
 
 type
   Tfrm_report = class(TForm)
@@ -26,14 +26,32 @@ type
     ppDBText1: TppDBText;
     ppDBText2: TppDBText;
     ppLabel5: TppLabel;
+    ppDBPipeline2: TppDBPipeline;
+    ppReport2: TppReport;
+    ppTitleBand2: TppTitleBand;
+    ppLabel6: TppLabel;
+    ppHeaderBand2: TppHeaderBand;
+    ppLabel7: TppLabel;
+    ppLabel8: TppLabel;
+    ppLabel9: TppLabel;
+    ppDetailBand2: TppDetailBand;
+    ppDBText5: TppDBText;
+    ppDBText6: TppDBText;
+    ppDBText7: TppDBText;
+    ppFooterBand2: TppFooterBand;
+    ppDesignLayers2: TppDesignLayers;
+    ppDesignLayer2: TppDesignLayer;
+    ppParameterList2: TppParameterList;
 
     procedure Panel2MouseEnter(Sender: TObject);
     procedure Panel2MouseLeave(Sender: TObject);
     procedure Panel2Click(Sender: TObject);
   private
     { Private declarations }
+    FFormPai: string;
   public
     { Public declarations }
+    property FormPai: string read FFormPai write FFormPai;
   end;
 
 var
@@ -45,7 +63,12 @@ implementation
 
 procedure Tfrm_report.Panel2Click(Sender: TObject);
 begin
-ppReport1.Print;
+  if FormPai = UpperCase('TForm_cadastro_paises' ) then
+    ppReport1.Print
+  else if FormPai = UpperCase('TForm_cadastro_estados' )then
+    ppReport2.Print
+  else CriarMensagem('aviso','Consulta não possui formulário');
+
 end;
 
 procedure Tfrm_report.Panel2MouseEnter(Sender: TObject);
