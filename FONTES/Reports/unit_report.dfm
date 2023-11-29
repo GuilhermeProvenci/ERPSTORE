@@ -1024,7 +1024,7 @@ object frm_report: Tfrm_report
     PrinterSetup.mmPaperHeight = 297000
     PrinterSetup.mmPaperWidth = 210000
     PrinterSetup.PaperSize = 9
-    Template.FileName = 'D:\DelphiPaises\FONTES\Reports\relatorios\estoque.rtm'
+    Template.FileName = 'D:\ERPSTORE\FONTES\Reports\relatorios\estoque.rtm'
     ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
     DeviceType = 'Screen'
     DefaultFileDeviceType = 'PDF'
