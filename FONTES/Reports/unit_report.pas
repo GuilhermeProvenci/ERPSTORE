@@ -61,6 +61,32 @@ type
     ppLine10: TppLine;
     ppLine11: TppLine;
     ppLine12: TppLine;
+    ppDBPipeline3: TppDBPipeline;
+    Estoque: TppReport;
+    ppTitleBand3: TppTitleBand;
+    ppLabel11: TppLabel;
+    ppHeaderBand3: TppHeaderBand;
+    ppShape5: TppShape;
+    ppLabel12: TppLabel;
+    ppLabel13: TppLabel;
+    ppLabel14: TppLabel;
+    ppLabel15: TppLabel;
+    ppLine13: TppLine;
+    ppLine14: TppLine;
+    ppLine15: TppLine;
+    ppDetailBand3: TppDetailBand;
+    ppShape6: TppShape;
+    ppDBText9: TppDBText;
+    ppDBText10: TppDBText;
+    ppDBText11: TppDBText;
+    ppDBText12: TppDBText;
+    ppLine16: TppLine;
+    ppLine17: TppLine;
+    ppLine18: TppLine;
+    ppFooterBand3: TppFooterBand;
+    ppDesignLayers3: TppDesignLayers;
+    ppDesignLayer3: TppDesignLayer;
+    ppParameterList3: TppParameterList;
 
     procedure Panel2MouseEnter(Sender: TObject);
     procedure Panel2MouseLeave(Sender: TObject);
@@ -80,7 +106,7 @@ implementation
 
 {$R *.dfm}
 
-procedure Tfrm_report.Panel2Click(Sender: TObject);
+procedure Tfrm_report.Panel2Click(Sender: TObject); //botao temporário, a impressao vai ser feita direto pelo consulta padrao
 var
   Relatorio: TppReport;
 begin
@@ -89,7 +115,7 @@ begin
   if Assigned(Relatorio) then
     Relatorio.Print
   else
-    CriarMensagem('aviso', 'Consulta não possui formulário');
+    CriarMensagem('aviso', 'Consulta não possui Relatório');
 end;
 
 procedure Tfrm_report.Panel2MouseEnter(Sender: TObject);

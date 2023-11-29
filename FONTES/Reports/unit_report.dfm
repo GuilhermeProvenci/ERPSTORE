@@ -45,7 +45,7 @@ object frm_report: Tfrm_report
       FieldName = 'id'
       FieldLength = 0
       DataType = dtLongint
-      DisplayWidth = 10
+      DisplayWidth = 0
       Position = 0
     end
     object ppDBPipeline1ppField2: TppField
@@ -967,6 +967,476 @@ object frm_report: Tfrm_report
       end
     end
     object ppParameterList2: TppParameterList
+    end
+  end
+  object ppDBPipeline3: TppDBPipeline
+    DataSource = form_conexao_tabelas.dsEstoque
+    UserName = 'DBPipeline3'
+    Left = 112
+    Top = 16
+    object ppDBPipeline3ppField1: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'id'
+      FieldName = 'id'
+      FieldLength = 0
+      DataType = dtLongint
+      DisplayWidth = 0
+      Position = 0
+    end
+    object ppDBPipeline3ppField2: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'produto_id'
+      FieldName = 'produto_id'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 1
+    end
+    object ppDBPipeline3ppField3: TppField
+      FieldAlias = 'nome_produto'
+      FieldName = 'nome_produto'
+      FieldLength = 255
+      DisplayWidth = 255
+      Position = 2
+    end
+    object ppDBPipeline3ppField4: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'quantidade_em_estoque'
+      FieldName = 'quantidade_em_estoque'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 3
+    end
+  end
+  object Estoque: TppReport
+    AutoStop = False
+    DataPipeline = ppDBPipeline3
+    PrinterSetup.BinName = 'Default'
+    PrinterSetup.DocumentName = 'Report'
+    PrinterSetup.PaperName = 'A4'
+    PrinterSetup.PrinterName = 'Default'
+    PrinterSetup.SaveDeviceSettings = False
+    PrinterSetup.mmMarginBottom = 6350
+    PrinterSetup.mmMarginLeft = 6350
+    PrinterSetup.mmMarginRight = 6350
+    PrinterSetup.mmMarginTop = 6350
+    PrinterSetup.mmPaperHeight = 297000
+    PrinterSetup.mmPaperWidth = 210000
+    PrinterSetup.PaperSize = 9
+    Template.FileName = 'D:\DelphiPaises\FONTES\Reports\relatorios\estoque.rtm'
+    ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
+    DeviceType = 'Screen'
+    DefaultFileDeviceType = 'PDF'
+    EmailSettings.ReportFormat = 'PDF'
+    EmailSettings.ConnectionSettings.MailService = 'SMTP'
+    EmailSettings.ConnectionSettings.WebMail.GmailSettings.OAuth2.AuthStorage = [oasAccessToken, oasRefreshToken]
+    EmailSettings.ConnectionSettings.WebMail.GmailSettings.OAuth2.RedirectURI = 'http://localhost'
+    EmailSettings.ConnectionSettings.WebMail.GmailSettings.OAuth2.RedirectPort = 0
+    EmailSettings.ConnectionSettings.WebMail.Outlook365Settings.OAuth2.AuthStorage = [oasAccessToken, oasRefreshToken]
+    EmailSettings.ConnectionSettings.WebMail.Outlook365Settings.OAuth2.RedirectURI = 'http://localhost'
+    EmailSettings.ConnectionSettings.WebMail.Outlook365Settings.OAuth2.RedirectPort = 0
+    EmailSettings.ConnectionSettings.EnableMultiPlugin = False
+    LanguageID = 'Default'
+    OpenFile = False
+    OutlineSettings.CreateNode = True
+    OutlineSettings.CreatePageNodes = True
+    OutlineSettings.Enabled = True
+    OutlineSettings.Visible = True
+    ThumbnailSettings.Enabled = True
+    ThumbnailSettings.Visible = True
+    ThumbnailSettings.DeadSpace = 30
+    ThumbnailSettings.PageHighlight.Width = 3
+    ThumbnailSettings.ThumbnailSize = tsSmall
+    PDFSettings.EmbedFontOptions = [efUseSubset]
+    PDFSettings.EncryptSettings.AllowCopy = True
+    PDFSettings.EncryptSettings.AllowInteract = True
+    PDFSettings.EncryptSettings.AllowModify = True
+    PDFSettings.EncryptSettings.AllowPrint = True
+    PDFSettings.EncryptSettings.AllowExtract = True
+    PDFSettings.EncryptSettings.AllowAssemble = True
+    PDFSettings.EncryptSettings.AllowQualityPrint = True
+    PDFSettings.EncryptSettings.Enabled = False
+    PDFSettings.EncryptSettings.KeyLength = kl40Bit
+    PDFSettings.EncryptSettings.EncryptionType = etRC4
+    PDFSettings.DigitalSignatureSettings.SignPDF = False
+    PDFSettings.FontEncoding = feAnsi
+    PDFSettings.ImageCompressionLevel = 25
+    PDFSettings.PDFAFormat = pafNone
+    PreviewFormSettings.PageBorder.mmPadding = 0
+    RTFSettings.AppName = 'ReportBuilder'
+    RTFSettings.Author = 'ReportBuilder'
+    RTFSettings.DefaultFont.Charset = DEFAULT_CHARSET
+    RTFSettings.DefaultFont.Color = clWindowText
+    RTFSettings.DefaultFont.Height = -13
+    RTFSettings.DefaultFont.Name = 'Arial'
+    RTFSettings.DefaultFont.Style = []
+    RTFSettings.Title = 'Report'
+    TextFileName = '($MyDocuments)\Report.pdf'
+    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.Enabled = True
+    XLSSettings.AppName = 'ReportBuilder'
+    XLSSettings.Author = 'ReportBuilder'
+    XLSSettings.Subject = 'Report'
+    XLSSettings.Title = 'Report'
+    XLSSettings.WorksheetName = 'Report'
+    CloudDriveSettings.DropBoxSettings.OAuth2.AuthStorage = [oasAccessToken, oasRefreshToken]
+    CloudDriveSettings.DropBoxSettings.OAuth2.RedirectURI = 'http://localhost'
+    CloudDriveSettings.DropBoxSettings.OAuth2.RedirectPort = 0
+    CloudDriveSettings.DropBoxSettings.DirectorySupport = True
+    CloudDriveSettings.GoogleDriveSettings.OAuth2.AuthStorage = [oasAccessToken, oasRefreshToken]
+    CloudDriveSettings.GoogleDriveSettings.OAuth2.RedirectURI = 'http://localhost'
+    CloudDriveSettings.GoogleDriveSettings.OAuth2.RedirectPort = 0
+    CloudDriveSettings.GoogleDriveSettings.DirectorySupport = False
+    CloudDriveSettings.OneDriveSettings.OAuth2.AuthStorage = [oasAccessToken, oasRefreshToken]
+    CloudDriveSettings.OneDriveSettings.OAuth2.RedirectURI = 'http://localhost'
+    CloudDriveSettings.OneDriveSettings.OAuth2.RedirectPort = 0
+    CloudDriveSettings.OneDriveSettings.DirectorySupport = True
+    Left = 168
+    Top = 16
+    Version = '22.01'
+    mmColumnWidth = 0
+    DataPipelineName = 'ppDBPipeline3'
+    object ppTitleBand3: TppTitleBand
+      Border.mmPadding = 0
+      mmBottomOffset = 0
+      mmHeight = 17463
+      mmPrintPosition = 0
+      object ppLabel11: TppLabel
+        DesignLayer = ppDesignLayer3
+        UserName = 'Label1'
+        Border.mmPadding = 0
+        Caption = 'Relat'#243'rio Estoque'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 20
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        Transparent = True
+        mmHeight = 8467
+        mmLeft = 64294
+        mmTop = 5556
+        mmWidth = 62442
+        BandType = 1
+        LayerName = Foreground2
+      end
+    end
+    object ppHeaderBand3: TppHeaderBand
+      Border.mmPadding = 0
+      mmBottomOffset = 0
+      mmHeight = 23548
+      mmPrintPosition = 0
+      object ppShape5: TppShape
+        DesignLayer = ppDesignLayer3
+        UserName = 'Shape2'
+        Brush.Color = clHighlight
+        mmHeight = 8996
+        mmLeft = 265
+        mmTop = 8202
+        mmWidth = 197644
+        BandType = 0
+        LayerName = Foreground2
+      end
+      object ppLabel12: TppLabel
+        DesignLayer = ppDesignLayer3
+        UserName = 'Label2'
+        Border.BorderPositions = [bpBottom]
+        Border.Color = clWhite
+        Border.Visible = True
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = 'ID'
+        Color = clBlack
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        TextAlignment = taCentered
+        Transparent = True
+        mmHeight = 5291
+        mmLeft = 11377
+        mmTop = 10319
+        mmWidth = 4233
+        BandType = 0
+        LayerName = Foreground2
+      end
+      object ppLabel13: TppLabel
+        DesignLayer = ppDesignLayer3
+        UserName = 'Label3'
+        Border.BorderPositions = [bpBottom]
+        Border.Color = clWhite
+        Border.Visible = True
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = 'ID PRODUTO'
+        Color = clBlack
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        TextAlignment = taCentered
+        Transparent = True
+        mmHeight = 5291
+        mmLeft = 27517
+        mmTop = 10319
+        mmWidth = 26723
+        BandType = 0
+        LayerName = Foreground2
+      end
+      object ppLabel14: TppLabel
+        DesignLayer = ppDesignLayer3
+        UserName = 'Label4'
+        Border.BorderPositions = [bpBottom]
+        Border.Color = clWhite
+        Border.Visible = True
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = 'PRODUTO'
+        Color = clBlack
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        TextAlignment = taCentered
+        Transparent = True
+        mmHeight = 5291
+        mmLeft = 87048
+        mmTop = 10319
+        mmWidth = 21431
+        BandType = 0
+        LayerName = Foreground2
+      end
+      object ppLabel15: TppLabel
+        DesignLayer = ppDesignLayer3
+        UserName = 'Label5'
+        Border.BorderPositions = [bpBottom]
+        Border.Color = clWhite
+        Border.Visible = True
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = 'ESTOQUE'
+        Color = clBlack
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        TextAlignment = taCentered
+        Transparent = True
+        mmHeight = 5291
+        mmLeft = 157163
+        mmTop = 10319
+        mmWidth = 20902
+        BandType = 0
+        LayerName = Foreground2
+      end
+      object ppLine13: TppLine
+        DesignLayer = ppDesignLayer3
+        UserName = 'Line10'
+        Border.mmPadding = 0
+        Position = lpRight
+        Weight = 0.750000000000000000
+        mmHeight = 8996
+        mmLeft = 25929
+        mmTop = 8202
+        mmWidth = 2117
+        BandType = 0
+        LayerName = Foreground2
+      end
+      object ppLine14: TppLine
+        DesignLayer = ppDesignLayer3
+        UserName = 'Line11'
+        Border.mmPadding = 0
+        Position = lpRight
+        Weight = 0.750000000000000000
+        mmHeight = 8996
+        mmLeft = 53975
+        mmTop = 8202
+        mmWidth = 2117
+        BandType = 0
+        LayerName = Foreground2
+      end
+      object ppLine15: TppLine
+        DesignLayer = ppDesignLayer3
+        UserName = 'Line12'
+        Border.mmPadding = 0
+        Position = lpRight
+        Weight = 0.750000000000000000
+        mmHeight = 8996
+        mmLeft = 139171
+        mmTop = 8202
+        mmWidth = 2117
+        BandType = 0
+        LayerName = Foreground2
+      end
+    end
+    object ppDetailBand3: TppDetailBand
+      Border.mmPadding = 0
+      mmBottomOffset = 0
+      mmHeight = 13229
+      mmPrintPosition = 0
+      object ppShape6: TppShape
+        DesignLayer = ppDesignLayer3
+        UserName = 'Shape1'
+        Brush.Color = clGradientInactiveCaption
+        mmHeight = 8996
+        mmLeft = 265
+        mmTop = 2646
+        mmWidth = 197644
+        BandType = 4
+        LayerName = Foreground2
+      end
+      object ppDBText9: TppDBText
+        DesignLayer = ppDesignLayer3
+        UserName = 'DBText3'
+        Border.mmPadding = 0
+        DataField = 'id'
+        DataPipeline = ppDBPipeline3
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = [fsBold]
+        TextAlignment = taCentered
+        Transparent = True
+        DataPipelineName = 'ppDBPipeline3'
+        mmHeight = 5027
+        mmLeft = 1660
+        mmTop = 5027
+        mmWidth = 21250
+        BandType = 4
+        LayerName = Foreground2
+      end
+      object ppDBText10: TppDBText
+        DesignLayer = ppDesignLayer3
+        UserName = 'DBText4'
+        Border.mmPadding = 0
+        DataField = 'produto_id'
+        DataPipeline = ppDBPipeline3
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = [fsBold]
+        TextAlignment = taCentered
+        Transparent = True
+        DataPipelineName = 'ppDBPipeline3'
+        mmHeight = 5027
+        mmLeft = 30163
+        mmTop = 5027
+        mmWidth = 23574
+        BandType = 4
+        LayerName = Foreground2
+      end
+      object ppDBText11: TppDBText
+        DesignLayer = ppDesignLayer3
+        UserName = 'DBText1'
+        Border.mmPadding = 0
+        DataField = 'nome_produto'
+        DataPipeline = ppDBPipeline3
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = [fsBold]
+        TextAlignment = taCentered
+        Transparent = True
+        DataPipelineName = 'ppDBPipeline3'
+        mmHeight = 5027
+        mmLeft = 59796
+        mmTop = 5027
+        mmWidth = 75536
+        BandType = 4
+        LayerName = Foreground2
+      end
+      object ppDBText12: TppDBText
+        DesignLayer = ppDesignLayer3
+        UserName = 'DBText2'
+        Border.mmPadding = 0
+        DataField = 'quantidade_em_estoque'
+        DataPipeline = ppDBPipeline3
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = [fsBold]
+        TextAlignment = taCentered
+        Transparent = True
+        DataPipelineName = 'ppDBPipeline3'
+        mmHeight = 5027
+        mmLeft = 142082
+        mmTop = 5027
+        mmWidth = 50536
+        BandType = 4
+        LayerName = Foreground2
+      end
+      object ppLine16: TppLine
+        DesignLayer = ppDesignLayer3
+        UserName = 'Line1'
+        Border.mmPadding = 0
+        Position = lpRight
+        Weight = 0.750000000000000000
+        mmHeight = 9038
+        mmLeft = 25868
+        mmTop = 2765
+        mmWidth = 2182
+        BandType = 4
+        LayerName = Foreground2
+      end
+      object ppLine17: TppLine
+        DesignLayer = ppDesignLayer3
+        UserName = 'Line2'
+        Border.mmPadding = 0
+        Position = lpRight
+        Weight = 0.750000000000000000
+        mmHeight = 8996
+        mmLeft = 54286
+        mmTop = 2117
+        mmWidth = 2158
+        BandType = 4
+        LayerName = Foreground2
+      end
+      object ppLine18: TppLine
+        DesignLayer = ppDesignLayer3
+        UserName = 'Line3'
+        Border.mmPadding = 0
+        Position = lpRight
+        Weight = 0.750000000000000000
+        mmHeight = 8996
+        mmLeft = 139467
+        mmTop = 2646
+        mmWidth = 1558
+        BandType = 4
+        LayerName = Foreground2
+      end
+    end
+    object ppFooterBand3: TppFooterBand
+      Border.mmPadding = 0
+      mmBottomOffset = 0
+      mmHeight = 21960
+      mmPrintPosition = 0
+    end
+    object ppDesignLayers3: TppDesignLayers
+      object ppDesignLayer3: TppDesignLayer
+        UserName = 'Foreground2'
+        LayerType = ltBanded
+        Index = 0
+      end
+    end
+    object ppParameterList3: TppParameterList
     end
   end
 end
