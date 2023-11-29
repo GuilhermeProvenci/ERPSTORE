@@ -222,17 +222,16 @@ end;
 
 
 procedure Tform_principal.pnl_tab_estadosClick(Sender: TObject);
+var
+  Valor1, Valor2: String;
 begin
-  //cria o form_consulta_origem_mercadoria
-// form_consulta_estados := Tform_consulta_estados.Create ( Self );
 
-  //manda abrir o form dentro do painel
- // form_consulta_estados.parent := pnl_fundo;
+CalcDoisCamp('SELECT id, preco FROM produtos WHERE id = 2', Valor1, Valor2);
 
-  // desativando os botoes do form principal
-//  prc_controla_menu ( False );
+// Agora você pode usar os valores retornados conforme necessário
+ShowMessage('Valor1: ' + Valor1 + #13#10 + 'Valor2: ' + Valor2);
 
-//  form_consulta_estados.Show;
+
 end;
 procedure Tform_principal.pnl_tab_cidadesClick(Sender: TObject);
 begin

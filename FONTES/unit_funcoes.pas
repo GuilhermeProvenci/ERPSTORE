@@ -28,7 +28,7 @@ uses
 
   procedure maxID(const TableName: string; Edit: TEdit);
   procedure limpaEDit(Form : Tform);
-  procedure CalcDoisCamp(const SQLQuery: string; const ParametrosSaida: array of PChar);
+  procedure CalcDoisCamp(TextSQL: String; var Val1, Val2: String);
 
   procedure ChamarUpdateGenerico(const NomeTabela: string; AContainer: TWinControl);
   procedure AtualizarGenerica(const NomeTabela: string; const NomesCamposAtualizar: string; Valores: array of string; const Condicao: string; NomesCampos: TStringList);
@@ -503,31 +503,40 @@ begin
 end;
 
 
-procedure CalcDoisCamp(const SQLQuery: string; const ParametrosSaida: array of PChar);
+procedure CalcDoisCamp(TextSQL: String; var Val1, Val2: String);
 var
-  Query: TFDQuery; // Voc� pode usar o componente TADOQuery para acessar bancos de dados ADO
-  I: Integer;
+  vQuer: TFDQuery;
 begin
-  Query := TFDQuery.Create(nil);
+  vQuer := TFDQuery.Create(nil);
   try
-    Query.Connection := form_conexao.FDConnection;
-    Query.SQL.Text := SQLQuery;
-
-    Query.Open;
-
-    // Verifique se a consulta retornou resultados
-    if not Query.IsEmpty then
+    with vQuer do
     begin
-      // Percorra os par�metros de sa�da e atribua os valores dos campos da consulta
-      for I := 0 to Min(Length(ParametrosSaida), Query.FieldCount) - 1 do
+      Connection := form_conexao.FDConnection;
+      SQL.Text := TextSQL;
+      Open;
+
+      if Fields.Count >= 1 then
       begin
-        StrPCopy(ParametrosSaida[I], Query.Fields[I].AsString);
+        if (IsEmpty) or (Fields[0].IsNull) then
+          Val1 := ''
+        else
+          Val1 := Fields[0].AsString;
+      end;
+
+      if Fields.Count >= 2 then
+      begin
+        if (IsEmpty) or (Fields[1].IsNull) then
+          Val2 := ''
+        else
+          Val2 := Fields[1].AsString;
       end;
     end;
   finally
-    Query.Free;
+    vQuer.Close;
+    FreeAndNil(vQuer);
   end;
 end;
+
 
 procedure ChamarUpdateGenerico(const NomeTabela: string; AContainer: TWinControl);
 var
