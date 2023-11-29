@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.pngimage, Vcl.ExtCtrls,
-  Vcl.StdCtrls;
+  Vcl.StdCtrls, unit_funcoes;
 
 type
   Tform_login = class(TForm)
@@ -34,6 +34,7 @@ type
     procedure lbl_botao_entrarMouseEnter(Sender: TObject);
     procedure lbl_botao_entrarMouseLeave(Sender: TObject);
     procedure pnl_botao_entrarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -46,6 +47,11 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure Tform_login.FormCreate(Sender: TObject);
+begin
+lbl_versao.caption :=  'Versão: ' + Var_gbl_versao;
+end;
 
 procedure Tform_login.img_botao_sairClick(Sender: TObject);
 begin

@@ -32,6 +32,7 @@ uses
 
   procedure ChamarUpdateGenerico(const NomeTabela: string; AContainer: TWinControl);
   procedure AtualizarGenerica(const NomeTabela: string; const NomesCamposAtualizar: string; Valores: array of string; const Condicao: string; NomesCampos: TStringList);
+  function GetVersaoArq: string;
 
 
 type
@@ -39,6 +40,7 @@ type
 
 VAR //variaveis globais
   var_gbl_resposta_msg : Boolean;
+  Var_gbl_versao :String;
 
 implementation
 
@@ -1011,6 +1013,30 @@ begin
     end;
   end;
 
+end;
+
+//funcao que pega o valor da versao do executavel e retorna uma sting
+function GetVersaoArq: string;
+var
+  VerInfoSize: DWORD;
+  VerInfo: Pointer;
+  VerValueSize: DWORD;
+  VerValue: PVSFixedFileInfo;
+  Dummy: DWORD;
+begin
+  VerInfoSize := GetFileVersionInfoSize(PChar(ParamStr(0)), Dummy);
+  GetMem(VerInfo, VerInfoSize);
+  GetFileVersionInfo(PChar(ParamStr(0)), 0, VerInfoSize, VerInfo);
+  VerQueryValue(VerInfo, '\', Pointer(VerValue), VerValueSize);
+
+  with VerValue^ do
+  begin
+Result := IntToStr(dwFileVersionMS shr 16);
+Result := Result + '.' + IntToStr(dwFileVersionMS and $FFFF) ;
+Result := Result + '.' + IntToStr(dwFileVersionMS shr 16);
+Result := Result + '.' + IntToStr(dwFileVersionMS and $FFFF);
+  end;
+  FreeMem(VerInfo, VerInfoSize);
 end;
 
 

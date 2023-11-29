@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Imaging.pngimage,
-  Vcl.ExtCtrls, Vcl.Buttons, Vcl.AppEvnts;
+  Vcl.ExtCtrls, Vcl.Buttons, Vcl.AppEvnts, unit_funcoes;
 
 type
   Tform_principal = class(TForm)
@@ -90,7 +90,7 @@ implementation
 
 {$R *.dfm}
 
-uses unit_funcoes, unit_configuracao_servidor, unit_fundo_esmaecer,
+uses unit_configuracao_servidor, unit_fundo_esmaecer,
    unit_consulta_produtos, unit_consulta_clientes, unit_consulta_condicional,
   unit_consulta_estoque;
 
@@ -117,6 +117,7 @@ procedure Tform_principal.FormCreate(Sender: TObject);
 begin
   //Ativando o Memory Leak (Vazamento de memoria)
   ReportMemoryLeaksOnShutdown := True;
+  lbl_versao.Caption :=  'Versão: ' + Var_gbl_versao;
 end;
 
 procedure Tform_principal.img_botao_sairClick(Sender: TObject);

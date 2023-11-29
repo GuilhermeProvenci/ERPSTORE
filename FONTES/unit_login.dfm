@@ -13,6 +13,7 @@ object form_login: Tform_login
   Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object pnl_fundo: TPanel
@@ -50,8 +51,7 @@ object form_login: Tform_login
         Font.Name = 'Segoe UI'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitLeft = 8
-        ExplicitTop = 476
+        ExplicitWidth = 117
       end
       object lbl_versao: TLabel
         Left = 0
@@ -83,7 +83,7 @@ object form_login: Tform_login
         Font.Name = 'Segoe UI'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitTop = 200
+        ExplicitWidth = 307
       end
     end
   end

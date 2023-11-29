@@ -33,9 +33,9 @@ begin
   Application.CreateForm(Tform_conexao, form_conexao);
   Application.CreateForm(Tform_conexao_tabelas, form_conexao_tabelas);
   //testa pra ver se a conexao esta ativa
+  var_gbl_versao := GetVersaoArq;
   if form_conexao.FDConnection.Connected then
   begin
-
     //Criando o form de login mas mantento o form principal como mainForm
     form_login := Tform_login.Create( Nil );
     form_login.ShowModal;
