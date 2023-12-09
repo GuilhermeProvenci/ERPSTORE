@@ -30,6 +30,18 @@ inherited form_cadastro_produtos: Tform_cadastro_produtos
         ExplicitWidth = 159
       end
     end
+    inherited edt_id: TEdit
+      StyleName = 'id'
+    end
+    inherited edt_nome: TEdit
+      StyleName = 'nome'
+    end
+    inherited edt_3: TEdit
+      StyleName = 'tamanho'
+    end
+    inherited edt_4: TEdit
+      StyleName = 'preco'
+    end
   end
   object qryProd: TFDQuery
     Active = True

@@ -204,7 +204,7 @@ object form_cadastro_padrao: Tform_cadastro_padrao
         TabOrder = 0
       end
     end
-    object edt_codigo: TEdit
+    object edt_id: TEdit
       Tag = 99
       Left = 25
       Top = 128

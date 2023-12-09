@@ -51,14 +51,14 @@ end;
 
 
 
- edt_codigo.Text := qry.FieldByName('id').AsString;
+ edt_id.Text := qry.FieldByName('id').AsString;
 end;
 
 procedure Tform_cadastro_estoque.FormCreate(Sender: TObject);
 begin
   inherited;
 
-edt_codigo.Clear;
+edt_id.Clear;
 
 form_conexao_tabelas.qryConsultaEstoque.Active := true;
 form_conexao_tabelas.qryConsultaProdutos.Active := true;
@@ -81,7 +81,7 @@ begin
     // Verifique se o registro já existe na tabela
     SQL.Clear;
     SQL.Add('SELECT COUNT(*) FROM estoque WHERE produto_id = :id_prod');
-    ParamByName('id_prod').Value := StrToInt(edt_codigo.Text);
+    ParamByName('id_prod').Value := StrToInt(edt_id.Text);
     Open;
 
     // Se o registro existir, execute um UPDATE
@@ -102,7 +102,7 @@ begin
 
     ParamByName('qtt').Value := StrToInt(edt_3.Text);
 
-    ParamByName('id_prod').Value := StrToInt(edt_codigo.Text);
+    ParamByName('id_prod').Value := StrToInt(edt_id.Text);
     ExecSQL;
   end;
   limpaEDit(Self);

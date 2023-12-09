@@ -60,7 +60,7 @@ inherited form_cadastro_estoque: Tform_cadastro_estoque
         ExplicitWidth = 722
       end
     end
-    inherited edt_codigo: TEdit
+    inherited edt_id: TEdit
       Left = 31
       Width = 24
       Hint = 'Id produto'

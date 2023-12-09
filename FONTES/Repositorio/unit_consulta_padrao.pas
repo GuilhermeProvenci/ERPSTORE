@@ -117,7 +117,7 @@ begin
     vID := ds_consulta.DataSet.FieldByName('ID').AsInteger;
     // Abrir o formulário em modo de edição
     CriaForm(NomeForm, True);
-
+    dbg_registros.Update;
   end;
 end;
 

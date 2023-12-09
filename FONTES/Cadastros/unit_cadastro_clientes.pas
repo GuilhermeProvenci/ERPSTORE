@@ -42,7 +42,7 @@ begin
   with qryCondicional do
     begin
       close;
-      ParamByName('1').Value:= strtoint(edt_codigo.Text);
+      ParamByName('1').Value:= strtoint(edt_id.Text);
       ParamByName('2').AsDateTime := Now;
       ParamByName('3').AsDateTime := DataDevolucao;
       ParamByName('4').Value:= edt_nome.Text;
@@ -50,7 +50,7 @@ begin
     end;
     CriarMensagem('aviso', 'Registro Salvo com sucesso');
     limpaEDit(Self);
-    maxID(NomeTabela, edt_codigo);
+    maxID(NomeTabela, edt_id);
 
 
 end;

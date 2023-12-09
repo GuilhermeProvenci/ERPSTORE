@@ -887,7 +887,7 @@ object form_principal: Tform_principal
         end
       end
       object pnl_tab_paises: TPanel
-        Tag = 8
+        Tag = 9
         AlignWithMargins = True
         Left = 3
         Top = 5
@@ -903,7 +903,7 @@ object form_principal: Tform_principal
         OnClick = pnl_tab_paisesClick
         OnMouseEnter = pnl_botao_notasMouseEnter
         object img_tab_paises: TImage
-          Tag = 8
+          Tag = 9
           AlignWithMargins = True
           Left = 10
           Top = 3
@@ -1018,7 +1018,7 @@ object form_principal: Tform_principal
           ExplicitHeight = 26
         end
         object lbl_tab_paises: TLabel
-          Tag = 8
+          Tag = 9
           Left = 48
           Top = 14
           Width = 64
@@ -1048,7 +1048,7 @@ object form_principal: Tform_principal
     TabOrder = 2
     OnMouseEnter = pnl_menulateralMouseEnter
     object pnl_botao_configuracoes: TPanel
-      Tag = 7
+      Tag = 8
       AlignWithMargins = True
       Left = 3
       Top = 299
@@ -1063,9 +1063,8 @@ object form_principal: Tform_principal
       TabOrder = 0
       OnClick = pnl_botao_configuracoesClick
       OnMouseEnter = pnl_botao_notasMouseEnter
-      ExplicitTop = 250
       object img_botao_config: TImage
-        Tag = 7
+        Tag = 8
         AlignWithMargins = True
         Left = 10
         Top = 3
@@ -1119,7 +1118,7 @@ object form_principal: Tform_principal
         ExplicitHeight = 28
       end
       object lbl_botao_config: TLabel
-        Tag = 7
+        Tag = 8
         Left = 48
         Top = 13
         Width = 77
@@ -1444,7 +1443,7 @@ object form_principal: Tform_principal
       end
     end
     object pnl_botao_usuarios: TPanel
-      Tag = 6
+      Tag = 7
       AlignWithMargins = True
       Left = 3
       Top = 250
@@ -1458,9 +1457,8 @@ object form_principal: Tform_principal
       ParentBackground = False
       TabOrder = 4
       OnMouseEnter = pnl_botao_notasMouseEnter
-      ExplicitTop = 201
       object img_botao_usuarios: TImage
-        Tag = 6
+        Tag = 7
         AlignWithMargins = True
         Left = 10
         Top = 3
@@ -1517,7 +1515,7 @@ object form_principal: Tform_principal
         ExplicitHeight = 28
       end
       object lbl_botao_usuarios: TLabel
-        Tag = 6
+        Tag = 7
         Left = 48
         Top = 14
         Width = 45
@@ -1639,7 +1637,6 @@ object form_principal: Tform_principal
       TabOrder = 6
       OnClick = pnl_botao_compraClick
       OnMouseEnter = pnl_botao_notasMouseEnter
-      ExplicitLeft = 0
       object img_botao_compras: TImage
         Tag = 6
         AlignWithMargins = True

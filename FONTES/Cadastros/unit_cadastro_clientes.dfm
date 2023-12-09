@@ -43,6 +43,18 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
         ExplicitWidth = 219
       end
     end
+    inherited edt_id: TEdit
+      StyleName = 'id'
+    end
+    inherited edt_nome: TEdit
+      StyleName = 'nome'
+    end
+    inherited edt_3: TEdit
+      StyleName = 'telefone'
+    end
+    inherited edt_4: TEdit
+      StyleName = 'endereco'
+    end
     inherited pnl_salvar: TPanel
       Top = 194
       ExplicitTop = 194
@@ -61,6 +73,7 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
       ParentFont = False
       TabOrder = 6
       Text = 'Bronze'
+      StyleName = 'classificacao'
       Items.Strings = (
         'Bronze'
         'Prata '

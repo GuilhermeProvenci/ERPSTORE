@@ -22,7 +22,7 @@ type
     lbl_titulo: TLabel;
     btn_fechar: TSpeedButton;
     pnl_separador_topo: TPanel;
-    edt_codigo: TEdit;
+    edt_id: TEdit;
     edt_nome: TEdit;
     edt_3: TEdit;
     edt_4: TEdit;
@@ -45,6 +45,7 @@ type
     NomeClass : String;
     property ID: Integer read FID write FID;
     property ModoEdicao: Boolean read FModoEdicao write FModoEdicao;
+
   end;
 
 var
@@ -59,6 +60,7 @@ implementation
 
 uses unit_mensagem, unit_funcoes, unit_conexao, unit_conexao_tabelas,
   Vcl.ComCtrls;
+
 
 procedure Tform_cadastro_padrao.btn_fecharClick(Sender: TObject);
 begin
@@ -76,40 +78,25 @@ procedure Tform_cadastro_padrao.CarregarCampos(ID: Integer; Form: TForm);
 var
   Query: TFDQuery;
   i: Integer;
-  Control: TControl;
 begin
-  // Obtenha o nome da tabela com base no nome do formulário
   Query := TFDQuery.Create(nil);
   try
     Query.Connection := form_conexao.FDConnection;
-
-    // Execute a consulta SQL para obter os valores dos campos com base no ID
     Query.SQL.Text := 'SELECT * FROM ' + NomeTabela + ' WHERE ID = :ID';
     Query.Params.ParamByName('ID').AsInteger := ID;
     Query.Open;
 
-    // Preencha os controles no formulário com as tags 99
-    for i := 0 to Form.ControlCount - 1 do
+    for i := 0 to Form.ComponentCount - 1 do
     begin
-     // if Form.Controls[i] is TControl then
-      //begin
-      //  Control := TControl(Form.Components[i]);
-        if (Form.Controls[i].Tag = 99) then
-        begin
-            if Form.Controls[i] is TEdit then
-              TEdit(Form.Controls[i]).Text := Query.Fields[i].AsString
-            else if Form.Controls[i] is TDateTimePicker then
-              TDateTimePicker(Form.Controls[i]).Date := Query.Fields[i].AsDateTime;
-        end;
-      //end;
-    end;
+      if (Form.Components[i].Tag = 99) and  (Form.Components[i] is TEdit) then
+          TEdit(Form.Components[i]).Text := Query.FieldByName((Form.Components[i] as TControl).StyleName).AsString
+        else if (Form.Components[i].Tag = 99) and (Form.Components[i] is TDateTimePicker) then
+          TDateTimePicker(Form.Components[i]).Date := Query.FieldByName(Form.Components[i].Name).AsDateTime;
+      end;
   finally
     Query.Free;
   end;
 end;
-
-
-
 
 
 procedure Tform_cadastro_padrao.FormClose(Sender: TObject;
@@ -142,7 +129,7 @@ Instancia: TObject;
 begin
  if ModoEdicao then
  begin
-//   edt_codigo.text:=  ID.ToString
+   edt_id.text:=  ID.ToString;
    CarregarCampos(ID, Self);
    lbl_titulo.Caption := 'EDIÇÃO DE ' + UpperCase(NomeTabela);
    Classe := GetClass(NomeClass);
@@ -164,7 +151,7 @@ begin
  end;
  end
  else
-  maxID(NomeTabela, edt_codigo);
+  maxID(NomeTabela, edt_id);
 end;
 
 procedure Tform_cadastro_padrao.pnl_salvarClick(Sender: TObject);
@@ -179,10 +166,15 @@ begin
   begin
     ChamarInsertGenerico(NomeTabela, self);
     limpaEDit(Self);
-    maxID(NomeTabela, edt_codigo);
+    maxID(NomeTabela, edt_id);
   end;
 
   CriarMensagem('aviso', 'Registro Salvo com sucesso');
+  if FModoEdicao then
+  self.close;
+
+
+
 end;
 
 
