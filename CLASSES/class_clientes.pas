@@ -1,11 +1,14 @@
-unit TCliente;
+﻿unit class_clientes;
 
 interface
+
+uses
+  System.Classes;
 
 type
   TClassificacao = (clBronze, clPrata, clOuro, clDiamante);
 
-  TCliente = class
+  TClientes = class(TComponent)
   private
     FNome: string;
     FTelefone: string;
@@ -24,7 +27,7 @@ implementation
 
 { TCliente }
 
-constructor TCliente.Create(ANome, ATelefone, AEndereco: string; AClassificacao: TClassificacao);
+constructor TClientes.Create(ANome, ATelefone, AEndereco: string; AClassificacao: TClassificacao);
 begin
   FNome := ANome;
   FTelefone := ATelefone;
@@ -32,7 +35,7 @@ begin
   FClassificacao := AClassificacao;
 end;
 
-function TCliente.ObterDesconto: Double;
+function TClientes.ObterDesconto: Double;
 const
   DescontoBronze = 0.05;
   DescontoPrata = 0.1;
@@ -50,4 +53,9 @@ begin
   end;
 end;
 
+initialization
+
+RegisterClass(TClientes);
+
 end.
+
