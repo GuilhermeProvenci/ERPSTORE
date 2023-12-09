@@ -42,6 +42,7 @@ type
 
   public
     { Public declarations }
+    NomeClass : String;
     property ID: Integer read FID write FID;
     property ModoEdicao: Boolean read FModoEdicao write FModoEdicao;
   end;
@@ -125,7 +126,7 @@ begin
 
   NomeForm := Self.Name;
   Delete(NomeForm, 1, Length('form_cadastro_')); // Remove 'form_cadastro_'
-
+  NomeClass:= 'T' + NomeForm;
   NomeTabela := NomeForm; // Usar o nome que você deu para o from como
                           // nome da tabela (nomear as tabelas seguindo
                           // esse padrão
@@ -135,12 +136,32 @@ begin
 end;
 
 procedure Tform_cadastro_padrao.FormShow(Sender: TObject);
+var
+Classe : TClass;
+Instancia: TObject;
 begin
  if ModoEdicao then
  begin
 //   edt_codigo.text:=  ID.ToString
    CarregarCampos(ID, Self);
    lbl_titulo.Caption := 'EDIÇÃO DE ' + UpperCase(NomeTabela);
+   Classe := GetClass(NomeClass);
+    if Assigned(Classe) then
+    begin
+      // Criar uma instância da classe diretamente
+      Instancia := Classe.Create;
+
+      try
+        begin
+            ShowMessage('classe criada - teste') ;
+        end;
+
+      finally
+
+        Instancia.Free;
+      end;
+
+ end;
  end
  else
   maxID(NomeTabela, edt_codigo);

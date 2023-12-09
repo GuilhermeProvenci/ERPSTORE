@@ -56,6 +56,9 @@ type
     pnl_botao_estoque: TPanel;
     img_botao_estoque: TImage;
     lbl_botao_estoque: TLabel;
+    pnl_botao_compra: TPanel;
+    img_botao_compras: TImage;
+    lbl_botao_compras: TLabel;
     procedure img_botao_sairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -73,6 +76,7 @@ type
     procedure pnl_tab_estadosClick(Sender: TObject);
     procedure pnl_tab_cidadesClick(Sender: TObject);
     procedure pnl_botao_estoqueClick(Sender: TObject);
+    procedure pnl_botao_compraClick(Sender: TObject);
 
 
   private
@@ -126,6 +130,15 @@ begin
   form_principal.Close;
 end;
 
+procedure Tform_principal.pnl_botao_compraClick(Sender: TObject);
+begin
+  form_consulta_clientes := Tform_consulta_clientes.Create ( Self );
+  form_consulta_clientes.parent := pnl_fundo;
+  prc_controla_menu ( False );
+
+  form_consulta_clientes.Show;
+end;
+
 procedure Tform_principal.pnl_botao_configuracoesClick(Sender: TObject);
 begin
   //Funcao que esconde um SubMenu caso esteja aberto
@@ -162,7 +175,6 @@ end;
 
 procedure Tform_principal.pnl_botao_clientesClick(Sender: TObject);
 begin
-
   form_consulta_clientes := Tform_consulta_clientes.Create ( Self );
   form_consulta_clientes.parent := pnl_fundo;
   prc_controla_menu ( False );

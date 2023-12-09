@@ -23,10 +23,22 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
       Caption = 'Endere'#231'o'
       ExplicitWidth = 55
     end
+    object Label1: TLabel [5]
+      Left = 220
+      Top = 181
+      Width = 74
+      Height = 17
+      Caption = 'Classifica'#231#227'o'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clGray
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+    end
     inherited pnl_topo: TPanel
       inherited lbl_titulo: TLabel
         Width = 219
-        Height = 48
         Caption = 'Cadastro de Pessoas / clientes'
         ExplicitWidth = 219
       end
@@ -34,6 +46,26 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
     inherited pnl_salvar: TPanel
       Top = 194
       ExplicitTop = 194
+    end
+    object ComboBox1: TComboBox
+      Left = 220
+      Top = 203
+      Width = 145
+      Height = 24
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ItemIndex = 0
+      ParentFont = False
+      TabOrder = 6
+      Text = 'Bronze'
+      Items.Strings = (
+        'Bronze'
+        'Prata '
+        'Ouro'
+        'Diamante')
     end
   end
   object qryCondicional: TFDQuery

@@ -1051,7 +1051,7 @@ object form_principal: Tform_principal
       Tag = 7
       AlignWithMargins = True
       Left = 3
-      Top = 250
+      Top = 299
       Width = 147
       Height = 41
       Cursor = crHandPoint
@@ -1063,6 +1063,7 @@ object form_principal: Tform_principal
       TabOrder = 0
       OnClick = pnl_botao_configuracoesClick
       OnMouseEnter = pnl_botao_notasMouseEnter
+      ExplicitTop = 250
       object img_botao_config: TImage
         Tag = 7
         AlignWithMargins = True
@@ -1446,7 +1447,7 @@ object form_principal: Tform_principal
       Tag = 6
       AlignWithMargins = True
       Left = 3
-      Top = 201
+      Top = 250
       Width = 147
       Height = 41
       Cursor = crHandPoint
@@ -1457,6 +1458,7 @@ object form_principal: Tform_principal
       ParentBackground = False
       TabOrder = 4
       OnMouseEnter = pnl_botao_notasMouseEnter
+      ExplicitTop = 201
       object img_botao_usuarios: TImage
         Tag = 6
         AlignWithMargins = True
@@ -1618,6 +1620,71 @@ object form_principal: Tform_principal
         Font.Style = []
         ParentFont = False
         OnClick = pnl_botao_estoqueClick
+        OnMouseEnter = pnl_botao_notasMouseEnter
+      end
+    end
+    object pnl_botao_compra: TPanel
+      Tag = 6
+      AlignWithMargins = True
+      Left = 3
+      Top = 201
+      Width = 147
+      Height = 41
+      Cursor = crHandPoint
+      Margins.Top = 5
+      Align = alTop
+      BevelOuter = bvNone
+      Color = 1644825
+      ParentBackground = False
+      TabOrder = 6
+      OnClick = pnl_botao_compraClick
+      OnMouseEnter = pnl_botao_notasMouseEnter
+      ExplicitLeft = 0
+      object img_botao_compras: TImage
+        Tag = 6
+        AlignWithMargins = True
+        Left = 10
+        Top = 3
+        Width = 30
+        Height = 35
+        Margins.Left = 10
+        Align = alLeft
+        AutoSize = True
+        Center = True
+        Picture.Data = {
+          0954506E67496D61676589504E470D0A1A0A0000000D494844520000001E0000
+          001E08060000003B30AEA2000000097048597300000B1300000B1301009A9C18
+          000001884944415478DADD96CF2B046118C7E72D3F72759015CAC1C1D5C1AF96
+          9303A9FD074471D89324A5E624A1C48572E2248AB3D3EEC5696D36257F8072B0
+          4B519B9BA2189F69875E6AADE79D666679EBDBF77DDF799FF7F3BECFCC3B33CA
+          8AA8A848C18EE3E4B05EAFEF06D94AA9A330C067589FD6FF8ABA805F050AD60B
+          8BD8C726D022E09530C109EC18E500F787096EC08AA81EC5803F8402F6E0296C
+          044D023E08133C836D07C0CBB291F84FE00EEC3A007001705B5970B9C2825AAC
+          D213BF8CEA0CC07B80A7C4606D0136B666103A0EF8F00B98C9B2D84085C05302
+          07BD9DDF0AA16F96764A7470068B5708CE1038C4D826EAF742F025B1DD1F0DD3
+          542F601BC2B075C0B611D87BB9CCA2555423040F033EF9040BEF6D8CFA9D4192
+          9E5023733CEB60C9BD3505A7891FD53BA4A9363D46F38037C56080CDD8345A42
+          B542E823EA045C3401BBC7600BF558A5AFD66FCA0B3A4773402FBE5F8CF69FAB
+          AAC1A47B0CDB71AB2849FA527EC649C079ACD56BE699B0DDCFB83F01765F00BB
+          5A0AD37EC655FFC3F56FC0EF4FA4A61F545A79320000000049454E44AE426082}
+        OnClick = pnl_botao_compraClick
+        OnMouseEnter = pnl_botao_notasMouseEnter
+        ExplicitHeight = 30
+      end
+      object lbl_botao_compras: TLabel
+        Tag = 6
+        Left = 48
+        Top = 14
+        Width = 48
+        Height = 15
+        Caption = 'Compras'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        OnClick = pnl_botao_compraClick
         OnMouseEnter = pnl_botao_notasMouseEnter
       end
     end
