@@ -76,8 +76,6 @@ end;
 
 procedure Tform_cadastro_estoque.pnl_salvarClick(Sender: TObject);
 begin
-
-
   with qryInsert do
   begin
     // Verifique se o registro já existe na tabela
@@ -113,6 +111,9 @@ begin
   dbg_registros.Refresh;
 end;
 
+initialization
+
+RegisterClass(Tform_cadastro_estoque);
 
 
 end.

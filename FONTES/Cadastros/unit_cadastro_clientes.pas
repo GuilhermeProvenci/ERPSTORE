@@ -8,11 +8,13 @@ uses
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.ExtCtrls,
-  Vcl.StdCtrls, Vcl.Buttons;
+  Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls;
 
 type
   Tform_cadastro_clientes = class(Tform_cadastro_padrao)
     qryCondicional: TFDQuery;
+    ComboBox1: TComboBox;
+    Label1: TLabel;
     procedure pnl_salvarClick(Sender: TObject);
   private
     { Private declarations }
@@ -52,5 +54,9 @@ begin
 
 
 end;
+
+initialization
+
+RegisterClass(Tform_cadastro_clientes);
 
 end.

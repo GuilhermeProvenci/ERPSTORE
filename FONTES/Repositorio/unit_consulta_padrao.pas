@@ -91,11 +91,11 @@ end;
 procedure Tform_consulta_padrao.CriaForm(const Nome: string; ModoEdicao: Boolean);
 var
   Tela: TForm;
-  Classe: TFormClass;
+  ClasseForm: TFormClass;
 begin
   // Chamada da função FindClass do Delphi que procura uma classe registrada.
-  Classe := TFormClass(FindClass(Nome));
-  Tela := Classe.Create(Application);
+  ClasseForm := TFormClass(FindClass(Nome));
+  Tela := ClasseForm.Create(Application);
 
   if ModoEdicao then
   begin
@@ -283,8 +283,4 @@ end;
 
 initialization
 
-RegisterClass(Tform_cadastro_clientes);
-RegisterClass(Tform_cadastro_produtos);
-RegisterClass(Tform_cadastro_condicional);
-RegisterClass(Tform_cadastro_estoque);
 end.

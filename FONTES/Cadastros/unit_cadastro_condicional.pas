@@ -288,4 +288,9 @@ begin
 end;
 
 
+initialization
+
+RegisterClass(Tform_cadastro_condicional);
+
+
 end.
