@@ -35,8 +35,17 @@ procedure Tform_cadastro_clientes.pnl_salvarClick(Sender: TObject);
   var DataDevolucao : TDateTime;
 begin
 //  inherited;
+     ValidarCampoObrigatorios(Self);
 
+
+    if ModoEdicao then
+  begin
+    ChamarUpdateGenerico(NomeTabela, self);
+  end
+  else
+ begin
     ChamarInsertGenerico(NomeTabela, self);
+    end;
 
   DataDevolucao := Date + 3;
   with qryCondicional do
@@ -51,7 +60,6 @@ begin
     CriarMensagem('aviso', 'Registro Salvo com sucesso');
     limpaEDit(Self);
     maxID(NomeTabela, edt_id);
-
 
 end;
 
