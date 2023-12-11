@@ -326,36 +326,20 @@ begin
 
   for i := 0 to AContainer.ControlCount - 1 do
   begin
-    if (AContainer.Controls[i] is TEdit) then
+    if (AContainer.Controls[i] is TEdit) or
+       (AContainer.Controls[i] is TDBLookupComboBox) or
+       (AContainer.Controls[i] is TComboBox) or
+       (AContainer.Controls[i] is TDateTimePicker) then
     begin
-      if TEdit(AContainer.Controls[i]).Tag = 99 then
+      if AContainer.Controls[i].Tag = 99 then
       begin
         SetLength(ControlList, Length(ControlList) + 1);
         ControlList[High(ControlList)] := AContainer.Controls[i];
       end;
-    end
-    else if (AContainer.Controls[i] is TDBLookupComboBox) then
-    begin
-      if TDBLookupComboBox(AContainer.Controls[i]).Tag = 99 then
-      begin
-        SetLength(ControlList, Length(ControlList) + 1);
-        ControlList[High(ControlList)] := AContainer.Controls[i];
-      end;
-    end
-    else if  (AContainer.Controls[i] is TDateTimePicker) then
-     begin
-      if TDateTimePicker(AContainer.Controls[i]).Tag = 99 then
-      begin
-        SetLength(ControlList, Length(ControlList) + 1);
-        ControlList[High(ControlList)] := AContainer.Controls[i];
-      end;
-     end;
-
+    end;
 
     if AContainer.Controls[i] is TWinControl then
-    begin
       ControlList := ControlList + AcharEdit99(TWinControl(AContainer.Controls[i]));
-    end;
   end;
 
   Result := ControlList;
@@ -444,10 +428,13 @@ begin
     begin
       if ControlesValores[i] is TEdit then
         Valores[i] := TEdit(ControlesValores[i]).Text
-      else if ControlesValores[i] is TDBLookupComboBox then
+      else if (ControlesValores[i] is TDBLookupComboBox) then
         Valores[i] := TDBLookupComboBox(ControlesValores[i]).Text // ou KeyValue, dependendo do que voc� deseja
-         else if ControlesValores[i] is TDateTimePicker then
+      else if (ControlesValores[i] is TComboBox)  then
+        Valores[i] := TDBLookupComboBox(ControlesValores[i]).Text
+      else if ControlesValores[i] is TDateTimePicker then
            Valores[i] := FormatDateTime('yyyy/mm/dd' ,TDateTimePicker(ControlesValores[i]).DateTime);
+
     end;
 
 
@@ -574,7 +561,9 @@ begin
       else if ControlesValores[i] is TDBLookupComboBox then
         Valores[i] := TDBLookupComboBox(ControlesValores[i]).Text // ou KeyValue, dependendo do que voc� deseja
       else if ControlesValores[i] is TDateTimePicker then
-        Valores[i] := FormatDateTime('yyyy/mm/dd', TDateTimePicker(ControlesValores[i]).DateTime);
+        Valores[i] := FormatDateTime('yyyy/mm/dd', TDateTimePicker(ControlesValores[i]).DateTime)
+      else if (ControlesValores[i] is TComboBox)  then
+        Valores[i] := TComboBox(ControlesValores[i]).Text
     end;
 
     Condicao := NomesCampos[0] + ' = ' + QuotedStr(Valores[0]); // Adicione QuotedStr para lidar com strings
@@ -965,7 +954,8 @@ begin
   begin
 
     if ( UpperCase( xDBGrid.Fields[I].FieldName ) = 'DESCRICAO' ) or
-       ( UpperCase( xDBGrid.Fields[I].FieldName ) = 'NOME' )  then
+       ( UpperCase( xDBGrid.Fields[I].FieldName ) = 'NOME' )  or
+       ( UpperCase( xDBGrid.Fields[I].FieldName ) = 'ENDERECO' )  then
       xDBGrid.Fields[I].Tag := 30 //pode ser qualquer valor, � so pra diferenciar a coluna
     else
       xDBGrid.Fields[I].Tag := 0;

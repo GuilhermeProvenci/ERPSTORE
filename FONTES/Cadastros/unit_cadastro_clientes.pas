@@ -13,7 +13,7 @@ uses
 type
   Tform_cadastro_clientes = class(Tform_cadastro_padrao)
     qryCondicional: TFDQuery;
-    ComboBox1: TComboBox;
+    cbb_classificacao: TComboBox;
     Label1: TLabel;
     procedure pnl_salvarClick(Sender: TObject);
   private
@@ -60,6 +60,9 @@ begin
     CriarMensagem('aviso', 'Registro Salvo com sucesso');
     limpaEDit(Self);
     maxID(NomeTabela, edt_id);
+
+    if ModoEdicao then
+    self.close;
 
 end;
 

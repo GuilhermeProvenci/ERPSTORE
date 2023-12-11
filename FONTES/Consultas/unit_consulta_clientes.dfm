@@ -20,7 +20,7 @@ inherited form_consulta_clientes: Tform_consulta_clientes
           item
             Expanded = False
             FieldName = 'nome'
-            Width = 401
+            Width = 260
             Visible = True
           end
           item
@@ -31,6 +31,13 @@ inherited form_consulta_clientes: Tform_consulta_clientes
           item
             Expanded = False
             FieldName = 'endereco'
+            Width = 168
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'classificacao'
+            Width = 129
             Visible = True
           end>
       end

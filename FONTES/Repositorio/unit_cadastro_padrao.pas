@@ -88,11 +88,14 @@ begin
 
     for i := 0 to Form.ComponentCount - 1 do
     begin
-      if (Form.Components[i].Tag = 99) and  (Form.Components[i] is TEdit) then
+      if (Form.Components[i].Tag = 99) and  (Form.Components[i] is TEdit)  then
           TEdit(Form.Components[i]).Text := Query.FieldByName((Form.Components[i] as TControl).StyleName).AsString
+      else if (Form.Components[i].Tag = 99) and  (Form.Components[i] is TComboBox)  then
+          TComboBox(Form.Components[i]).Text := Query.FieldByName((Form.Components[i] as TComboBox).StyleName).AsString
         else if (Form.Components[i].Tag = 99) and (Form.Components[i] is TDateTimePicker) then
           TDateTimePicker(Form.Components[i]).Date := Query.FieldByName(Form.Components[i].Name).AsDateTime;
       end;
+
   finally
     Query.Free;
   end;
@@ -140,7 +143,7 @@ begin
 
       try
         begin
-            ShowMessage('classe criada - teste') ;
+        //    ShowMessage('classe criada - teste') ;
         end;
 
       finally

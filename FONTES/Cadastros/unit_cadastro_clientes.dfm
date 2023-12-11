@@ -56,10 +56,13 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
       StyleName = 'endereco'
     end
     inherited pnl_salvar: TPanel
+      Tag = 99
       Top = 194
+      TabOrder = 6
       ExplicitTop = 194
     end
-    object ComboBox1: TComboBox
+    object cbb_classificacao: TComboBox
+      Tag = 99
       Left = 220
       Top = 203
       Width = 145
@@ -71,7 +74,7 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
       Font.Style = []
       ItemIndex = 0
       ParentFont = False
-      TabOrder = 6
+      TabOrder = 5
       Text = 'Bronze'
       StyleName = 'classificacao'
       Items.Strings = (

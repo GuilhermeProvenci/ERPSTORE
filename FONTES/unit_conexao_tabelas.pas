@@ -40,6 +40,7 @@ type
     qryConsultaProdutosnome: TStringField;
     qryConsultaProdutostamanho: TStringField;
     qryConsultaProdutospreco: TBCDField;
+    qryConsultaClientesclassificacao: TStringField;
     procedure qryConsultaCSTBeforeOpen(DataSet: TDataSet);
   private
     { Private declarations }

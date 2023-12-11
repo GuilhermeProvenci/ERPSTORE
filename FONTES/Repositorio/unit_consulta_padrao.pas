@@ -275,7 +275,6 @@ begin
   //ordena inicialmente pela coluna numero 0, ou seja, a primeira coluna do dbgrid
   dbg_registrosTitleClick( dbg_registros.Columns[0] );
 
-
    if ds_consulta.DataSet <> nil then
     ds_consulta.DataSet.active:= true;
 end;

@@ -3,7 +3,6 @@ object form_conexao_tabelas: Tform_conexao_tabelas
   Height = 485
   Width = 871
   object qryConsultaClientes: TFDQuery
-    Active = True
     Connection = form_conexao.FDConnection
     SQL.Strings = (
       'select *'
@@ -29,6 +28,12 @@ object form_conexao_tabelas: Tform_conexao_tabelas
       FieldName = 'endereco'
       Origin = 'endereco'
       Size = 255
+    end
+    object qryConsultaClientesclassificacao: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'classificacao'
+      Origin = 'classificacao'
+      Size = 10
     end
   end
   object qryConsultaProdutos: TFDQuery
