@@ -38,7 +38,8 @@ begin
 
 
 
-
+ if not ModoEdicao then
+ begin
   with qryProd do
   begin
     close;
@@ -56,6 +57,7 @@ begin
     ParamByName('nome').Value := nomeprod;
     ExecSQL;
   end;
+ end;
 
 
 

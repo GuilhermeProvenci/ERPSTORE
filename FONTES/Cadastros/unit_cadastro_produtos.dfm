@@ -26,6 +26,7 @@ inherited form_cadastro_produtos: Tform_cadastro_produtos
     inherited pnl_topo: TPanel
       inherited lbl_titulo: TLabel
         Width = 159
+        Height = 48
         Caption = 'Cadastro de Produtos'
         ExplicitWidth = 159
       end

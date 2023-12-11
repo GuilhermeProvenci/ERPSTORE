@@ -9,10 +9,14 @@ inherited form_consulta_condicional: Tform_consulta_condicional
   inherited pnl_principal: TPanel
     Width = 962
     Height = 637
+    ExplicitWidth = 962
+    ExplicitHeight = 637
     inherited pnl_cabecalho: TPanel
       Width = 962
+      ExplicitWidth = 962
       inherited btn_fechar: TSpeedButton
         Left = 892
+        ExplicitLeft = 892
       end
       inherited lbl_titulo: TLabel
         Width = 283
@@ -21,28 +25,41 @@ inherited form_consulta_condicional: Tform_consulta_condicional
       end
       inherited pnl_separa_topo: TPanel
         Width = 962
+        ExplicitWidth = 962
       end
     end
     inherited pnl_Rodape: TPanel
       Top = 599
       Width = 962
+      ExplicitTop = 599
+      ExplicitWidth = 962
       inherited lbl_duplo_clique: TLabel
         Left = 667
+        ExplicitLeft = 667
       end
     end
     inherited pnl_pesquisa: TPanel
       Width = 962
+      ExplicitWidth = 962
       inherited edt_consulta: TEdit
-        Width = 772
+        Width = 671
+        ExplicitWidth = 671
       end
       inherited btn_inserir: TButton
         Left = 813
         Caption = 'Add Itens'
+        ExplicitLeft = 813
+      end
+      inherited Button1: TButton
+        Left = 696
+        ExplicitLeft = 696
       end
     end
     inherited pnl_dbgrid: TPanel
       Width = 962
       Height = 470
+      ExplicitWidth = 962
+      ExplicitHeight = 470
       inherited dbg_registros: TDBGrid
         Width = 922
         Height = 419
@@ -75,6 +92,7 @@ inherited form_consulta_condicional: Tform_consulta_condicional
       end
       inherited pnl_resultado: TPanel
         Width = 922
+        ExplicitWidth = 922
       end
     end
   end

@@ -97,14 +97,15 @@ begin
   ClasseForm := TFormClass(FindClass(Nome));
   Tela := ClasseForm.Create(Application);
 
-  if ModoEdicao then
+  if ModoEdicao and (Tela is Tform_cadastro_padrao) then
   begin
-   (Tela as Tform_cadastro_padrao).ID := vID;
-   (Tela as Tform_cadastro_padrao).ModoEdicao := true;
+    Tform_cadastro_padrao(Tela).ID := vID;
+    Tform_cadastro_padrao(Tela).ModoEdicao := True;
   end;
 
   Tela.ShowModal;
 end;
+
 
 
 
