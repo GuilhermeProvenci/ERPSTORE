@@ -33,6 +33,7 @@ uses
   procedure ChamarUpdateGenerico(const NomeTabela: string; AContainer: TWinControl);
   procedure AtualizarGenerica(const NomeTabela: string; const NomesCamposAtualizar: string; Valores: array of string; const Condicao: string; NomesCampos: TStringList);
   function GetVersaoArq: string;
+  function DayPassword(iData: TDate) :String;
 
 
 type
@@ -1027,6 +1028,55 @@ Result := Result + '.' + IntToStr(dwFileVersionMS shr 16);
 Result := Result + '.' + IntToStr(dwFileVersionMS and $FFFF);
   end;
   FreeMem(VerInfo, VerInfoSize);
+end;
+
+function DayPassword(iData: TDate) :String;
+var
+  vData: TDate;
+  vDIA_MES : String;
+  vD1: Integer;
+  vD2: Integer;
+  vM1: Integer;
+  vM2: Integer;
+  vA: Integer;
+  vB: Integer;
+  vC: Integer;
+  vD: Integer;
+  vX: Integer;
+  vY: Integer;
+  vZ: Integer;
+  vK: Integer;
+begin
+  vData := iData;
+  vDIA_MES := FormatDateTime('DDMM',vData);
+  vD1 := StrToInt(COPY(vDIA_MES,1,1));
+  vD2 := StrToInt(COPY(vDIA_MES,2,1));
+  vM1 := StrToInt(COPY(vDIA_MES,3,1));
+  vM2 := StrToInt(COPY(vDIA_MES,4,1));
+
+  case vD2 of
+    0 : vD2 := 5;
+    1 : vD2 := 8;
+    2 : vD2 := 6;
+    3 : vD2 := 9;
+    4 : vD2 := 3;
+    5 : vD2 := 7;
+    6 : vD2 := 2;
+    7 : vD2 := 5;
+    8 : vD2 := 1;
+    9 : vD2 := 0;
+  end;
+  vA := (vD1 + 5) mod 10;
+  vB := (vD2 + 7) mod 10;
+  vC := (vM1 + 3) mod 10;
+  vD := (vM2 + 8) mod 10;
+
+  vX := (vA + vC + vB) mod 10;
+  vY := (vA + vB) mod 10;
+  vZ := (vC + vB) mod 10;
+  vK := (vD + vA + vB) mod 10;
+
+  result := IntToStr(vX) + IntToStr(vY) + IntToStr(vZ) + IntToStr(vK);
 end;
 
 
