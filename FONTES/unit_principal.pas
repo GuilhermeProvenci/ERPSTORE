@@ -245,44 +245,34 @@ var
 
 begin
 
+  gplQry := TgpQry.Create(Self);
+//  gplQry.SQLExec('SELECT id, nome FROM clientes WHERE nome = :1', ['Guilherme Lima']);
+  gplQry.SQLExec('SELECT id, nome FROM clientes', []);
+
+  Msg := 'Resultados da Consulta:'#13#10 + 'Nome: ' + gplQry.FieldByName('Nome').AsString;
+
+  if not gplQry.IsEmpty then
+  begin
+    gplQry.First;
+      while not gplQry.Eof do
+        begin
+          Msg := Msg + 'Nome: ' + gplQry.FieldByName('Nome').AsString + #13#10;
+          gplQry.Next;
+        end;
+  end;
+
+  ShowMessage(Msg);
+  FreeAndNil(gplQry);
+
+
+
+
 //CalcDoisCamp('SELECT id, preco FROM produtos WHERE id = 2', Valor1, Valor2);
 //
 //// Agora você pode usar os valores retornados conforme necessário
 //ShowMessage('Valor1: ' + Valor1 + #13#10 + 'Valor2: ' + Valor2);
 
-  gplQry := TgpQry.Create(Self);
-
-  try
-    // Verifique se a propriedade Connection está atribuída
-    if Assigned(gplQry.Connection) then
-    begin
-      gplQry.SQL.Text := 'select * from clientes';
-      gplQry.Open;
-
-      Msg := 'Resultados da Consulta:'#13#10;
-      try
-        while not gplQry.Eof do
-        begin
-          Msg := Msg + 'Nome: ' + gplQry.FieldByName('Nome').AsString + ', ';
-          Msg := Msg + 'Idade: ' + gplQry.FieldByName('Idade').AsString + ', ';
-          // Adicione outros campos conforme necessário
-
-          // Vá para o próximo registro
-          gplQry.Next;
-        end;
-
-        // Exiba a mensagem
-        ShowMessage(Msg);
-      finally
-        gplQry.Close;  // Certifique-se de fechar a query após o uso
-      end;
-    end
-    else
-      ShowMessage('A propriedade Connection não está atribuída corretamente.');
-  finally
-    FreeAndNil(gplQry);
-  end;
-  end;
+end;
 
 
 procedure Tform_principal.pnl_tab_cidadesClick(Sender: TObject);

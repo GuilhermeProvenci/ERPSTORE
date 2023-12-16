@@ -31,25 +31,21 @@ implementation
 
 {$R *.dfm}
 
-uses unit_conexao_tabelas, unit_conexao, unit_funcoes;
+uses unit_conexao_tabelas, unit_conexao, unit_funcoes, gplQry;
 
 procedure Tform_cadastro_estoque.lccb_nomeClick(Sender: TObject);
 var
-qry : TFDQuery;
+qry : TgpQry;
 begin
   inherited;
-qry := TFDQuery.Create(self);
-with qry do
-begin
-  Connection := form_conexao.FDConnection;
-  close;
-  sql.Clear;
-  sql.Add('select id from produtos where nome = :nome ');
-  ParamByName('nome').Value := lccb_nome.Text;
-  open;
-end;
-
-
+qry := TgpQry.Create(self);
+qry.SQLExec('select id from produtos where nome = :1 ', [lccb_nome.Text]);
+//with qry do
+//begin
+//  sql.Add('select id from produtos where nome = :nome ');
+//  ParamByName('nome').Value := lccb_nome.Text;
+//  open;
+//end;
 
  edt_id.Text := qry.FieldByName('id').AsString;
 end;

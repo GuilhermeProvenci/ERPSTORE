@@ -59,7 +59,7 @@ implementation
 {$R *.dfm}
 
 uses unit_mensagem, unit_funcoes, unit_conexao, unit_conexao_tabelas,
-  Vcl.ComCtrls;
+  Vcl.ComCtrls, gplQry;
 
 
 procedure Tform_cadastro_padrao.btn_fecharClick(Sender: TObject);
@@ -76,15 +76,16 @@ end;
 
 procedure Tform_cadastro_padrao.CarregarCampos(ID: Integer; Form: TForm);
 var
-  Query: TFDQuery;
+  Query: TgpQry;
   i: Integer;
 begin
-  Query := TFDQuery.Create(nil);
+  Query := TgpQry.Create(Self);
   try
-    Query.Connection := form_conexao.FDConnection;
-    Query.SQL.Text := 'SELECT * FROM ' + NomeTabela + ' WHERE ID = :ID';
-    Query.Params.ParamByName('ID').AsInteger := ID;
-    Query.Open;
+    Query.SQLExec('SELECT * FROM ' + NomeTabela + ' WHERE ID = :1', [ID.ToString]);
+
+    //Query.SQL.Text := 'SELECT * FROM ' + NomeTabela + ' WHERE ID = :ID';
+    //Query.Params.ParamByName('ID').AsInteger := ID;
+    //Query.Open;
 
     for i := 0 to Form.ComponentCount - 1 do
     begin

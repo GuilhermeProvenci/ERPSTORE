@@ -48,7 +48,7 @@ inherited form_cadastro_estoque: Tform_cadastro_estoque
       ExplicitWidth = 722
       inherited lbl_titulo: TLabel
         Width = 146
-        Height = 48
+        Height = 21
         Caption = 'Inclus'#227'o de Estoque'
         ExplicitWidth = 146
       end
