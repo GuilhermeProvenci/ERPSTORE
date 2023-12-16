@@ -28,6 +28,14 @@ package LibGPL;
 {$IMPLICITBUILD ON}
 
 requires
-  rtl;
+  rtl,
+  dbrtl,
+  FireDAC,
+  FireDACCommonDriver,
+  FireDACCommon,
+  xmlrtl;
+
+contains
+  gplQry in 'gplQry.pas';
 
 end.

@@ -5,7 +5,10 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Imaging.pngimage,
-  Vcl.ExtCtrls, Vcl.Buttons, Vcl.AppEvnts, unit_funcoes;
+  Vcl.ExtCtrls, Vcl.Buttons, Vcl.AppEvnts, unit_funcoes, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, gplQry;
 
 type
   Tform_principal = class(TForm)
@@ -236,16 +239,52 @@ end;
 
 procedure Tform_principal.pnl_tab_estadosClick(Sender: TObject);
 var
-  Valor1, Valor2: String;
+  Valor1, Valor2, Msg:  String;
+  gplQry : TgpQry;
+  qry : TFDQuery;
+
 begin
 
-CalcDoisCamp('SELECT id, preco FROM produtos WHERE id = 2', Valor1, Valor2);
+//CalcDoisCamp('SELECT id, preco FROM produtos WHERE id = 2', Valor1, Valor2);
+//
+//// Agora você pode usar os valores retornados conforme necessário
+//ShowMessage('Valor1: ' + Valor1 + #13#10 + 'Valor2: ' + Valor2);
 
-// Agora você pode usar os valores retornados conforme necessário
-ShowMessage('Valor1: ' + Valor1 + #13#10 + 'Valor2: ' + Valor2);
+  gplQry := TgpQry.Create(Self);
+
+  try
+    // Verifique se a propriedade Connection está atribuída
+    if Assigned(gplQry.Connection) then
+    begin
+      gplQry.SQL.Text := 'select * from clientes';
+      gplQry.Open;
+
+      Msg := 'Resultados da Consulta:'#13#10;
+      try
+        while not gplQry.Eof do
+        begin
+          Msg := Msg + 'Nome: ' + gplQry.FieldByName('Nome').AsString + ', ';
+          Msg := Msg + 'Idade: ' + gplQry.FieldByName('Idade').AsString + ', ';
+          // Adicione outros campos conforme necessário
+
+          // Vá para o próximo registro
+          gplQry.Next;
+        end;
+
+        // Exiba a mensagem
+        ShowMessage(Msg);
+      finally
+        gplQry.Close;  // Certifique-se de fechar a query após o uso
+      end;
+    end
+    else
+      ShowMessage('A propriedade Connection não está atribuída corretamente.');
+  finally
+    FreeAndNil(gplQry);
+  end;
+  end;
 
 
-end;
 procedure Tform_principal.pnl_tab_cidadesClick(Sender: TObject);
 begin
   //cria o form_consulta_origem_mercadoria

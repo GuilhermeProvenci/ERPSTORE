@@ -23,7 +23,8 @@ uses
   unit_cadastro_estoque in 'FONTES\Cadastros\unit_cadastro_estoque.pas' {form_cadastro_estoque},
   unit_report in 'FONTES\Reports\unit_report.pas' {form_cadastro_estoque},
   class_clientes in 'CLASSES\class_clientes.pas',
-  class_compras in 'CLASSES\class_compras.pas';
+  class_compras in 'CLASSES\class_compras.pas',
+  gplQry in 'LIB\gplQry.pas';
 
 {$R *.res}
 
