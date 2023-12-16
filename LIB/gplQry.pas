@@ -3,7 +3,8 @@ unit gplQry;
 interface
 
 uses
-  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, IniFiles, System.Classes, System.SysUtils;
+  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, IniFiles, System.Classes, System.SysUtils,
+  unit_funcoes;
 
 type
   TConnectionParams = record
@@ -29,8 +30,8 @@ type
     procedure SetConnectionFromIni;
   public
     constructor Create(AOwner: TComponent); override;
+    procedure SQLExec(const ASQL: string; const AParams: array of string) ;
   published
-    property Connection: TFDConnection read FConnection write FConnection;
     property Texto: String read FTexto write FTexto;
     property Numero: Real read FNumero write FNumero;
     property Column: TStrings read FColumn write SetColumn;
@@ -42,7 +43,7 @@ procedure Register;
 implementation
 
 uses
-  Vcl.Dialogs;
+  Vcl.Dialogs, FireDAC.Stan.Param;
 
 procedure Register;
 begin
@@ -54,10 +55,10 @@ end;
 constructor TgpQry.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  Connection := TFDConnection.Create(Self);
+  FConnection := TFDConnection.Create(Self);
   SetConnectionFromIni;
+  Connection := FConnection;
 end;
-
 
 function TgpQry.GetConnectionParamsFromIni: TConnectionParams;
 var
@@ -88,6 +89,39 @@ begin
   FFieldSize := Value;
 end;
 
+procedure TgpQry.SQLExec(const ASQL: string; const AParams: array of string);
+var
+  I: Integer;
+  Param: TFDParam;
+begin
+  Close;
+  SQL.Clear;
+  SQL.Add(ASQL);
+
+  // Adiciona os parâmetros à query, se houver
+  for I := 0 to High(AParams) do
+  begin
+    Param := ParamByName(IntToStr(I + 1)); // Ajuste para começar do 1 em vez de 0
+    if Assigned(Param) then
+    begin
+      Param.AsString := AParams[I];
+    end
+    else
+    begin
+      ShowMessage('Parâmetro ' + IntToStr(I + 1) + ' não encontrado.');
+    end;
+  end;
+
+  Open;
+end;
+
+
+
+
+
+
+
+
 procedure TgpQry.SetColumn(const Value: TStrings);
 begin
   if FColumn.Text <> Value.Text then
@@ -111,26 +145,20 @@ begin
     FConnection.Params.Add('Port=' + Porta);
     FConnection.Params.Add('User_Name=' + Login);
     FConnection.Params.Add('Password=' + Senha);
-
-    // Configura o DriverName para o MySQL
     FConnection.DriverName := 'MySQL';
-
-    // Conecta ao banco de dados
     try
       FConnection.Connected := True;
-
-      // Se chegou até aqui sem exceções, então a conexão foi bem-sucedida
-      Connection := FConnection;
+      // possivel erro> Connection property is not set because it's not using a ConnectionName
     except
-      // Trate qualquer exceção aqui, se necessário
       on E: Exception do
       begin
-        // Exemplo de tratamento: exibir a mensagem da exceção
-        ShowMessage('Erro na conexão: ' + E.Message);
+        CriarMensagem('ERRO',E.Message );
+        Exit;
       end;
     end;
   end;
 end;
+
 
 
 procedure TgpQry.SetConnectionFromIni;
@@ -139,10 +167,9 @@ var
 begin
   ConnectionParams := GetConnectionParamsFromIni;
 
-  // Verifica se a propriedade Connection está atribuída e não é nula
   if Assigned(FConnection) then
   begin
-    // Configura os parâmetros de conexão
+    // parâmetros de conexão
     SetConnection(ConnectionParams.Servidor, ConnectionParams.Base, ConnectionParams.Porta, ConnectionParams.Login, ConnectionParams.Senha);
   end;
 end;
