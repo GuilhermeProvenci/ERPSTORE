@@ -873,9 +873,9 @@ object form_principal: Tform_principal
           Tag = 9
           Left = 48
           Top = 14
-          Width = 105
+          Width = 81
           Height = 15
-          Caption = 'Teste calcDoisCamp'
+          Caption = 'Bot'#227'o de Testes'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWhite
           Font.Height = -12

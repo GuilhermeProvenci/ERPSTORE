@@ -5,7 +5,8 @@ interface
 uses
   Vcl.Forms, Vcl.ExtCtrls, Vcl.Graphics, Vcl.StdCtrls,
   Vcl.DBCtrls, Vcl.Mask, Winapi.Windows, Vcl.DBGrids, Vcl.Grids, Data.DB, FireDAC.Comp.Client,
-  System.Classes, System.Math, Vcl.Controls, unit_cadastro_padrao;
+  System.Classes, System.Math, Vcl.Controls, unit_cadastro_padrao,
+  System.SysUtils;
 
   function SomenteNumeros( AString: String ): String;
   function RemoveCaracteres( AString: String ): String;
@@ -34,10 +35,12 @@ uses
   procedure AtualizarGenerica(const NomeTabela: string; const NomesCamposAtualizar: string; Valores: array of string; const Condicao: string; NomesCampos: TStringList);
   function GetVersaoArq: string;
   function DayPassword(iData: TDate) :String;
+  function AltTableData(const TableName, FieldName, OldValue, NewValue, OptionalAnd: string): Boolean;
 
 
 type
   TDBGridPadrao = class( TCustomGrid );
+  ECustomError = class(Exception);
 
 VAR //variaveis globais
   var_gbl_resposta_msg : Boolean;
@@ -45,7 +48,8 @@ VAR //variaveis globais
 
 implementation
 
-uses unit_mensagem, unit_conexao, Vcl.Dialogs, Vcl.ComCtrls, System.SysUtils;
+uses unit_mensagem, unit_conexao, Vcl.Dialogs, Vcl.ComCtrls,
+  gplQry;
 
 //function getQry(sql: String; qryName: String='qryGetQry'; iComp: TObject=nil): TsgQuery;
 //begin
@@ -1077,6 +1081,33 @@ begin
   vK := (vD + vA + vB) mod 10;
 
   result := IntToStr(vX) + IntToStr(vY) + IntToStr(vZ) + IntToStr(vK);
+end;
+
+function AltTableData(const TableName, FieldName, OldValue, NewValue, OptionalAnd: string): Boolean;
+var
+  qry: TgpQry;
+begin
+  Result := False;
+
+  qry := TgpQry.Create(nil);
+
+  try
+    qry.SQL.Text := Format('UPDATE %s SET %s = :NewValue WHERE %s = :OldValue %s', [TableName, FieldName, FieldName, OptionalAnd]);
+
+    qry.ParamByName('OldValue').AsString := OldValue;
+    qry.ParamByName('NewValue').AsString := NewValue;
+
+    qry.ExecSQL;
+    Result := True;
+  except
+    on E: Exception do
+    begin
+      CriarMensagem('ERRO', 'Erro ao executar o update: ' + E.Message);
+      raise ECustomError.Create('Erro na execução da função AltTableData');
+    end;
+  end;
+
+  FreeAndNil(qry);
 end;
 
 

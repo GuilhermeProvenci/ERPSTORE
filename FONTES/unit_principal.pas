@@ -244,33 +244,34 @@ var
   qry : TFDQuery;
 
 begin
-
-  gplQry := TgpQry.Create(Self);
-//  gplQry.SQLExec('SELECT id, nome FROM clientes WHERE nome = :1', ['Guilherme Lima']);
-  gplQry.SQLExec('SELECT id, nome FROM clientes', []);
-
-  Msg := 'Resultados da Consulta:'#13#10 + 'Nome: ' + gplQry.FieldByName('Nome').AsString;
-
-  if not gplQry.IsEmpty then
-  begin
-    gplQry.First;
-      while not gplQry.Eof do
-        begin
-          Msg := Msg + 'Nome: ' + gplQry.FieldByName('Nome').AsString + #13#10;
-          gplQry.Next;
-        end;
-  end;
-
-  ShowMessage(Msg);
-  FreeAndNil(gplQry);
-
-
+//
+//  gplQry := TgpQry.Create(Self);
+////  gplQry.SQLExec('SELECT id, nome FROM clientes WHERE nome = :1', ['Guilherme Lima']);
+//  gplQry.SQLExec('SELECT id, nome FROM clientes', []);
+//
+//  Msg := 'Resultados da Consulta:'#13#10 + 'Nome: ' + gplQry.FieldByName('Nome').AsString;
+//
+//  if not gplQry.IsEmpty then
+//  begin
+//    gplQry.First;
+//      while not gplQry.Eof do
+//        begin
+//          Msg := Msg + 'Nome: ' + gplQry.FieldByName('Nome').AsString + #13#10;
+//          gplQry.Next;
+//        end;
+//  end;
+//
+//  ShowMessage(Msg);
+//  FreeAndNil(gplQry);
 
 
 //CalcDoisCamp('SELECT id, preco FROM produtos WHERE id = 2', Valor1, Valor2);
 //
 //// Agora você pode usar os valores retornados conforme necessário
 //ShowMessage('Valor1: ' + Valor1 + #13#10 + 'Valor2: ' + Valor2);
+
+AltTableData('condicional_pendente', 'nome_cliente', 'adm21232', 'adm', 'AND quantidade_condicional = 123' );
+
 
 end;
 

@@ -101,7 +101,7 @@ begin
   // Adiciona os parâmetros à query, se houver
   for I := 0 to High(AParams) do
   begin
-    Param := ParamByName(IntToStr(I + 1)); // Ajuste para começar do 1 em vez de 0
+    Param := ParamByName(IntToStr(I + 1)); // paremtros começamdo do :1 em vez de :0
     if Assigned(Param) then
     begin
       Param.Value := AParams[I];
