@@ -22,7 +22,7 @@ type
     FNumero: Real;
     FColumn: TStrings;
     FFieldSize: Integer;
-    procedure SetConnection(Servidor, Base, Porta, Login, Senha: String);
+    procedure SetConnection(const Servidor, Base, Porta, Login, Senha: String);
     function GetFieldSize: Integer;
     procedure SetColumn(const Value: TStrings);
     procedure SetFieldSize(const Value: Integer);
@@ -30,7 +30,7 @@ type
     procedure SetConnectionFromIni;
   public
     constructor Create(AOwner: TComponent); override;
-    procedure SQLExec(const ASQL: string; const AParams: array of string) ;
+    procedure SQLExec(const ASQL: string; const AParams: array of Variant) ;
   published
     property Texto: String read FTexto write FTexto;
     property Numero: Real read FNumero write FNumero;
@@ -89,7 +89,7 @@ begin
   FFieldSize := Value;
 end;
 
-procedure TgpQry.SQLExec(const ASQL: string; const AParams: array of string);
+procedure TgpQry.SQLExec(const ASQL: string; const AParams: array of Variant);
 var
   I: Integer;
   Param: TFDParam;
@@ -104,7 +104,7 @@ begin
     Param := ParamByName(IntToStr(I + 1)); // Ajuste para começar do 1 em vez de 0
     if Assigned(Param) then
     begin
-      Param.AsString := AParams[I];
+      Param.Value := AParams[I];
     end
     else
     begin
@@ -112,13 +112,11 @@ begin
     end;
   end;
 
-  Open;
+  if Pos('SELECT', UpperCase(ASQL)) > 0 then
+    Open
+  else
+    ExecSQL;
 end;
-
-
-
-
-
 
 
 
@@ -135,7 +133,7 @@ begin
   end;
 end;
 
-procedure TgpQry.SetConnection(Servidor, Base, Porta, Login, Senha: String);
+procedure TgpQry.SetConnection(const Servidor, Base, Porta, Login, Senha: String);
 begin
   if Assigned(FConnection) then
   begin
@@ -158,8 +156,6 @@ begin
     end;
   end;
 end;
-
-
 
 procedure TgpQry.SetConnectionFromIni;
 var

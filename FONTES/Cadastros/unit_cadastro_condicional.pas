@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, unit_conexao_tabelas, Vcl.Grids,
-  Vcl.DBGrids;
+  Vcl.DBGrids, gplQry;
 
 type
   Tform_cadastro_condicional = class(TForm)
@@ -52,6 +52,8 @@ type
     procedure Panel1Click(Sender: TObject);
   private
     { Private declarations }
+    qryEstoque, qryInsertCond :   TgpQry;
+    clienteID, condicionalID: Integer;
   public
     { Public declarations }
 
@@ -59,9 +61,7 @@ type
 
 var
   form_cadastro_condicional: Tform_cadastro_condicional;
-  qryEstoque :   TFDQuery;
-  qryInsertCond: TFDQuery;
-  clienteID, condicionalID: Integer;
+
 
 implementation
 
@@ -135,19 +135,12 @@ begin
     ParamByName('nome').Value := cbb_produtos.Items[cbb_produtos.ItemIndex];
     Open;
   end;
+
+
   edt_cod_prod.Clear;
   edt_cod_prod.Text := qryProdutos.FieldByName('id').AsString;
 
-
-  with qryEstoque do
-  begin
-    close;
-    sql.clear;
-    sql.Add('Select * from estoque where produto_id = :id');
-    ParamByName('id').Value := strtoint(edt_cod_prod.Text);
-    open;
-  end;
-
+  qryEstoque.SQLExec('SELECT * FROM estoque WHERE produto_id = :1',[edt_cod_prod.Text]);
 
   edt_qtt_estoque.Clear;
   edt_qtt_estoque.Text := qryEstoque.FieldByName('quantidade_em_estoque').AsString;
@@ -172,14 +165,8 @@ begin
   form_conexao_tabelas.qryConsultaProdutos.Active := true;
 
 
-  qryInsertCond:= TFDQuery.Create(NIL);
-  qryInsertCond.Close;
-  qryInsertCond.Connection := form_conexao.FDConnection;
-
-
-  qryEstoque := TFDQuery.Create(NIL);
-  qryEstoque.Close;
-  qryEstoque.Connection := form_conexao.FDConnection;
+  qryInsertCond := TgpQry.Create(self);
+  qryEstoque := TgpQry.Create(self);
 
 
 for I := 0 to form_conexao_tabelas.qryConsultaProdutos.RecordCount - 1 do
@@ -207,24 +194,16 @@ begin
     var ID: Integer := qryCondPendente.FieldByName('id').AsInteger;
 
     // Desfaz a transação removendo o registro da tabela condicional_pendente
-    with TFDQuery.Create(nil) do
+    with TgpQry.Create(nil) do
     begin
-      Connection := form_conexao.FDConnection;
-      SQL.Text := 'DELETE FROM condicional_pendente WHERE id = :id';
-      ParamByName('id').AsInteger := ID;
-      ExecSQL;
+      SQLExec('DELETE FROM condicional_pendente WHERE id = :1', [ID.ToString]);
       Free;
     end;
 
     // Atualiza o saldo do estoque desfazendo a quantidade condicional
     with qryEstoque do
     begin
-      Close;
-      SQL.Clear;
-      SQL.Add('UPDATE estoque SET quantidade_em_estoque = quantidade_em_estoque + :quantidade WHERE id = :id_produto');
-      ParamByName('quantidade').AsInteger := qryCondPendente.FieldByName('quantidade_condicional').AsInteger;
-      ParamByName('id_produto').AsInteger := qryCondPendente.FieldByName('id_produto').AsInteger;
-      ExecSQL;
+      SQLExec('UPDATE estoque SET quantidade_em_estoque = quantidade_em_estoque + :1 WHERE id = :2', [qryCondPendente.FieldByName('quantidade_condicional').ToString, qryCondPendente.FieldByName('id_produto').ToString] );
     end;
 
     // Recarrega os dados do TDBGrid
@@ -239,53 +218,38 @@ begin
 end;
 
 procedure Tform_cadastro_condicional.pnl_addClick(Sender: TObject);
- var
-saldoEstoque : integer;
+var
+  saldoEstoque: Integer;
 begin
-    qryEstoque.close;
-    qryEstoque.SQL.Clear;
-    qryEstoque.SQL.Text := 'SELECT id, produto_id, nome_produto, quantidade_em_estoque FROM estoque WHERE produto_id = :id';
-    qryEstoque.ParamByName('id').AsInteger := strtoint(edt_cod_prod.Text);
-    qryEstoque.Open;
+  qryEstoque.SQLExec('SELECT id, produto_id, nome_produto, quantidade_em_estoque FROM estoque WHERE produto_id = :1', [edt_cod_prod.Text]);
 
-    if not qryEstoque.IsEmpty then
-    begin
-      // Obtenha o saldo em estoque do produto
-       saldoEstoque := qryEstoque.FieldByName('quantidade_em_estoque').AsInteger;
-       qryInsertCond.Close;
-       qryInsertCond.SQL.Text :=
-          'INSERT INTO condicional_pendente (id_produto, nome_produto, quantidade_condicional, id_condicional, nome_cliente) ' +
-          'VALUES (:id_produto, :nome_produto, :quantidade_condicional, :id_condicional, :nome_cliente)';
+  if not qryEstoque.IsEmpty then
+  begin
+    // Obtenha o saldo em estoque do produto
+    saldoEstoque := qryEstoque.FieldByName('quantidade_em_estoque').AsInteger;
 
-        qryInsertCond.ParamByName('id_produto').AsInteger := strtoint(edt_cod_prod.Text);
-        qryInsertCond.ParamByName('nome_produto').AsString := cbb_produtos.Items[cbb_produtos.ItemIndex];
-        qryInsertCond.ParamByName('quantidade_condicional').AsInteger := trunc(edt_qtt.Value);
-        qryInsertCond.ParamByName('id_condicional').DataType := ftInteger;
-        qryInsertCond.ParamByName('id_condicional').value := condicionalID;
-        qryInsertCond.ParamByName('nome_cliente').AsString := qryClientes.FieldByName('nome').asstring;
-        qryInsertCond.ExecSQL;
+    qryInsertCond.SQLExec(
+      'INSERT INTO condicional_pendente (id_produto, nome_produto, quantidade_condicional, id_condicional, nome_cliente) ' +
+      'VALUES (:1, :2, :3, :4, :5)',
+      [edt_cod_prod.Text, cbb_produtos.Items[cbb_produtos.ItemIndex],
+       edt_qtt.Text, condicionalID, qryClientes.FieldByName('nome').AsString]);
 
+    qryEstoque.SQLExec(
+      'UPDATE estoque SET quantidade_em_estoque = :1 WHERE id = :2',
+      [saldoEstoque - edt_qtt.Value, edt_cod_prod.Text]
+    );
 
-       with qryEstoque do
-       begin
-         sql.clear;
-         sql.Add('UPDATE estoque SET quantidade_em_estoque = :novo_saldo WHERE id = :id_produto');
-         ParamByName('novo_saldo').value := saldoEstoque - edt_qtt.value;
-         ParamByName('id_produto').Value := strtoint(edt_cod_prod.Text);
-         ExecSQL;
-       end;
-
-        CriarMensagem('aviso','Inserção realizada com sucesso!');
-        qryCondPendente.Refresh;
-        dbg_registros.Refresh;
-    end
-    else
-    begin
-    CriarMensagem('aviso','Produto não encontrado.');
-    exit;
-    end;
-
+    CriarMensagem('aviso', 'Inserção realizada com sucesso!');
+    qryCondPendente.Refresh;
+    dbg_registros.Refresh;
+  end
+  else
+  begin
+    CriarMensagem('aviso', 'Produto não encontrado.');
+    Exit;
+  end;
 end;
+
 
 
 initialization
