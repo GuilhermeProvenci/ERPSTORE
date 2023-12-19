@@ -2,11 +2,13 @@
 
 interface
 
+
+
 uses
   Vcl.Forms, Vcl.ExtCtrls, Vcl.Graphics, Vcl.StdCtrls,
   Vcl.DBCtrls, Vcl.Mask, Winapi.Windows, Vcl.DBGrids, Vcl.Grids, Data.DB, FireDAC.Comp.Client,
   System.Classes, System.Math, Vcl.Controls, unit_cadastro_padrao,
-  System.SysUtils;
+  System.SysUtils, gplQry;
 
   function SomenteNumeros( AString: String ): String;
   function RemoveCaracteres( AString: String ): String;
@@ -36,6 +38,11 @@ uses
   function GetVersaoArq: string;
   function DayPassword(iData: TDate) :String;
   function AltTableData(const TableName, FieldName, OldValue, NewValue, OptionalAnd: string): Boolean;
+  function TableExists(const TableName: string; Query: TgpQry): Boolean;
+  procedure CreateTable(const TableName: string; const Fields: array of string);
+  function GetTableColumns(const TableName: string): TArray<string>;
+  procedure DropTable(const TableName: string);
+  procedure AddColumn(const TableName, ColumnName, ColumnType: string);
 
 
 type
@@ -48,8 +55,7 @@ VAR //variaveis globais
 
 implementation
 
-uses unit_mensagem, unit_conexao, Vcl.Dialogs, Vcl.ComCtrls,
-  gplQry;
+uses unit_mensagem, unit_conexao, Vcl.Dialogs, Vcl.ComCtrls;
 
 //function getQry(sql: String; qryName: String='qryGetQry'; iComp: TObject=nil): TsgQuery;
 //begin
@@ -875,6 +881,7 @@ begin
 
 end;
 
+
 //prcedure responsavel por mudar a cor da selecao e zebrar um dbgrid
 procedure prcDrawColumnCell( Sender: TObject; const Rect: TRect;
   DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -1108,6 +1115,117 @@ begin
   end;
 
   FreeAndNil(qry);
+end;
+
+function TableExists(const TableName: string; Query: TgpQry): Boolean;
+begin
+  Query := TgpQry.create(nil);
+  Query.SQLExec('SHOW TABLES LIKE :1', [TableName]);
+  Result := not Query.IsEmpty;
+  Query.Free;
+end;
+
+
+procedure CreateTable(const TableName: string; const Fields: array of string);
+var
+  Field, FieldsList, FieldsDefinition: string;
+  Query: TgpQry;
+begin
+
+  Query:= TgpQry.Create(nil);
+
+  if TableExists(TableName, Query) then
+  begin
+    CriarMensagem('ERRO','A tabela '+ TableName + ' já existe.');
+    Exit;
+  end;
+
+  FieldsList := '';
+  for Field in Fields do
+    FieldsList := FieldsList + Field + ', ';
+
+  if FieldsList <> '' then
+    SetLength(FieldsList, Length(FieldsList) - 2); // Remove a última vírgula e espaço
+
+  FieldsDefinition := 'id INT NOT NULL AUTO_INCREMENT, '; // Adiciona o campo 'id' no início
+
+  for Field in Fields do
+    FieldsDefinition := FieldsDefinition + Field + ' INT NOT NULL, ';
+
+  if FieldsDefinition <> '' then
+    SetLength(FieldsDefinition, Length(FieldsDefinition) - 2); // Remove a última vírgula e espaço
+
+  Query.SQLExec(Format(
+    'CREATE TABLE %s (%s, PRIMARY KEY (id))',
+    [TableName, FieldsDefinition]
+  ), []);
+
+  CriarMensagem('AVISO', 'Tabela ' + TableName + ' criada com sucesso');
+  Query.free;
+end;
+
+function GetTableColumns(const TableName: string): TArray<string>;
+var
+  FieldList: TArray<string>;
+  Query: TgpQry;
+begin
+  Query := TgpQry.Create(nil);
+
+  if not TableExists(TableName, Query) then
+  begin
+    ShowMessage('A tabela não existe.');
+    Exit;
+  end;
+
+  Query.SQLExec(Format('SHOW COLUMNS FROM %s', [TableName]), []);
+  SetLength(FieldList, 0);
+
+  while not Query.Eof do
+  begin
+    SetLength(FieldList, Length(FieldList) + 1);
+    FieldList[High(FieldList)] := Query.FieldByName('Field').AsString;
+    Query.Next;
+  end;
+
+  Result := FieldList;
+  Query.Free;
+end;
+
+procedure DropTable(const TableName: string);
+var
+Query: TgpQry;
+begin
+ Query:= TgpQry.Create(nil);
+  if not TableExists(TableName, Query) then
+  begin
+    ShowMessage('A tabela não existe.');
+    Exit;
+  end;
+
+  Query.SQLExec(Format('DROP TABLE %s', [TableName]), []);
+
+  CriarMensagem('AVISO', 'Tabela ' + TableName + ' excluída com sucesso');
+  Query.Free;
+end;
+
+procedure AddColumn(const TableName, ColumnName, ColumnType: string);
+var
+  Query: TgpQry;
+begin
+  Query := TgpQry.Create(nil);
+  try
+    if not TableExists(TableName, Query) then
+    begin
+      CriarMensagem('ERRO','A tabela não existe.');
+      Exit;
+    end;
+
+    Query.SQLExec(Format('ALTER TABLE %s ADD %s %s', [TableName, ColumnName, ColumnType]), []);
+
+    CriarMensagem('AVISO', 'Coluna ' + ColumnName + ' adicionada com sucesso à tabela ' + TableName);
+  finally
+    Query.Free;
+  end;
 end;
 
 

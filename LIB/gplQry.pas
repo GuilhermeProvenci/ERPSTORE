@@ -3,8 +3,7 @@ unit gplQry;
 interface
 
 uses
-  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, IniFiles, System.Classes, System.SysUtils,
-  unit_funcoes;
+  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, IniFiles, System.Classes, System.SysUtils;
 
 type
   TConnectionParams = record
@@ -43,7 +42,7 @@ procedure Register;
 implementation
 
 uses
-  Vcl.Dialogs, FireDAC.Stan.Param;
+  Vcl.Dialogs, FireDAC.Stan.Param, unit_funcoes, System.Math;
 
 procedure Register;
 begin
@@ -93,6 +92,7 @@ procedure TgpQry.SQLExec(const ASQL: string; const AParams: array of Variant);
 var
   I: Integer;
   Param: TFDParam;
+  IsSelectQuery: Boolean;
 begin
   Close;
   SQL.Clear;
@@ -101,7 +101,7 @@ begin
   // Adiciona os parâmetros à query, se houver
   for I := 0 to High(AParams) do
   begin
-    Param := ParamByName(IntToStr(I + 1)); // paremtros começamdo do :1 em vez de :0
+    Param := ParamByName(IntToStr(I + 1)); // parâmetros começando do :1 em vez de :0
     if Assigned(Param) then
     begin
       Param.Value := AParams[I];
@@ -112,12 +112,18 @@ begin
     end;
   end;
 
-  if Pos('SELECT', UpperCase(ASQL)) > 0 then
-    Open
-  else
-    ExecSQL;
-end;
+  IsSelectQuery := (Pos('SELECT', UpperCase(ASQL)) > 0) or (Pos('SHOW', UpperCase(ASQL)) > 0);
+  try
+    if IsSelectQuery then
+      Open
+    else
+      ExecSQL;
+  except
+    on E: Exception do
+      CriarMensagem('ERRO', 'Erro ao executar a consulta: ' + E.Message);
+  end;
 
+end;
 
 
 procedure TgpQry.SetColumn(const Value: TStrings);
