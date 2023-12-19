@@ -181,16 +181,6 @@ uses unit_configuracao_servidor, unit_fundo_esmaecer,
    unit_consulta_produtos, unit_consulta_clientes, unit_consulta_condicional,
   unit_consulta_estoque;
 
- function OperTernario(AValue: Boolean; const ATrue, AFalse: TProcRef): Boolean; overload;
-begin
-  if AValue then
-    ATrue()
-  else
-    AFalse();
-
-  Result := AValue;
-end;
-
 procedure Tform_principal.ApplicationEventsModalBegin(Sender: TObject);
 begin
   form_fundo_esmaecer.Show;
@@ -364,7 +354,8 @@ begin
 
 //AltTableData('condicional_pendente', 'nome_cliente', 'adm21232', 'adm', 'AND quantidade_condicional = 123' );
 
-CreateTable('Testes', ['campo1','campo2','campo3'],  gplQry);
+//CreateTable('Testes', ['campo1','campo2','campo3'],  gplQry);
+
 
 end;
 
