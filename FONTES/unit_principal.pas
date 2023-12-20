@@ -319,10 +319,11 @@ end;
 
 procedure Tform_principal.pnl_tab_estadosClick(Sender: TObject);
 var
-  Valor1, Valor2, Msg:  String;
+  Msg:  String;
   gplQry : TgpQry;
   qry : TFDQuery;
   booleano : Boolean;
+  Valor1, Valor2, resultado : integer;
 
 begin
 //
@@ -347,10 +348,11 @@ begin
 //  FreeAndNil(gplQry);
 
 
-//CalcDoisCamp('SELECT id, preco FROM produtos WHERE id = 2', Valor1, Valor2);
-//
+Resultado := CalcDoisCamp('SELECT id, preco FROM produtos WHERE id = 2', Valor1, Valor2);
+
+
 //// Agora você pode usar os valores retornados conforme necessário
-//ShowMessage('Valor1: ' + Valor1 + #13#10 + 'Valor2: ' + Valor2);
+ShowMessage('Valor1: ' + Valor1.ToString + #13#10 + 'Valor2: ' + Valor2.ToString +#13#10 + 'Resultado: ' + resultado.ToString);
 
 //AltTableData('condicional_pendente', 'nome_cliente', 'adm21232', 'adm', 'AND quantidade_condicional = 123' );
 

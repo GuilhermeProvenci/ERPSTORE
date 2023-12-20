@@ -7,7 +7,7 @@ interface
 uses
   Vcl.Forms, Vcl.ExtCtrls, Vcl.Graphics, Vcl.StdCtrls,
   Vcl.DBCtrls, Vcl.Mask, Winapi.Windows, Vcl.DBGrids, Vcl.Grids, Data.DB, FireDAC.Comp.Client,
-  System.Classes, System.Math, Vcl.Controls, unit_cadastro_padrao,
+  System.Classes, Vcl.Controls, unit_cadastro_padrao,
   System.SysUtils, gplQry;
 
   function SomenteNumeros( AString: String ): String;
@@ -31,7 +31,7 @@ uses
 
   procedure maxID(const TableName: string; Edit: TEdit);
   procedure limpaEDit(Form : Tform);
-  procedure CalcDoisCamp(TextSQL: String; var Val1, Val2: String);
+  function CalcDoisCamp(TextSQL: String; var Val1, Val2: integer) : integer;
 
   procedure ChamarUpdateGenerico(const NomeTabela: string; AContainer: TWinControl);
   procedure AtualizarGenerica(const NomeTabela: string; const NomesCamposAtualizar: string; Valores: array of string; const Condicao: string; NomesCampos: TStringList);
@@ -55,7 +55,7 @@ VAR //variaveis globais
 
 implementation
 
-uses unit_mensagem, unit_conexao, Vcl.Dialogs, Vcl.ComCtrls;
+uses unit_mensagem, unit_conexao, Vcl.Dialogs, Vcl.ComCtrls, System.Math;
 
 //function getQry(sql: String; qryName: String='qryGetQry'; iComp: TObject=nil): TsgQuery;
 //begin
@@ -503,39 +503,28 @@ begin
 end;
 
 
-procedure CalcDoisCamp(TextSQL: String; var Val1, Val2: String);
+function CalcDoisCamp(TextSQL: String; var Val1, Val2: integer) : integer;
 var
-  vQuer: TFDQuery;
+  vQuer: TgpQry;
 begin
-  vQuer := TFDQuery.Create(nil);
+  vQuer := TgpQry.Create(nil);
   try
     with vQuer do
     begin
-      Connection := form_conexao.FDConnection;
       SQL.Text := TextSQL;
       Open;
 
-      if Fields.Count >= 1 then
-      begin
-        if (IsEmpty) or (Fields[0].IsNull) then
-          Val1 := ''
-        else
-          Val1 := Fields[0].AsString;
-      end;
+      Val1 := Ifthen((Fields.Count >= 1) and (not IsEmpty) and (not Fields[0].IsNull), Fields[0].AsInteger, 0);
 
-      if Fields.Count >= 2 then
-      begin
-        if (IsEmpty) or (Fields[1].IsNull) then
-          Val2 := ''
-        else
-          Val2 := Fields[1].AsString;
-      end;
+      Val2 := IfThen((Fields.Count >= 2) and (not IsEmpty) and (not Fields[1].IsNull), Fields[1].AsInteger, 0);
     end;
   finally
     vQuer.Close;
     FreeAndNil(vQuer);
   end;
+  result := val1 + val2;
 end;
+
 
 
 procedure ChamarUpdateGenerico(const NomeTabela: string; AContainer: TWinControl);
