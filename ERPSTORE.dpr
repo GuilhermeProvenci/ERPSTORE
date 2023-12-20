@@ -24,7 +24,8 @@ uses
   unit_report in 'FONTES\Reports\unit_report.pas' {form_cadastro_estoque},
   class_clientes in 'CLASSES\class_clientes.pas',
   class_compras in 'CLASSES\class_compras.pas',
-  gplQry in 'LIB\gplQry.pas';
+  gplQry in 'LIB\gplQry.pas',
+  gplForm in 'LIB\gplForm.pas';
 
 {$R *.res}
 

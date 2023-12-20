@@ -34,18 +34,26 @@ uses unit_conexao, unit_funcoes;
 procedure Tform_cadastro_clientes.pnl_salvarClick(Sender: TObject);
   var DataDevolucao : TDateTime;
 begin
-//  inherited;
-     ValidarCampoObrigatorios(Self);
+ // inherited;
+ // só está sem o inherited até arrumar o classe, para puxar as informações dela
+ ValidarCampoObrigatorios(Self);
 
-
-    if ModoEdicao then
-  begin
-    ChamarUpdateGenerico(NomeTabela, self);
-  end
-  else
- begin
-    ChamarInsertGenerico(NomeTabela, self);
-    end;
+  case FormState of
+    fsView:
+      begin
+        //
+      end;
+    fsEdit:
+      begin
+        ChamarUpdateGenerico(NomeTabela, Self);
+      end;
+    fsInsert:
+      begin
+        ChamarInsertGenerico(NomeTabela, Self);
+        LimpaEdit(Self);
+        MaxID(NomeTabela, edt_id);
+      end;
+  end;
 
   DataDevolucao := Date + 3;
   with qryCondicional do
@@ -57,13 +65,9 @@ begin
       ParamByName('4').Value:= edt_nome.Text;
       ExecSQL;
     end;
-    CriarMensagem('aviso', 'Registro Salvo com sucesso');
-    limpaEDit(Self);
-    maxID(NomeTabela, edt_id);
 
-    if ModoEdicao then
-    self.close;
-
+  CriarMensagem('aviso', 'Registro Salvo com sucesso');
+  self.Close;
 end;
 
 initialization

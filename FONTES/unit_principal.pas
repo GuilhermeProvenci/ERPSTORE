@@ -326,8 +326,8 @@ var
 
 begin
 //
-  booleano := TRUE;
-  gplQry := TgpQry.Create(Self);
+//  booleano := TRUE;
+//  gplQry := TgpQry.Create(Self);
 ////  gplQry.SQLExec('SELECT id, nome FROM clientes WHERE nome = :1', ['Guilherme Lima']);
 //  gplQry.SQLExec('SELECT id, nome FROM clientes', []);
 //

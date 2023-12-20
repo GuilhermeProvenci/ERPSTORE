@@ -49,7 +49,7 @@ type
     vID : Integer;
   public
     { Public declarations }
-    procedure CriaForm(const Nome: string; ModoEdicao: Boolean);
+    procedure CriaForm(const Nome: string; FormState: TFormState; ID: Integer);
     var
     NomeForm: string;
     NomeReport: string;
@@ -76,7 +76,9 @@ end;
 procedure Tform_consulta_padrao.btn_inserirClick(Sender: TObject);
 begin
 // Abrir a tela de cadastro em modo de inserção
-CriaForm(NomeForm, False);
+//CriaForm(NomeForm, False);
+CriaForm(NomeForm, fsInsert, 0); // ID pode ser 0 ou outro valor inicial
+
 
 end;
 
@@ -88,7 +90,7 @@ frm_report.ShowModal;
 FreeAndNil(frm_report);
 end;
 
-procedure Tform_consulta_padrao.CriaForm(const Nome: string; ModoEdicao: Boolean);
+procedure Tform_consulta_padrao.CriaForm(const Nome: string; FormState: TFormState; ID: Integer);
 var
   Tela: TForm;
   ClasseForm: TFormClass;
@@ -97,16 +99,33 @@ begin
   ClasseForm := TFormClass(FindClass(Nome));
   Tela := ClasseForm.Create(Application);
 
-  if ModoEdicao and (Tela is Tform_cadastro_padrao) then
-  begin
-    Tform_cadastro_padrao(Tela).ID := vID;
-    Tform_cadastro_padrao(Tela).ModoEdicao := True;
+  case FormState of
+    fsView:
+      begin
+        // Lógica para exibir dados em modo de visualização
+      end;
+    fsEdit:
+      begin
+        // Lógica para edição de dados
+        if Tela is Tform_cadastro_padrao then
+        begin
+          Tform_cadastro_padrao(Tela).ID := ID;
+          Tform_cadastro_padrao(Tela).FormState := FormState;
+        end;
+      end;
+    fsInsert:
+      begin
+        // Lógica para inserção de novos dados
+        if Tela is Tform_cadastro_padrao then
+        begin
+          Tform_cadastro_padrao(Tela).ID := ID;
+          Tform_cadastro_padrao(Tela).FormState := FormState;
+        end;
+      end;
   end;
 
   Tela.ShowModal;
 end;
-
-
 
 
 procedure Tform_consulta_padrao.dbg_registrosDblClick(Sender: TObject);
@@ -117,7 +136,10 @@ begin
     // Obtém o ID da linha selecionada
     vID := ds_consulta.DataSet.FieldByName('ID').AsInteger;
     // Abrir o formulário em modo de edição
-    CriaForm(NomeForm, True);
+   // CriaForm(NomeForm, True);
+    CriaForm(NomeForm, fsEdit, vID);
+
+    ds_consulta.DataSet.Refresh;
     dbg_registros.Update;
   end;
 end;

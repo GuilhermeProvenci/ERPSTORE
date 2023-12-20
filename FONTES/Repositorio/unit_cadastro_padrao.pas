@@ -8,10 +8,11 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client;
+  FireDAC.Comp.Client, gplForm;
 
 type
-  Tform_cadastro_padrao = class(TForm)
+  TFormState = (fsView, fsEdit, fsInsert);
+  Tform_cadastro_padrao = class(TgpForm)
     pnl_fundo: TPanel;
     lbl_informacao: TLabel;
     lbl_CODIGO: TLabel;
@@ -39,12 +40,14 @@ type
     { Private declarations }
     FModoEdicao: Boolean;
     FID: Integer;
+    FFormState: TFormState;
 
   public
     { Public declarations }
     NomeClass : String;
     property ID: Integer read FID write FID;
     property ModoEdicao: Boolean read FModoEdicao write FModoEdicao;
+    property FormState: TFormState read FFormState write FFormState;
 
   end;
 
@@ -131,53 +134,72 @@ var
 Classe : TClass;
 Instancia: TObject;
 begin
- if ModoEdicao then
- begin
-   edt_id.text:=  ID.ToString;
-   CarregarCampos(ID, Self);
-   lbl_titulo.Caption := 'EDIÇÃO DE ' + UpperCase(NomeTabela);
-   Classe := GetClass(NomeClass);
-    if Assigned(Classe) then
-    begin
-      // Criar uma instância da classe diretamente
-      Instancia := Classe.Create;
-
-      try
-        begin
-        //    ShowMessage('classe criada - teste') ;
-        end;
-
-      finally
-
-        Instancia.Free;
+begin
+  case FormState of
+    fsView:
+      begin
+        CarregarCampos(ID, Self);
+        pnl_salvar.Enabled := false;
       end;
 
- end;
- end
- else
-  maxID(NomeTabela, edt_id);
+    fsEdit, fsInsert:
+      begin
+        if FormState = fsEdit then
+        begin
+          CarregarCampos(ID, Self);
+          lbl_titulo.Caption := 'EDIÇÃO DE ' + UpperCase(NomeTabela);
+        end
+        else
+        begin
+          maxID(NomeTabela, edt_id);
+          lbl_titulo.Caption := 'INSERÇÃO EM ' + UpperCase(NomeTabela);
+        end;
+
+        Classe := GetClass(NomeClass);
+        if Assigned(Classe) then
+        begin
+          // Criar uma instância da classe diretamente
+          Instancia := Classe.Create;
+
+          try
+            begin
+               ShowMessage('classe: '+  Classe.ClassName +'  - Criada com sucesso');
+            end;
+          finally
+            Instancia.Free;
+          end;
+        end;
+      end;
+  end;
+end;
+
+
 end;
 
 procedure Tform_cadastro_padrao.pnl_salvarClick(Sender: TObject);
 begin
-  ValidarCampoObrigatorios(Self);
 
-  if FModoEdicao then
-  begin
-    ChamarUpdateGenerico(NomeTabela, self);
-  end
-  else
-  begin
-    ChamarInsertGenerico(NomeTabela, self);
-    limpaEDit(Self);
-    maxID(NomeTabela, edt_id);
+ ValidarCampoObrigatorios(Self);
+
+  case FormState of
+    fsView:
+      begin
+        //
+      end;
+    fsEdit:
+      begin
+        ChamarUpdateGenerico(NomeTabela, Self);
+      end;
+    fsInsert:
+      begin
+        ChamarInsertGenerico(NomeTabela, Self);
+        LimpaEdit(Self);
+        MaxID(NomeTabela, edt_id);
+      end;
   end;
 
   CriarMensagem('aviso', 'Registro Salvo com sucesso');
-  if FModoEdicao then
-  self.close;
-
-
+  self.Close;
 
 end;
 
