@@ -442,7 +442,7 @@ begin
       else if (ControlesValores[i] is TDBLookupComboBox) then
         Valores[i] := TDBLookupComboBox(ControlesValores[i]).Text // ou KeyValue, dependendo do que voc� deseja
       else if (ControlesValores[i] is TComboBox)  then
-        Valores[i] := TDBLookupComboBox(ControlesValores[i]).Text
+        Valores[i] := TComboBox(ControlesValores[i]).Text
       else if ControlesValores[i] is TDateTimePicker then
            Valores[i] := FormatDateTime('yyyy/mm/dd' ,TDateTimePicker(ControlesValores[i]).DateTime);
 
