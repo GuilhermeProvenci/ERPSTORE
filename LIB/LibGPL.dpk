@@ -33,9 +33,12 @@ requires
   FireDAC,
   FireDACCommonDriver,
   FireDACCommon,
-  xmlrtl;
+  xmlrtl,
+  vcl;
 
 contains
-  gplQry in 'gplQry.pas';
+  gplQry in 'gplQry.pas',
+  gplEdit in 'gplEdit.pas',
+  gplForm in 'gplForm.pas';
 
 end.

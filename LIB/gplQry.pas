@@ -42,7 +42,7 @@ procedure Register;
 implementation
 
 uses
-  Vcl.Dialogs, FireDAC.Stan.Param, unit_funcoes, System.Math;
+  Vcl.Dialogs, FireDAC.Stan.Param, System.Math, unit_funcoes;
 
 procedure Register;
 begin
@@ -120,6 +120,7 @@ begin
       ExecSQL;
   except
     on E: Exception do
+      //ShowMessage('Erro ao executar a consulta: ' + E.Message)
       CriarMensagem('ERRO', 'Erro ao executar a consulta: ' + E.Message);
   end;
 
@@ -156,6 +157,7 @@ begin
     except
       on E: Exception do
       begin
+        //ShowMessage(E.Message);
         CriarMensagem('ERRO',E.Message );
         Exit;
       end;
