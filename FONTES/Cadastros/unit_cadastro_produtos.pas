@@ -37,28 +37,28 @@ begin
   inherited;
 
 
-
- if not ModoEdicao then
- begin
-  with qryProd do
-  begin
-    close;
-    sql.Clear;
-    sql.Add('select max(id) as id, nome from produtos');
-    open;
-  end;
-
-  with qryInsert do
-  begin
-    close;
-    sql.Clear;
-    sql.Add('Insert into estoque (produto_id, nome_produto ) values (:id, :nome)') ;
-    ParamByName('id').Value := qryProd.FieldByName('id').Value;
-    ParamByName('nome').Value := nomeprod;
-    ExecSQL;
-  end;
- end;
-
+//
+// if not ModoEdicao then
+// begin
+//  with qryProd do
+//  begin
+//    close;
+//    sql.Clear;
+//    sql.Add('select max(id) as id, nome from produtos');
+//    open;
+//  end;
+//
+//  with qryInsert do
+//  begin
+//    close;
+//    sql.Clear;
+//    sql.Add('Insert into estoque (produto_id, nome_produto ) values (:id, :nome)') ;
+//    ParamByName('id').Value := qryProd.FieldByName('id').Value;
+//    ParamByName('nome').Value := nomeprod;
+//    ExecSQL;
+//  end;
+// end;
+//
 
 
 

@@ -25,7 +25,8 @@ uses
   class_clientes in 'CLASSES\class_clientes.pas',
   class_compras in 'CLASSES\class_compras.pas',
   gplQry in 'LIB\gplQry.pas',
-  gplForm in 'LIB\gplForm.pas';
+  gplForm in 'LIB\gplForm.pas',
+  gplEdit in 'LIB\gplEdit.pas';
 
 {$R *.res}
 

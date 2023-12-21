@@ -8,7 +8,7 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, gplForm;
+  FireDAC.Comp.Client, gplForm, gplEdit;
 
 type
   TFormState = (fsView, fsEdit, fsInsert);
@@ -24,12 +24,12 @@ type
     btn_fechar: TSpeedButton;
     pnl_separador_topo: TPanel;
     edt_id: TEdit;
-    edt_nome: TEdit;
     edt_3: TEdit;
     edt_4: TEdit;
     pnl_salvar: TPanel;
     Image1: TImage;
     qryInsert: TFDQuery;
+    edt_nome: TgpEdit;
     procedure btn_fecharClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure pnl_salvarClick(Sender: TObject);
@@ -38,16 +38,18 @@ type
     procedure CarregarCampos(ID: Integer; Form: TForm);
   private
     { Private declarations }
-    FModoEdicao: Boolean;
     FID: Integer;
     FFormState: TFormState;
+    FClasse: TClass;
+    FClasseInstance: TObject;
 
   public
     { Public declarations }
     NomeClass : String;
     property ID: Integer read FID write FID;
-    property ModoEdicao: Boolean read FModoEdicao write FModoEdicao;
     property FormState: TFormState read FFormState write FFormState;
+    property Classe: TClass read FClasse write FClasse;
+    property ClasseInstance: TObject read FClasseInstance write FClasseInstance;
 
   end;
 
@@ -131,50 +133,32 @@ end;
 
 procedure Tform_cadastro_padrao.FormShow(Sender: TObject);
 var
-Classe : TClass;
-Instancia: TObject;
-begin
+  Instancia: TObject;
 begin
   case FormState of
     fsView:
-      begin
-        CarregarCampos(ID, Self);
-        pnl_salvar.Enabled := false;
-      end;
+    begin
+      CarregarCampos(ID, Self);
+      pnl_salvar.Enabled := false;
+    end;
 
     fsEdit, fsInsert:
+    begin
+      if FormState = fsEdit then
       begin
-        if FormState = fsEdit then
-        begin
-          CarregarCampos(ID, Self);
-          lbl_titulo.Caption := 'EDIÇÃO DE ' + UpperCase(NomeTabela);
-        end
-        else
-        begin
-          maxID(NomeTabela, edt_id);
-          lbl_titulo.Caption := 'INSERÇÃO EM ' + UpperCase(NomeTabela);
-        end;
-
-        Classe := GetClass(NomeClass);
-        if Assigned(Classe) then
-        begin
-          // Criar uma instância da classe diretamente
-          Instancia := Classe.Create;
-
-          try
-            begin
-               ShowMessage('classe: '+  Classe.ClassName +'  - Criada com sucesso');
-            end;
-          finally
-            Instancia.Free;
-          end;
-        end;
+        CarregarCampos(ID, Self);
+        lbl_titulo.Caption := 'EDIÇÃO DE ' + UpperCase(NomeTabela);
+      end
+      else
+      begin
+        maxID(NomeTabela, edt_id);
+        lbl_titulo.Caption := 'INSERÇÃO EM ' + UpperCase(NomeTabela);
       end;
+      Classe := GetClass(NomeClass);
+    end;
   end;
 end;
 
-
-end;
 
 procedure Tform_cadastro_padrao.pnl_salvarClick(Sender: TObject);
 begin

@@ -46,9 +46,6 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
     inherited edt_id: TEdit
       StyleName = 'id'
     end
-    inherited edt_nome: TEdit
-      StyleName = 'nome'
-    end
     inherited edt_3: TEdit
       StyleName = 'telefone'
     end
@@ -58,10 +55,10 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
     inherited pnl_salvar: TPanel
       Tag = 99
       Top = 194
-      TabOrder = 6
+      TabOrder = 5
       ExplicitTop = 194
     end
-    object cbb_classificacao: TComboBox
+    object cbb_classificacao: TComboBox [11]
       Tag = 99
       Left = 220
       Top = 203
@@ -74,7 +71,7 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
       Font.Style = []
       ItemIndex = 0
       ParentFont = False
-      TabOrder = 5
+      TabOrder = 4
       Text = 'Bronze'
       StyleName = 'classificacao'
       Items.Strings = (
@@ -82,6 +79,13 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
         'Prata '
         'Ouro'
         'Diamante')
+    end
+    inherited edt_nome: TgpEdit
+      Height = 24
+      TabOrder = 6
+      StyleName = 'nome'
+      DataFieldName = 'Nome'
+      ExplicitHeight = 24
     end
   end
   object qryCondicional: TFDQuery

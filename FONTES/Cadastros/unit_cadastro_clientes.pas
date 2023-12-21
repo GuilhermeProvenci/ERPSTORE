@@ -8,7 +8,7 @@ uses
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.ExtCtrls,
-  Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls;
+  Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls, gplEdit;
 
 type
   Tform_cadastro_clientes = class(Tform_cadastro_padrao)
@@ -16,6 +16,7 @@ type
     cbb_classificacao: TComboBox;
     Label1: TLabel;
     procedure pnl_salvarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -29,32 +30,25 @@ implementation
 
 {$R *.dfm}
 
-uses unit_conexao, unit_funcoes;
+uses unit_conexao, unit_funcoes, class_clientes;
+
+procedure Tform_cadastro_clientes.FormShow(Sender: TObject);
+//var
+//  ClienteInstance: TClientes;
+begin
+  inherited;
+//  if Assigned(ClasseInstance) and (ClasseInstance is TClientes) then
+//  begin
+//  ClienteInstance := TClientes.Create
+//  end;
+
+TClientes(Classe).Create;
+end;
 
 procedure Tform_cadastro_clientes.pnl_salvarClick(Sender: TObject);
-  var DataDevolucao : TDateTime;
+  var
+  DataDevolucao : TDateTime;
 begin
- // inherited;
- // só está sem o inherited até arrumar o classe, para puxar as informações dela
- ValidarCampoObrigatorios(Self);
-
-  case FormState of
-    fsView:
-      begin
-        //
-      end;
-    fsEdit:
-      begin
-        ChamarUpdateGenerico(NomeTabela, Self);
-      end;
-    fsInsert:
-      begin
-        ChamarInsertGenerico(NomeTabela, Self);
-        LimpaEdit(Self);
-        MaxID(NomeTabela, edt_id);
-      end;
-  end;
-
   DataDevolucao := Date + 3;
   with qryCondicional do
     begin
@@ -66,8 +60,9 @@ begin
       ExecSQL;
     end;
 
-  CriarMensagem('aviso', 'Registro Salvo com sucesso');
-  self.Close;
+
+ inherited;
+ // arrumar a classe
 end;
 
 initialization
