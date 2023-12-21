@@ -1017,18 +1017,21 @@ var
 begin
   VerInfoSize := GetFileVersionInfoSize(PChar(ParamStr(0)), Dummy);
   GetMem(VerInfo, VerInfoSize);
-  GetFileVersionInfo(PChar(ParamStr(0)), 0, VerInfoSize, VerInfo);
-  VerQueryValue(VerInfo, '\', Pointer(VerValue), VerValueSize);
-
-  with VerValue^ do
-  begin
-Result := IntToStr(dwFileVersionMS shr 16);
-Result := Result + '.' + IntToStr(dwFileVersionMS and $FFFF) ;
-Result := Result + '.' + IntToStr(dwFileVersionMS shr 16);
-Result := Result + '.' + IntToStr(dwFileVersionMS and $FFFF);
+  try
+    GetFileVersionInfo(PChar(ParamStr(0)), 0, VerInfoSize, VerInfo);
+    VerQueryValue(VerInfo, '\', Pointer(VerValue), VerValueSize);
+    with VerValue^ do
+    begin
+      Result := IntToStr(dwFileVersionMS shr 16);                   // Major
+      Result := Result + '.' + IntToStr(dwFileVersionMS and $FFFF); // Minor
+      Result := Result + '.' + IntToStr(dwFileVersionLS shr 16);    // Release
+      Result := Result + '.' + IntToStr(dwFileVersionLS and $FFFF); // Build
+    end;
+  finally
+    FreeMem(VerInfo, VerInfoSize);
   end;
-  FreeMem(VerInfo, VerInfoSize);
 end;
+
 
 function DayPassword(iData: TDate) :String;
 var
