@@ -8,7 +8,7 @@ uses
   Vcl.Forms, Vcl.ExtCtrls, Vcl.Graphics, Vcl.StdCtrls,
   Vcl.DBCtrls, Vcl.Mask, Winapi.Windows, Vcl.DBGrids, Vcl.Grids, Data.DB, FireDAC.Comp.Client,
   System.Classes, Vcl.Controls, unit_cadastro_padrao,
-  System.SysUtils, gplQry;
+  System.SysUtils, gplQry, gplEdit;
 
   function SomenteNumeros( AString: String ): String;
   function RemoveCaracteres( AString: String ): String;
@@ -44,6 +44,8 @@ uses
   procedure DropTable(const TableName: string);
   procedure AddColumn(const TableName, ColumnName, ColumnType: string);
 
+  procedure CarregarCamposClasse(form: TForm; Classe: TObject);
+
 
 type
   TDBGridPadrao = class( TCustomGrid );
@@ -55,7 +57,8 @@ VAR //variaveis globais
 
 implementation
 
-uses unit_mensagem, unit_conexao, Vcl.Dialogs, Vcl.ComCtrls, System.Math;
+uses unit_mensagem, unit_conexao, Vcl.Dialogs, Vcl.ComCtrls, System.Math,
+  System.Rtti;
 
 //function getQry(sql: String; qryName: String='qryGetQry'; iComp: TObject=nil): TsgQuery;
 //begin
@@ -1219,6 +1222,49 @@ begin
     Query.Free;
   end;
 end;
+
+procedure CarregarCamposClasse(form: TForm; Classe: TObject);
+var
+  Contexto: TRttiContext;
+  Propriedade: TRttiProperty;
+  Valor: TValue;
+  Componente: TComponent;
+  DataFieldName: string;
+begin
+  Contexto := TRttiContext.Create;
+  try
+    for var i: integer := 0 to form.ComponentCount - 1 do
+    begin
+      Componente := form.Components[i];
+      DataFieldName := '';
+      if (Componente is TgpEdit) then
+        DataFieldName := TgpEdit(Componente).DataFieldName
+      else
+        Continue;
+
+      for Propriedade in Contexto.GetType(Classe.ClassType).GetProperties do
+      begin
+        if SameText(Propriedade.Name, DataFieldName) then
+        begin
+          if Propriedade.PropertyType.TypeKind = tkInteger then
+          begin
+            Valor := StrToIntDef(TgpEdit(Componente).Text, 0);
+          end
+          else
+          begin
+            // Se não for Integer, manter o valor como string
+            Valor := TgpEdit(Componente).Text;
+          end;
+
+          Propriedade.SetValue(Classe, Valor);
+        end;
+      end;
+    end;
+  finally
+    Contexto.Free;
+  end;
+end;
+
 
 
 end.

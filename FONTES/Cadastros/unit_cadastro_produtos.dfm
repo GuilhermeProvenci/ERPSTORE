@@ -30,16 +30,16 @@ inherited form_cadastro_produtos: Tform_cadastro_produtos
         ExplicitWidth = 159
       end
     end
-    inherited edt_id: TEdit
-      StyleName = 'id'
-    end
-    inherited edt_nome: TEdit
+    inherited edt_nome: TgpEdit
       StyleName = 'nome'
     end
-    inherited edt_3: TEdit
+    inherited edt_id: TgpEdit
+      StyleName = 'id'
+    end
+    inherited edt_3: TgpEdit
       StyleName = 'tamanho'
     end
-    inherited edt_4: TEdit
+    inherited edt_4: TgpEdit
       StyleName = 'preco'
     end
   end

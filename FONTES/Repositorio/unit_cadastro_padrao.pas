@@ -23,24 +23,27 @@ type
     lbl_titulo: TLabel;
     btn_fechar: TSpeedButton;
     pnl_separador_topo: TPanel;
-    edt_id: TEdit;
-    edt_3: TEdit;
-    edt_4: TEdit;
     pnl_salvar: TPanel;
     Image1: TImage;
     qryInsert: TFDQuery;
     edt_nome: TgpEdit;
+    edt_id: TgpEdit;
+    edt_3: TgpEdit;
+    edt_4: TgpEdit;
     procedure btn_fecharClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure pnl_salvarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure CarregarCampos(ID: Integer; Form: TForm);
+    procedure SetClass(const NomeClasse: string);
+    procedure InstanceClass;
   private
     { Private declarations }
     FID: Integer;
     FFormState: TFormState;
-    FClasse: TClass;
+  protected
+    FClasseType: TClass;
     FClasseInstance: TObject;
 
   public
@@ -48,9 +51,6 @@ type
     NomeClass : String;
     property ID: Integer read FID write FID;
     property FormState: TFormState read FFormState write FFormState;
-    property Classe: TClass read FClasse write FClasse;
-    property ClasseInstance: TObject read FClasseInstance write FClasseInstance;
-
   end;
 
 var
@@ -64,7 +64,7 @@ implementation
 {$R *.dfm}
 
 uses unit_mensagem, unit_funcoes, unit_conexao, unit_conexao_tabelas,
-  Vcl.ComCtrls, gplQry;
+  Vcl.ComCtrls, gplQry, System.Rtti;
 
 
 procedure Tform_cadastro_padrao.btn_fecharClick(Sender: TObject);
@@ -107,13 +107,16 @@ begin
   end;
 end;
 
-
 procedure Tform_cadastro_padrao.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
 //FreeAndNil(Self);
-action := caFree;
-self := Nil;
+
+ if Assigned(FClasseInstance) then
+ FreeAndNil(FClasseInstance);
+
+ action := caFree;
+ self := Nil;
 end;
 
 procedure Tform_cadastro_padrao.FormCreate(Sender: TObject);
@@ -128,7 +131,8 @@ begin
                           // esse padrão
   limpaEDit(Self);
 
-
+  SetClass(NomeClass);
+  InstanceClass;
 end;
 
 procedure Tform_cadastro_padrao.FormShow(Sender: TObject);
@@ -154,9 +158,11 @@ begin
         maxID(NomeTabela, edt_id);
         lbl_titulo.Caption := 'INSERÇÃO EM ' + UpperCase(NomeTabela);
       end;
-      Classe := GetClass(NomeClass);
     end;
   end;
+
+  CarregarCamposClasse(self, FClasseInstance);
+
 end;
 
 
@@ -186,6 +192,43 @@ begin
   self.Close;
 
 end;
+
+procedure Tform_cadastro_padrao.SetClass(const NomeClasse: string);
+begin
+  FClasseType := GetClass(NomeClasse);
+  if FClasseType = nil then
+    raise Exception.CreateFmt('Classe %s não encontrada.', [NomeClasse]);
+end;
+
+
+procedure Tform_cadastro_padrao.InstanceClass; //talvez passar para a unit_funcoes
+var
+  RttiContext: TRttiContext;
+  RttiType: TRttiType;
+  Method: TRttiMethod;
+  Instance: TValue;
+begin
+  if FClasseType = nil then
+    Exit;
+
+  RttiContext := TRttiContext.Create;
+  try
+    RttiType := RttiContext.GetType(FClasseType);
+    Method := RttiType.GetMethod('Create');
+    if not Assigned(Method) then
+      Exit;
+
+    if Length(Method.GetParameters) = 0 then
+      Instance := Method.Invoke(RttiType.AsInstance.MetaclassType, [])
+    else
+      Instance := Method.Invoke(RttiType.AsInstance.MetaclassType, [Self]);
+
+    FClasseInstance := Instance.AsObject;
+  finally
+    RttiContext.Free;
+  end;
+end;
+
 
 
 

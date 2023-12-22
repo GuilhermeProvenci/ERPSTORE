@@ -204,53 +204,6 @@ object form_cadastro_padrao: Tform_cadastro_padrao
         TabOrder = 0
       end
     end
-    object edt_id: TEdit
-      Tag = 99
-      Left = 25
-      Top = 128
-      Width = 187
-      Height = 25
-      Hint = 'Nome do Servidor'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clGray
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      NumbersOnly = True
-      ParentFont = False
-      ReadOnly = True
-      TabOrder = 1
-    end
-    object edt_3: TEdit
-      Tag = 99
-      Left = 566
-      Top = 128
-      Width = 149
-      Height = 25
-      Hint = 'N'#250'mero da Porta'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clGray
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 2
-    end
-    object edt_4: TEdit
-      Tag = 99
-      Left = 27
-      Top = 202
-      Width = 187
-      Height = 25
-      Hint = 'Login'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clGray
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 3
-    end
     object pnl_salvar: TPanel
       Left = 522
       Top = 225
@@ -266,7 +219,7 @@ object form_cadastro_padrao: Tform_cadastro_padrao
       Font.Style = []
       ParentBackground = False
       ParentFont = False
-      TabOrder = 4
+      TabOrder = 5
       OnClick = pnl_salvarClick
       object Image1: TImage
         Left = 1
@@ -344,7 +297,7 @@ object form_cadastro_padrao: Tform_cadastro_padrao
       Left = 222
       Top = 128
       Width = 338
-      Height = 25
+      Height = 24
       Hint = 'Preencha com o valor desejado'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -352,7 +305,53 @@ object form_cadastro_padrao: Tform_cadastro_padrao
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      TabOrder = 5
+      TabOrder = 2
+    end
+    object edt_id: TgpEdit
+      Tag = 99
+      Left = 27
+      Top = 128
+      Width = 187
+      Height = 24
+      Hint = 'Preencha com o valor desejado'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 1
+      DataFieldName = 'Id'
+    end
+    object edt_3: TgpEdit
+      Tag = 99
+      Left = 566
+      Top = 128
+      Width = 149
+      Height = 24
+      Hint = 'Preencha com o valor desejado'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 3
+    end
+    object edt_4: TgpEdit
+      Tag = 99
+      Left = 27
+      Top = 202
+      Width = 187
+      Height = 24
+      Hint = 'Preencha com o valor desejado'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 4
     end
   end
   object qryInsert: TFDQuery

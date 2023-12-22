@@ -15,8 +15,9 @@ type
     qryCondicional: TFDQuery;
     cbb_classificacao: TComboBox;
     Label1: TLabel;
+    Button1: TButton;
     procedure pnl_salvarClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -32,17 +33,13 @@ implementation
 
 uses unit_conexao, unit_funcoes, class_clientes;
 
-procedure Tform_cadastro_clientes.FormShow(Sender: TObject);
-//var
-//  ClienteInstance: TClientes;
+procedure Tform_cadastro_clientes.Button1Click(Sender: TObject);
+var
+  Instance: TClientes;
 begin
   inherited;
-//  if Assigned(ClasseInstance) and (ClasseInstance is TClientes) then
-//  begin
-//  ClienteInstance := TClientes.Create
-//  end;
-
-TClientes(Classe).Create;
+    Instance := TClientes(FClasseInstance);
+    Instance.TestMensage;
 end;
 
 procedure Tform_cadastro_clientes.pnl_salvarClick(Sender: TObject);

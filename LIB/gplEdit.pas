@@ -12,11 +12,13 @@ uses
     FTexto: string;
     FNumero: Real;
     FDataFieldName : string;
+    FDataField: string;
   public
     property Texto: string read FTexto write FTexto;
     property Numero: Real read FNumero write FNumero;
   published
     property DataFieldName: string Read FDataFieldName Write FDataFieldName;
+    property DataField: string Read FDataField Write FDataField;
   end;
 
 procedure Register;

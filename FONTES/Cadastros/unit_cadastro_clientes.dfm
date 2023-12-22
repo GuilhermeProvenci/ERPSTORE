@@ -43,22 +43,13 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
         ExplicitWidth = 219
       end
     end
-    inherited edt_id: TEdit
-      StyleName = 'id'
-    end
-    inherited edt_3: TEdit
-      StyleName = 'telefone'
-    end
-    inherited edt_4: TEdit
-      StyleName = 'endereco'
-    end
     inherited pnl_salvar: TPanel
       Tag = 99
       Top = 194
-      TabOrder = 5
+      TabOrder = 6
       ExplicitTop = 194
     end
-    object cbb_classificacao: TComboBox [11]
+    object cbb_classificacao: TComboBox [8]
       Tag = 99
       Left = 220
       Top = 203
@@ -71,7 +62,7 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
       Font.Style = []
       ItemIndex = 0
       ParentFont = False
-      TabOrder = 4
+      TabOrder = 5
       Text = 'Bronze'
       StyleName = 'classificacao'
       Items.Strings = (
@@ -81,12 +72,29 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
         'Diamante')
     end
     inherited edt_nome: TgpEdit
-      Height = 24
-      TabOrder = 6
       StyleName = 'nome'
       DataFieldName = 'Nome'
-      ExplicitHeight = 24
     end
+    inherited edt_id: TgpEdit
+      StyleName = 'id'
+    end
+    inherited edt_3: TgpEdit
+      StyleName = 'telefone'
+      DataFieldName = 'TELEFONE'
+    end
+    inherited edt_4: TgpEdit
+      StyleName = 'ENDERECO'
+      DataFieldName = 'ENDERECO'
+    end
+  end
+  object Button1: TButton [1]
+    Left = 416
+    Top = 203
+    Width = 75
+    Height = 25
+    Caption = 'Button1'
+    TabOrder = 1
+    OnClick = Button1Click
   end
   object qryCondicional: TFDQuery
     Connection = form_conexao.FDConnection

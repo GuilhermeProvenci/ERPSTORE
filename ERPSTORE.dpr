@@ -26,7 +26,8 @@ uses
   class_compras in 'CLASSES\class_compras.pas',
   gplQry in 'LIB\gplQry.pas',
   gplForm in 'LIB\gplForm.pas',
-  gplEdit in 'LIB\gplEdit.pas';
+  gplEdit in 'LIB\gplEdit.pas',
+  class_produtos in 'CLASSES\class_produtos.pas';
 
 {$R *.res}
 

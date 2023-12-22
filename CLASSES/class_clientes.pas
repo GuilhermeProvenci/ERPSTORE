@@ -3,29 +3,30 @@
 interface
 
 uses
-  System.Classes, FireDAC.Comp.Client, System.SysUtils, System.Rtti;
+  System.Classes, FireDAC.Comp.Client, System.SysUtils, System.Rtti, VCL.Forms;
 
 type
-  TClassificacao = (clBronze, clPrata, clOuro, clDiamante);
-
   TClientes = class(TComponent)
   private
     FID: Integer;
     FNome: string;
     FTelefone: string;
     FEndereco: string;
-    FClassificacao: TClassificacao;
+    FClassificacao: string;
+    FOwnerForm : TForm;
     procedure SetID(const Value: Integer);
-    procedure CarregarCampos;
+  //  procedure CarregarCampos(form : Tform);
   public
    // constructor Create(AID: Integer; ANome, ATelefone, AEndereco: string; AClassificacao: TClassificacao);
-    constructor Create;
+    constructor Create(form : Tform);
     property ID: Integer read FID write SetID;
-    property Nome: string read FNome;
-    property Telefone: string read FTelefone;
-    property Endereco: string read FEndereco;
-    property Classificacao: TClassificacao read FClassificacao;
+    property Nome: string read FNome write FNome;
+    property Telefone: string read FTelefone write FTelefone ;
+    property Endereco: string read FEndereco write FEndereco;
+    property Classificacao: string read FClassificacao write FClassificacao;
+    property OwnerForm: TForm read FOwnerForm write FOwnerForm;
     function ObterDesconto: Double;
+    procedure TestMensage;
   end;
 
 implementation
@@ -33,21 +34,18 @@ implementation
 { TClientes }
 
 uses
-  gplEdit, Vcl.Dialogs, Vcl.Forms;
+  gplEdit, Vcl.Dialogs, StrUtils;
 
 //constructor TClientes.Create(AID: Integer; ANome, ATelefone, AEndereco: string; AClassificacao: TClassificacao);
-constructor TClientes.Create;
+constructor TClientes.Create(form : Tform);
 begin
-//  inherited Create(nil);
+  inherited Create(nil);
 //  FID := AID;
 //  FNome := ANome;
 //  FTelefone := ATelefone;
 //  FEndereco := AEndereco;
 //  FClassificacao := AClassificacao;
-  CarregarCampos;
-
-  ShowMessage(Format('ID: %d'#13#10'Nome: %s'#13#10'Telefone: %s'#13#10'Endereco: %s'#13#10'Classificacao: %d',
-  [FID, FNome, FTelefone, FEndereco, Ord(FClassificacao)]));
+   OwnerForm := form;
 end;
 
 procedure TClientes.SetID(const Value: Integer);
@@ -55,65 +53,61 @@ begin
   FID := Value;
 end;
 
-procedure TClientes.CarregarCampos;
-var
-  i: Integer;
-  Componente: TComponent;
-  NomePropriedade: string;
-  Valor: Variant;
-  Contexto: TRttiContext;
-  Propriedade: TRttiProperty;
+procedure TClientes.TestMensage;
 begin
-  if not Assigned(Owner) or not (Owner is TForm) then
-    Exit; // Sair se não houver formulário associado ou se o Owner não for um TForm
+  ShowMessage(Format('ID: %d'#13#10'Nome: %s'#13#10'Telefone: %s'#13#10'Endereco: %s'#13#10'Classificacao: %s',
+  [FID, FNome, FTelefone, FEndereco, FClassificacao]));
 
-  Contexto := TRttiContext.Create;
-  try
-    for i := 0 to TForm(Owner).ComponentCount - 1 do
-    begin
-      Componente := TForm(Owner).Components[i];
-
-      // Verificar se o componente tem uma propriedade 'DataFieldName'
-      if not (Componente is TgpEdit) then
-        Continue;
-
-      NomePropriedade := TgpEdit(Componente).DataFieldName;
-      if NomePropriedade <> '' then
-      begin
-        // Verificar se a propriedade existe na classe
-        Propriedade := Contexto.GetType(Self.ClassType).GetProperty(NomePropriedade);
-        if Assigned(Propriedade) then
-        begin
-          // Converter Variant para TValue antes de atribuir à propriedade
-          Valor := TgpEdit(Componente).Text; // Ou outra propriedade adequada
-          Propriedade.SetValue(Self, TValue.FromVariant(Valor));
-        end;
-      end;
-    end;
-  finally
-    Contexto.Free;
-  end;
 end;
 
-
+//procedure TClientes.CarregarCampos(form: TForm);
+//var
+//  Contexto: TRttiContext;
+//  Propriedade: TRttiProperty;
+//  Valor: TValue;
+//  Componente: TComponent;
+//  DataFieldName: string;
+//begin
+//  Contexto := TRttiContext.Create;
+//  try
+//    for var i: integer := 0 to form.ComponentCount - 1 do
+//    begin
+//      Componente := form.Components[i];
+//      DataFieldName := '';
+//      if (Componente is TgpEdit) then
+//        DataFieldName := TgpEdit(Componente).DataFieldName
+//      else
+//        Continue;
+//      for Propriedade in Contexto.GetType(Self.ClassType).GetProperties do
+//      begin
+//        if SameText(Propriedade.Name, DataFieldName) then
+//        begin
+//          Valor := TgpEdit(Componente).Text;
+//          Propriedade.SetValue(Self, Valor);
+//        end;
+//      end;
+//    end;
+//  finally
+//    Contexto.Free;
+//  end;
+//end;
 
 function TClientes.ObterDesconto: Double;
-const
-  DescontoBronze = 0.05;
-  DescontoPrata = 0.1;
-  DescontoOuro = 0.15;
-  DescontoDiamante = 0.2;
 begin
-  // Retornar o desconto com base na classificação do cliente
-  case FClassificacao of
-    clBronze: Result := DescontoBronze;
-    clPrata: Result := DescontoPrata;
-    clOuro: Result := DescontoOuro;
-    clDiamante: Result := DescontoDiamante;
+  case AnsiIndexStr(UpperCase(Trim(FClassificacao)), ['BRONZE', 'PRATA', 'OURO', 'DIAMANTE']) of
+    0: Result := 0.05;
+    1: Result := 0.1;
+    2: Result := 0.15;
+    3: Result := 0.2;
   else
-    Result := 0.0; // Nenhum desconto para classificação não reconhecida
+    Result := 0.0;
   end;
 end;
+
+
+
+
+
 
 initialization
   RegisterClass(TClientes);
