@@ -39,6 +39,7 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
     inherited pnl_topo: TPanel
       inherited lbl_titulo: TLabel
         Width = 219
+        Height = 48
         Caption = 'Cadastro de Pessoas / clientes'
         ExplicitWidth = 219
       end
@@ -86,41 +87,5 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
       StyleName = 'ENDERECO'
       DataFieldName = 'ENDERECO'
     end
-  end
-  object Button1: TButton [1]
-    Left = 416
-    Top = 203
-    Width = 75
-    Height = 25
-    Caption = 'Button1'
-    TabOrder = 1
-    OnClick = Button1Click
-  end
-  object qryCondicional: TFDQuery
-    Connection = form_conexao.FDConnection
-    SQL.Strings = (
-      
-        'INSERT INTO condicional (cliente_id, data_entregue, data_devoluc' +
-        'ao, nome_cliente)'
-      'VALUES (:1, :2, :3, :4);')
-    Left = 504
-    Top = 8
-    ParamData = <
-      item
-        Name = '1'
-        ParamType = ptInput
-      end
-      item
-        Name = '2'
-        ParamType = ptInput
-      end
-      item
-        Name = '3'
-        ParamType = ptInput
-      end
-      item
-        Name = '4'
-        ParamType = ptInput
-      end>
   end
 end

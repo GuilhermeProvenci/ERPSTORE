@@ -152,6 +152,7 @@ begin
       begin
         CarregarCampos(ID, Self);
         lbl_titulo.Caption := 'EDIÇÃO DE ' + UpperCase(NomeTabela);
+        CarregarCamposClasse(self, FClasseInstance);
       end
       else
       begin
@@ -161,7 +162,7 @@ begin
     end;
   end;
 
-  CarregarCamposClasse(self, FClasseInstance);
+
 
 end;
 
@@ -182,6 +183,7 @@ begin
       end;
     fsInsert:
       begin
+        CarregarCamposClasse(self, FClasseInstance);
         ChamarInsertGenerico(NomeTabela, Self);
         LimpaEdit(Self);
         MaxID(NomeTabela, edt_id);

@@ -25,3 +25,5 @@ implementation
 uses unit_conexao_tabelas;
 
 end.
+
+//arrumar db grid para mostrar o condicional pendente, e nao o cond

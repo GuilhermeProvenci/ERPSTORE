@@ -149,36 +149,26 @@ object form_conexao_tabelas: Tform_conexao_tabelas
     Top = 40
   end
   object qryConsultaCondicional: TFDQuery
+    Active = True
     Connection = form_conexao.FDConnection
     SQL.Strings = (
       'select * from condicional')
     Left = 40
     Top = 192
-    object qryConsultaCondicionalid: TFDAutoIncField
-      FieldName = 'id'
-      Origin = 'id'
+    object qryConsultaCondicionalID: TFDAutoIncField
+      FieldName = 'ID'
+      Origin = 'ID'
       ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = True
     end
-    object qryConsultaCondicionalcliente_id: TIntegerField
-      FieldName = 'cliente_id'
-      Origin = 'cliente_id'
+    object qryConsultaCondicionalID_Cliente: TIntegerField
+      FieldName = 'ID_Cliente'
+      Origin = 'ID_Cliente'
       Required = True
     end
-    object qryConsultaCondicionaldata_entregue: TDateField
+    object qryConsultaCondicionalNome_Cliente: TStringField
       AutoGenerateValue = arDefault
-      FieldName = 'data_entregue'
-      Origin = 'data_entregue'
-    end
-    object qryConsultaCondicionaldata_devolucao: TDateField
-      FieldName = 'data_devolucao'
-      Origin = 'data_devolucao'
-      Required = True
-    end
-    object qryConsultaCondicionalnome_cliente: TStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'nome_cliente'
-      Origin = 'nome_cliente'
+      FieldName = 'Nome_Cliente'
+      Origin = 'Nome_Cliente'
       Size = 255
     end
   end

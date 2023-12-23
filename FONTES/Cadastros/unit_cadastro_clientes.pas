@@ -8,16 +8,13 @@ uses
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.ExtCtrls,
-  Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls, gplEdit;
+  Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls, gplEdit, gplQry;
 
 type
   Tform_cadastro_clientes = class(Tform_cadastro_padrao)
-    qryCondicional: TFDQuery;
     cbb_classificacao: TComboBox;
     Label1: TLabel;
-    Button1: TButton;
     procedure pnl_salvarClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -33,33 +30,14 @@ implementation
 
 uses unit_conexao, unit_funcoes, class_clientes;
 
-procedure Tform_cadastro_clientes.Button1Click(Sender: TObject);
-var
-  Instance: TClientes;
-begin
-  inherited;
-    Instance := TClientes(FClasseInstance);
-    Instance.TestMensage;
-end;
-
 procedure Tform_cadastro_clientes.pnl_salvarClick(Sender: TObject);
   var
-  DataDevolucao : TDateTime;
+  qryCondicional : tgpQry;
 begin
-  DataDevolucao := Date + 3;
-  with qryCondicional do
-    begin
-      close;
-      ParamByName('1').Value:= strtoint(edt_id.Text);
-      ParamByName('2').AsDateTime := Now;
-      ParamByName('3').AsDateTime := DataDevolucao;
-      ParamByName('4').Value:= edt_nome.Text;
-      ExecSQL;
-    end;
-
-
  inherited;
- // arrumar a classe
+   qryCondicional := tgpQry.Create(self);
+   qryCondicional.SQLExec('INSERT INTO Condicional (ID_Cliente, Nome_Cliente) values (:1, :2) ',
+                          [TClientes(FClasseInstance).ID, TClientes(FClasseInstance).Nome]);
 end;
 
 initialization

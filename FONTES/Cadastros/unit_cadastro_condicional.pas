@@ -9,27 +9,26 @@ uses
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, unit_conexao_tabelas, Vcl.Grids,
-  Vcl.DBGrids, gplQry;
+  Vcl.DBGrids, gplQry, gplEdit;
 
 type
   Tform_cadastro_condicional = class(TForm)
     pnl_fundo: TPanel;
-    lbl_informacao1: TLabel;
-    lbl_informacao2: TLabel;
+    lbl_cliente: TLabel;
+    lbl_produtos: TLabel;
     pnl_topo: TPanel;
     lbl_titulo: TLabel;
     btn_fechar: TSpeedButton;
     pnl_separador_topo: TPanel;
     edt_qtt: TNumberBox;
-    lbl_informacao3: TLabel;
+    lbl_qtt: TLabel;
     pnl_add: TPanel;
     edt_cod_clie: TEdit;
     edt_cod_prod: TEdit;
     qryProdutos: TFDQuery;
     cbb_produtos: TComboBox;
     cbb_clientes: TComboBox;
-    qryClientes: TFDQuery;
-    Label2: TLabel;
+    lbl_qtt_estoque: TLabel;
     edt_qtt_estoque: TEdit;
     dbg_registros: TDBGrid;
     dsCondPendente: TDataSource;
@@ -42,17 +41,21 @@ type
     qryConddata_entregue: TDateTimeField;
     qryConddata_devolucao: TDateTimeField;
     qryCondnome_cliente: TStringField;
-    Panel1: TPanel;
+    pnl_remover: TPanel;
+    pnl_campos: TPanel;
+    Splitter1: TSplitter;
+    edt_obs: TgpEdit;
+    lbl_obs: TLabel;
     procedure btn_fecharClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure cbb_produtosChange(Sender: TObject);
     procedure cbb_clientesChange(Sender: TObject);
     procedure pnl_addClick(Sender: TObject);
-    procedure Panel1Click(Sender: TObject);
+    procedure pnl_removerClick(Sender: TObject);
   private
     { Private declarations }
-    qryEstoque, qryInsertCond :   TgpQry;
+    qryEstoque, qryInsertCond, qryClientes :   TgpQry;
     clienteID, condicionalID: Integer;
   public
     { Public declarations }
@@ -78,19 +81,12 @@ end;
 
 procedure Tform_cadastro_condicional.cbb_clientesChange(Sender: TObject);
 begin
-  with qryClientes do
-  begin
-    Close;
-    SQL.Clear;
-    SQL.Add('SELECT id, nome FROM clientes WHERE nome = :nome');
-    ParamByName('nome').Value := cbb_clientes.Items[cbb_clientes.ItemIndex];
-    Open;
-  end;
+
+  qryClientes.SQLExec('SELECT id, nome FROM clientes WHERE nome = :1',
+  [cbb_clientes.Items[cbb_clientes.ItemIndex]]);
 
   edt_cod_clie.Clear;
   edt_cod_clie.Text := qryClientes.FieldByName('id').AsString;
-
-
   clienteID := StrToIntDef(edt_cod_clie.Text, 0);
 
 
@@ -114,11 +110,8 @@ begin
   Close;
   SQL.Clear;
   SQL.Add('Select * from condicional_pendente where id_condicional = :id');
-
-  // Especifique o tipo de dados do parâmetro :id
   ParamByName('id').DataType := ftInteger;
-
-  ParamByName('id').Value := qryCond.FieldByName('id').AsInteger; // Agora você pode acessar o ID do condicional
+  ParamByName('id').Value := qryCond.FieldByName('id').AsInteger;
   Open;
 end;
 
@@ -149,11 +142,9 @@ end;
 procedure Tform_cadastro_condicional.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-form_conexao_tabelas.qryConsultaClientes.Active := false;
-form_conexao_tabelas.qryConsultaProdutos.Active := false;
 FreeAndNil(qryEstoque);
 FreeAndNil(qryInsertCond);
-
+FreeAndNil(qryClientes);
 FreeAndNil(form_cadastro_condicional);
 end;
 
@@ -161,12 +152,9 @@ procedure Tform_cadastro_condicional.FormCreate(Sender: TObject);
 var
 i, j : integer;
 begin
-  form_conexao_tabelas.qryConsultaClientes.Active := true;
-  form_conexao_tabelas.qryConsultaProdutos.Active := true;
-
-
   qryInsertCond := TgpQry.Create(self);
   qryEstoque := TgpQry.Create(self);
+  qryClientes := TgpQry.Create(self);
 
 
 for I := 0 to form_conexao_tabelas.qryConsultaProdutos.RecordCount - 1 do
@@ -184,7 +172,7 @@ end;
 
 end;
 
-procedure Tform_cadastro_condicional.Panel1Click(Sender: TObject);
+procedure Tform_cadastro_condicional.pnl_removerClick(Sender: TObject);
 
 begin
  // Verifica se há um registro selecionado no TDBGrid

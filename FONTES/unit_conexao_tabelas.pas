@@ -31,16 +31,14 @@ type
     qryConsultaEstoquenome_produto: TStringField;
     qryConsultaEstoquequantidade_em_estoque: TIntegerField;
     qryConsultaCondicional: TFDQuery;
-    qryConsultaCondicionalid: TFDAutoIncField;
-    qryConsultaCondicionalcliente_id: TIntegerField;
-    qryConsultaCondicionaldata_entregue: TDateField;
-    qryConsultaCondicionaldata_devolucao: TDateField;
-    qryConsultaCondicionalnome_cliente: TStringField;
     qryConsultaProdutosid: TFDAutoIncField;
     qryConsultaProdutosnome: TStringField;
     qryConsultaProdutostamanho: TStringField;
     qryConsultaProdutospreco: TBCDField;
     qryConsultaClientesclassificacao: TStringField;
+    qryConsultaCondicionalID: TFDAutoIncField;
+    qryConsultaCondicionalID_Cliente: TIntegerField;
+    qryConsultaCondicionalNome_Cliente: TStringField;
     procedure qryConsultaCSTBeforeOpen(DataSet: TDataSet);
   private
     { Private declarations }

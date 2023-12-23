@@ -1,7 +1,6 @@
 object form_cadastro_condicional: Tform_cadastro_condicional
   Left = 0
   Top = 0
-  ActiveControl = edt_qtt
   BorderStyle = bsNone
   Caption = 'form_cadastro_condicional'
   ClientHeight = 576
@@ -26,60 +25,15 @@ object form_cadastro_condicional: Tform_cadastro_condicional
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    DesignSize = (
-      952
-      576)
-    object lbl_informacao1: TLabel
-      Left = 25
-      Top = 89
-      Width = 39
-      Height = 17
-      Caption = 'Cliente'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clGray
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-    end
-    object lbl_informacao2: TLabel
-      Left = 27
-      Top = 183
-      Width = 47
-      Height = 17
-      Caption = 'Produto'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clGray
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-    end
-    object lbl_informacao3: TLabel
-      Left = 27
-      Top = 339
-      Width = 68
-      Height = 17
-      Caption = 'Quantidade'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clGray
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-    end
-    object Label2: TLabel
-      Left = 25
-      Top = 273
-      Width = 141
-      Height = 17
-      Caption = 'Quantidade em Estoque'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clGray
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
+    ExplicitLeft = 40
+    object Splitter1: TSplitter
+      Left = 325
+      Top = 49
+      Height = 527
+      Align = alRight
+      ExplicitLeft = 160
+      ExplicitTop = 216
+      ExplicitHeight = 100
     end
     object pnl_topo: TPanel
       Left = 0
@@ -108,7 +62,8 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Font.Style = []
         ParentFont = False
         Layout = tlCenter
-        ExplicitHeight = 21
+        ExplicitLeft = -17
+        ExplicitTop = -1
       end
       object btn_fechar: TSpeedButton
         Left = 899
@@ -190,67 +145,18 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         TabOrder = 0
       end
     end
-    object edt_qtt: TNumberBox
-      Left = 27
-      Top = 362
-      Width = 121
-      Height = 21
-      TabOrder = 1
-    end
-    object pnl_add: TPanel
-      Left = 27
-      Top = 439
-      Width = 209
-      Height = 41
-      Anchors = [akLeft, akBottom]
-      Caption = 'Adicionar'
-      Color = clSilver
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlack
-      Font.Height = -11
-      Font.Name = 'Segoe UI Semibold'
-      Font.Style = []
-      ParentBackground = False
-      ParentFont = False
-      TabOrder = 2
-      OnClick = pnl_addClick
-    end
-    object edt_cod_clie: TEdit
-      Left = 27
-      Top = 112
-      Width = 32
-      Height = 21
-      ReadOnly = True
-      TabOrder = 3
-    end
-    object edt_cod_prod: TEdit
-      Left = 27
-      Top = 208
-      Width = 30
-      Height = 21
-      ReadOnly = True
-      TabOrder = 4
-    end
-    object edt_qtt_estoque: TEdit
-      Left = 27
-      Top = 296
-      Width = 56
-      Height = 21
-      ReadOnly = True
-      TabOrder = 5
-    end
     object pnl_registros: TPanel
-      Left = 344
-      Top = 112
-      Width = 598
-      Height = 409
-      Anchors = [akLeft, akTop, akRight]
-      TabOrder = 6
+      Left = 328
+      Top = 49
+      Width = 624
+      Height = 527
+      Align = alRight
+      TabOrder = 1
       object dbg_registros: TDBGrid
         Left = 1
         Top = 1
-        Width = 596
-        Height = 407
+        Width = 622
+        Height = 525
         Align = alClient
         DataSource = dsCondPendente
         TabOrder = 0
@@ -261,63 +167,202 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         TitleFont.Style = []
       end
     end
-    object Panel1: TPanel
-      Left = 27
-      Top = 495
-      Width = 209
-      Height = 41
-      Anchors = [akLeft, akBottom]
-      Caption = 'Remover'
-      Color = clSilver
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlack
-      Font.Height = -11
-      Font.Name = 'Segoe UI Semibold'
-      Font.Style = []
-      ParentBackground = False
-      ParentFont = False
-      TabOrder = 7
-      OnClick = Panel1Click
+    object pnl_campos: TPanel
+      Left = 0
+      Top = 49
+      Width = 325
+      Height = 527
+      Align = alClient
+      TabOrder = 2
+      ExplicitLeft = -2
+      ExplicitTop = 51
+      DesignSize = (
+        325
+        527)
+      object lbl_qtt_estoque: TLabel
+        Left = 29
+        Top = 153
+        Width = 141
+        Height = 17
+        Caption = 'Quantidade em Estoque'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lbl_cliente: TLabel
+        Left = 29
+        Top = 18
+        Width = 39
+        Height = 17
+        Caption = 'Cliente'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lbl_produtos: TLabel
+        Left = 29
+        Top = 89
+        Width = 47
+        Height = 17
+        Caption = 'Produto'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lbl_qtt: TLabel
+        Left = 29
+        Top = 211
+        Width = 162
+        Height = 17
+        Caption = 'Quantidade em Condicional'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lbl_obs: TLabel
+        Left = 29
+        Top = 289
+        Width = 70
+        Height = 17
+        Caption = 'Observa'#231#227'o'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object cbb_clientes: TComboBox
+        Left = 82
+        Top = 41
+        Width = 183
+        Height = 21
+        TabOrder = 0
+        OnChange = cbb_clientesChange
+      end
+      object cbb_produtos: TComboBox
+        Left = 82
+        Top = 112
+        Width = 183
+        Height = 21
+        TabOrder = 1
+        OnChange = cbb_produtosChange
+      end
+      object edt_cod_clie: TEdit
+        Left = 62
+        Top = 41
+        Width = 26
+        Height = 21
+        ReadOnly = True
+        TabOrder = 2
+      end
+      object edt_cod_prod: TEdit
+        Left = 62
+        Top = 112
+        Width = 26
+        Height = 21
+        ReadOnly = True
+        TabOrder = 3
+      end
+      object edt_qtt: TNumberBox
+        Left = 62
+        Top = 242
+        Width = 203
+        Height = 21
+        TabOrder = 4
+      end
+      object edt_qtt_estoque: TEdit
+        Left = 62
+        Top = 184
+        Width = 203
+        Height = 21
+        ReadOnly = True
+        TabOrder = 5
+      end
+      object pnl_remover: TPanel
+        Left = 62
+        Top = 451
+        Width = 209
+        Height = 41
+        Anchors = [akLeft, akBottom]
+        Caption = 'Remover'
+        Color = clSilver
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Segoe UI Semibold'
+        Font.Style = []
+        ParentBackground = False
+        ParentFont = False
+        TabOrder = 6
+        OnClick = pnl_removerClick
+      end
+      object pnl_add: TPanel
+        Left = 62
+        Top = 396
+        Width = 209
+        Height = 41
+        Anchors = [akLeft, akBottom]
+        Caption = 'Adicionar'
+        Color = clSilver
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Segoe UI Semibold'
+        Font.Style = []
+        ParentBackground = False
+        ParentFont = False
+        TabOrder = 7
+        OnClick = pnl_addClick
+      end
+      object edt_obs: TgpEdit
+        Left = 62
+        Top = 312
+        Width = 203
+        Height = 73
+        Hint = 'Observa'#231#227'o do Condicional'
+        TabOrder = 8
+      end
     end
-  end
-  object cbb_produtos: TComboBox
-    Left = 63
-    Top = 208
-    Width = 166
-    Height = 21
-    TabOrder = 1
-    OnChange = cbb_produtosChange
-  end
-  object cbb_clientes: TComboBox
-    Left = 63
-    Top = 112
-    Width = 166
-    Height = 21
-    TabOrder = 2
-    OnChange = cbb_clientesChange
   end
   object qryProdutos: TFDQuery
     Connection = form_conexao.FDConnection
     Left = 248
     Top = 8
   end
-  object qryClientes: TFDQuery
-    Connection = form_conexao.FDConnection
-    Left = 296
-    Top = 8
-  end
   object dsCondPendente: TDataSource
     DataSet = qryCondPendente
-    Left = 664
+    Left = 696
     Top = 8
   end
   object qryCondPendente: TFDQuery
     Connection = form_conexao.FDConnection
     SQL.Strings = (
-      
-        'select id, id_produto, nome_produto, quantidade_condicional, id_' +
-        'condicional from condicional_pendente'
-      'where id_condicional = :id')
+      'SELECT'
+      '    Cond.ID,'
+      '    Cond.Nome_Cliente,'
+      '    C.Nome AS NomeCliente,'
+      '    CP.Produto,'
+      '    CP.Quantidade'
+      'FROM'
+      '    Condicional Cond'
+      'INNER JOIN'
+      '    Clientes C ON Cond.ID_Cliente = C.id'
+      'INNER JOIN'
+      '    CondicionalPendente CP ON Cond.ID = CP.ID_Condicional;'
+      'WHERE ID_Condicional = :id')
     Left = 592
     Top = 8
     ParamData = <
