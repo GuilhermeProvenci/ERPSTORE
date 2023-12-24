@@ -27,7 +27,8 @@ uses
   gplQry in 'LIB\gplQry.pas',
   gplForm in 'LIB\gplForm.pas',
   gplEdit in 'LIB\gplEdit.pas',
-  class_produtos in 'CLASSES\class_produtos.pas';
+  class_produtos in 'CLASSES\class_produtos.pas',
+  gplCombo in 'LIB\gplCombo.pas';
 
 {$R *.res}
 
