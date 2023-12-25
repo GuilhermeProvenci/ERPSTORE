@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, unit_conexao_tabelas, Vcl.Grids,
-  Vcl.DBGrids, gplQry, gplEdit;
+  Vcl.DBGrids, gplQry, gplEdit, gplCombo;
 
 type
   Tform_cadastro_condicional = class(TForm)
@@ -27,7 +27,6 @@ type
     edt_cod_prod: TEdit;
     qryProdutos: TFDQuery;
     cbb_produtos: TComboBox;
-    cbb_clientes: TComboBox;
     lbl_qtt_estoque: TLabel;
     edt_qtt_estoque: TEdit;
     dbg_registros: TDBGrid;
@@ -46,6 +45,7 @@ type
     Splitter1: TSplitter;
     edt_obs: TgpEdit;
     lbl_obs: TLabel;
+    cbb_clientes: TgpCombo;
     procedure btn_fecharClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -53,6 +53,8 @@ type
     procedure cbb_clientesChange(Sender: TObject);
     procedure pnl_addClick(Sender: TObject);
     procedure pnl_removerClick(Sender: TObject);
+    procedure edt_cod_clieKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
     qryEstoque, qryInsertCond, qryClientes :   TgpQry;
@@ -137,6 +139,13 @@ begin
 
   edt_qtt_estoque.Clear;
   edt_qtt_estoque.Text := qryEstoque.FieldByName('quantidade_em_estoque').AsString;
+end;
+
+procedure Tform_cadastro_condicional.edt_cod_clieKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+ if key = VK_RETURN then
+    cbb_clientes.LoadField(edt_cod_clie.Text);
 end;
 
 procedure Tform_cadastro_condicional.FormClose(Sender: TObject;

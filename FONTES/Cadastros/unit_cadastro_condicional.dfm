@@ -12,6 +12,7 @@ object form_cadastro_condicional: Tform_cadastro_condicional
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
@@ -25,7 +26,6 @@ object form_cadastro_condicional: Tform_cadastro_condicional
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitLeft = 40
     object Splitter1: TSplitter
       Left = 325
       Top = 49
@@ -62,8 +62,7 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Font.Style = []
         ParentFont = False
         Layout = tlCenter
-        ExplicitLeft = -17
-        ExplicitTop = -1
+        ExplicitHeight = 21
       end
       object btn_fechar: TSpeedButton
         Left = 899
@@ -174,8 +173,6 @@ object form_cadastro_condicional: Tform_cadastro_condicional
       Height = 527
       Align = alClient
       TabOrder = 2
-      ExplicitLeft = -2
-      ExplicitTop = 51
       DesignSize = (
         325
         527)
@@ -244,20 +241,12 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Font.Style = []
         ParentFont = False
       end
-      object cbb_clientes: TComboBox
-        Left = 82
-        Top = 41
-        Width = 183
-        Height = 21
-        TabOrder = 0
-        OnChange = cbb_clientesChange
-      end
       object cbb_produtos: TComboBox
         Left = 82
         Top = 112
         Width = 183
         Height = 21
-        TabOrder = 1
+        TabOrder = 0
         OnChange = cbb_produtosChange
       end
       object edt_cod_clie: TEdit
@@ -265,8 +254,9 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Top = 41
         Width = 26
         Height = 21
-        ReadOnly = True
-        TabOrder = 2
+        NumbersOnly = True
+        TabOrder = 1
+        OnKeyDown = edt_cod_clieKeyDown
       end
       object edt_cod_prod: TEdit
         Left = 62
@@ -274,14 +264,14 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Width = 26
         Height = 21
         ReadOnly = True
-        TabOrder = 3
+        TabOrder = 2
       end
       object edt_qtt: TNumberBox
         Left = 62
         Top = 242
         Width = 203
         Height = 21
-        TabOrder = 4
+        TabOrder = 3
       end
       object edt_qtt_estoque: TEdit
         Left = 62
@@ -289,7 +279,7 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Width = 203
         Height = 21
         ReadOnly = True
-        TabOrder = 5
+        TabOrder = 4
       end
       object pnl_remover: TPanel
         Left = 62
@@ -306,7 +296,7 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Font.Style = []
         ParentBackground = False
         ParentFont = False
-        TabOrder = 6
+        TabOrder = 5
         OnClick = pnl_removerClick
       end
       object pnl_add: TPanel
@@ -324,16 +314,25 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Font.Style = []
         ParentBackground = False
         ParentFont = False
-        TabOrder = 7
+        TabOrder = 6
         OnClick = pnl_addClick
       end
       object edt_obs: TgpEdit
         Left = 62
         Top = 312
         Width = 203
-        Height = 73
+        Height = 21
         Hint = 'Observa'#231#227'o do Condicional'
+        TabOrder = 7
+      end
+      object cbb_clientes: TgpCombo
+        Left = 82
+        Top = 41
+        Width = 183
+        Height = 21
         TabOrder = 8
+        Table = 'CLIENTES'
+        DataField = 'Nome'
       end
     end
   end
