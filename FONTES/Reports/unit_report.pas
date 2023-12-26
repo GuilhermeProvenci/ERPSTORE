@@ -95,6 +95,7 @@ type
     { Private declarations }
     FNomeReport: string;
     FTable: string;
+
   public
     { Public declarations }
     property NomeReport: string read FNomeReport write FNomeReport;
@@ -108,32 +109,45 @@ implementation
 
 {$R *.dfm}
 
+
 procedure Tfrm_report.Panel2Click(Sender: TObject); //botao temporário, a impressao vai ser feita direto pelo consulta padrao
 var
   Relatorio, report: TppReport;
   DataSource: TDataSource;
+  pipeline : TppDBPipeline;
 
 begin
-  DataSource := form_conexao_tabelas.GetDataSourceByTableName(Table);
-  TppDBPipeline(FindComponent('Pipeline'+Table)).DataSource := DataSource;
-
-  report:= TppReport.Create(self);
-  report.DataPipeline := TppDBPipeline(FindComponent('Pipeline'+Table));
-
   Relatorio := TppReport(FindComponent(NomeReport));
-
-
-  //if Assigned(report) then
-    //report.Print
 
   if Assigned(Relatorio) then
     Relatorio.Print
   else
     CriarMensagem('aviso', 'Consulta não possui Relatório');
 
-  FreeAndNil(DataSource);
-  FreeAndNil(report);
+  //TESTE DINAMICO//
+
+
+
+
+//  DataSource := form_conexao_tabelas.GetDataSourceByTableName(Table);
+//  pipeline := TppDBPipeline(FindComponent('Pipeline'+Table));
+//  pipeline.DataSource := DataSource;
+//
+//  report:= TppReport.Create(self);
+//  report.DataPipeline := pipeline;
+//
+//  if Assigned(report) then
+//    report.Print
+//  else
+//    CriarMensagem('aviso', 'Consulta não possui Relatório');
+//
+//  FreeAndNil(DataSource);
+//  FreeAndNil(report);
+//  FreeAndNil(pipeline);
+
+
 end;
+
 
 procedure Tfrm_report.Panel2MouseEnter(Sender: TObject);
 begin
@@ -149,5 +163,6 @@ begin
       Panel2.Font.Style := [];
       Panel2.Font.Size := 10;
 end;
+
 
 end.

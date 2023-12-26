@@ -10,6 +10,8 @@ object frm_report: Tfrm_report
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   TextHeight = 13
   object Panel2: TPanel
     Left = 8
