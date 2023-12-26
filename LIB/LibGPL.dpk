@@ -39,6 +39,7 @@ requires
 contains
   gplQry in 'gplQry.pas',
   gplEdit in 'gplEdit.pas',
-  gplForm in 'gplForm.pas';
+  gplForm in 'gplForm.pas',
+  gplCombo in 'gplCombo.pas';
 
 end.

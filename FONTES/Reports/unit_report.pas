@@ -6,13 +6,13 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, unit_conexao_tabelas, ppProd, ppClass,
   ppReport, ppComm, ppRelatv, ppDB, ppDBPipe, Vcl.ExtCtrls, ppCtrls, ppPrnabl,
-  ppBands, ppCache, ppDesignLayer, ppParameter, unit_funcoes;
+  ppBands, ppCache, ppDesignLayer, ppParameter, unit_funcoes, Data.DB;
 
 
 type
   Tfrm_report = class(TForm)
     Panel2: TPanel;
-    ppDBPipeline1: TppDBPipeline;
+    PipelineClientes: TppDBPipeline;
     Clientes: TppReport;
     ppHeaderBand1: TppHeaderBand;
     ppDetailBand1: TppDetailBand;
@@ -27,7 +27,7 @@ type
     ppDBText1: TppDBText;
     ppDBText2: TppDBText;
     ppLabel5: TppLabel;
-    ppDBPipeline2: TppDBPipeline;
+    PipelineProdutos: TppDBPipeline;
     Produtos: TppReport;
     ppTitleBand2: TppTitleBand;
     ppLabel6: TppLabel;
@@ -61,7 +61,7 @@ type
     ppLine10: TppLine;
     ppLine11: TppLine;
     ppLine12: TppLine;
-    ppDBPipeline3: TppDBPipeline;
+    PipelineEstoque: TppDBPipeline;
     Estoque: TppReport;
     ppTitleBand3: TppTitleBand;
     ppLabel11: TppLabel;
@@ -94,9 +94,11 @@ type
   private
     { Private declarations }
     FNomeReport: string;
+    FTable: string;
   public
     { Public declarations }
     property NomeReport: string read FNomeReport write FNomeReport;
+    property Table: string read FTable write FTable;
   end;
 
 var
@@ -108,14 +110,29 @@ implementation
 
 procedure Tfrm_report.Panel2Click(Sender: TObject); //botao temporário, a impressao vai ser feita direto pelo consulta padrao
 var
-  Relatorio: TppReport;
+  Relatorio, report: TppReport;
+  DataSource: TDataSource;
+
 begin
+  DataSource := form_conexao_tabelas.GetDataSourceByTableName(Table);
+  TppDBPipeline(FindComponent('Pipeline'+Table)).DataSource := DataSource;
+
+  report:= TppReport.Create(self);
+  report.DataPipeline := TppDBPipeline(FindComponent('Pipeline'+Table));
+
   Relatorio := TppReport(FindComponent(NomeReport));
+
+
+  //if Assigned(report) then
+    //report.Print
 
   if Assigned(Relatorio) then
     Relatorio.Print
   else
     CriarMensagem('aviso', 'Consulta não possui Relatório');
+
+  FreeAndNil(DataSource);
+  FreeAndNil(report);
 end;
 
 procedure Tfrm_report.Panel2MouseEnter(Sender: TObject);

@@ -51,6 +51,7 @@ type
     { Public declarations }
     procedure CriaForm(const Nome: string; FormState: TFormState; ID: Integer);
     var
+    NomeTabela : string;
     NomeForm: string;
     NomeReport: string;
   end;
@@ -86,6 +87,7 @@ procedure Tform_consulta_padrao.Button1Click(Sender: TObject);
 begin
 frm_report := Tfrm_report.Create(self);
 frm_report.NomeReport := UpperCase(NomeReport);
+frm_report.Table := NomeTabela;
 frm_report.ShowModal;
 FreeAndNil(frm_report);
 end;
@@ -289,6 +291,7 @@ begin
   NomeForm := Self.Name;
   Delete(NomeForm, 1, Length('form_consulta_'));
   NomeReport := NomeForm;
+  NomeTabela:= NomeForm;
   NomeForm := 'Tform_cadastro_' + NomeForm;
 
 

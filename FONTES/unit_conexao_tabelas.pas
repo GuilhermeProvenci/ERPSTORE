@@ -44,6 +44,7 @@ type
     { Private declarations }
   public
     sTipoCST: String;{ Public declarations }
+    function GetDataSourceByTableName(const TableName: string): TDataSource;
   end;
 
 var
@@ -56,6 +57,12 @@ implementation
 uses unit_conexao;
 
 {$R *.dfm}
+
+function Tform_conexao_tabelas.GetDataSourceByTableName(
+  const TableName: string): TDataSource;
+begin
+  Result := TDataSource(FindComponent('DataSource' + TableName));
+end;
 
 procedure Tform_conexao_tabelas.qryConsultaCSTBeforeOpen(DataSet: TDataSet);
 begin

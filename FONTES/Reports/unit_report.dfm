@@ -10,8 +10,6 @@ object frm_report: Tfrm_report
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
-  PixelsPerInch = 96
   TextHeight = 13
   object Panel2: TPanel
     Left = 8
@@ -34,9 +32,9 @@ object frm_report: Tfrm_report
     OnMouseEnter = Panel2MouseEnter
     OnMouseLeave = Panel2MouseLeave
   end
-  object ppDBPipeline1: TppDBPipeline
+  object PipelineClientes: TppDBPipeline
     DataSource = form_conexao_tabelas.DataSourceClientes
-    UserName = 'DBPipeline1'
+    UserName = 'PipelineClientes'
     Left = 16
     Top = 16
     object ppDBPipeline1ppField1: TppField
@@ -69,10 +67,17 @@ object frm_report: Tfrm_report
       DisplayWidth = 255
       Position = 3
     end
+    object ppDBPipeline1ppField5: TppField
+      FieldAlias = 'classificacao'
+      FieldName = 'classificacao'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 4
+    end
   end
   object Clientes: TppReport
     AutoStop = False
-    DataPipeline = ppDBPipeline1
+    DataPipeline = PipelineClientes
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.PaperName = 'A4'
@@ -134,7 +139,7 @@ object frm_report: Tfrm_report
     RTFSettings.DefaultFont.Style = []
     RTFSettings.Title = 'Report'
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
@@ -153,11 +158,11 @@ object frm_report: Tfrm_report
     CloudDriveSettings.OneDriveSettings.OAuth2.RedirectURI = 'http://localhost'
     CloudDriveSettings.OneDriveSettings.OAuth2.RedirectPort = 0
     CloudDriveSettings.OneDriveSettings.DirectorySupport = True
-    Left = 56
+    Left = 88
     Top = 16
-    Version = '22.01'
+    Version = '22.03'
     mmColumnWidth = 0
-    DataPipelineName = 'ppDBPipeline1'
+    DataPipelineName = 'PipelineClientes'
     object ppTitleBand1: TppTitleBand
       Border.mmPadding = 0
       mmBottomOffset = 0
@@ -365,7 +370,7 @@ object frm_report: Tfrm_report
         UserName = 'DBText3'
         Border.mmPadding = 0
         DataField = 'id'
-        DataPipeline = ppDBPipeline1
+        DataPipeline = PipelineClientes
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -373,7 +378,7 @@ object frm_report: Tfrm_report
         Font.Style = [fsBold]
         TextAlignment = taCentered
         Transparent = True
-        DataPipelineName = 'ppDBPipeline1'
+        DataPipelineName = 'PipelineClientes'
         mmHeight = 5027
         mmLeft = 1660
         mmTop = 5027
@@ -386,7 +391,7 @@ object frm_report: Tfrm_report
         UserName = 'DBText4'
         Border.mmPadding = 0
         DataField = 'nome'
-        DataPipeline = ppDBPipeline1
+        DataPipeline = PipelineClientes
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -394,7 +399,7 @@ object frm_report: Tfrm_report
         Font.Style = [fsBold]
         TextAlignment = taCentered
         Transparent = True
-        DataPipelineName = 'ppDBPipeline1'
+        DataPipelineName = 'PipelineClientes'
         mmHeight = 5027
         mmLeft = 30163
         mmTop = 5027
@@ -407,7 +412,7 @@ object frm_report: Tfrm_report
         UserName = 'DBText1'
         Border.mmPadding = 0
         DataField = 'telefone'
-        DataPipeline = ppDBPipeline1
+        DataPipeline = PipelineClientes
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -415,7 +420,7 @@ object frm_report: Tfrm_report
         Font.Style = [fsBold]
         TextAlignment = taCentered
         Transparent = True
-        DataPipelineName = 'ppDBPipeline1'
+        DataPipelineName = 'PipelineClientes'
         mmHeight = 5027
         mmLeft = 93398
         mmTop = 5027
@@ -428,7 +433,7 @@ object frm_report: Tfrm_report
         UserName = 'DBText2'
         Border.mmPadding = 0
         DataField = 'endereco'
-        DataPipeline = ppDBPipeline1
+        DataPipeline = PipelineClientes
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -436,7 +441,7 @@ object frm_report: Tfrm_report
         Font.Style = [fsBold]
         TextAlignment = taCentered
         Transparent = True
-        DataPipelineName = 'ppDBPipeline1'
+        DataPipelineName = 'PipelineClientes'
         mmHeight = 5027
         mmLeft = 142082
         mmTop = 5027
@@ -500,9 +505,9 @@ object frm_report: Tfrm_report
     object ppParameterList1: TppParameterList
     end
   end
-  object ppDBPipeline2: TppDBPipeline
+  object PipelineProdutos: TppDBPipeline
     DataSource = form_conexao_tabelas.DataSourceProdutos
-    UserName = 'DBPipeline2'
+    UserName = 'PipelineProdutos'
     Left = 8
     Top = 120
     object ppDBPipeline2ppField1: TppField
@@ -540,7 +545,7 @@ object frm_report: Tfrm_report
   end
   object Produtos: TppReport
     AutoStop = False
-    DataPipeline = ppDBPipeline2
+    DataPipeline = PipelineProdutos
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.PaperName = 'A4'
@@ -602,7 +607,7 @@ object frm_report: Tfrm_report
     RTFSettings.DefaultFont.Style = []
     RTFSettings.Title = 'Report'
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
@@ -623,9 +628,9 @@ object frm_report: Tfrm_report
     CloudDriveSettings.OneDriveSettings.DirectorySupport = True
     Left = 56
     Top = 120
-    Version = '22.01'
+    Version = '22.03'
     mmColumnWidth = 0
-    DataPipelineName = 'ppDBPipeline2'
+    DataPipelineName = 'PipelineProdutos'
     object ppTitleBand2: TppTitleBand
       Border.mmPadding = 0
       mmBottomOffset = 0
@@ -843,7 +848,7 @@ object frm_report: Tfrm_report
         UserName = 'DBText3'
         Border.mmPadding = 0
         DataField = 'id'
-        DataPipeline = ppDBPipeline2
+        DataPipeline = PipelineProdutos
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -852,7 +857,7 @@ object frm_report: Tfrm_report
         ParentDataPipeline = False
         TextAlignment = taCentered
         Transparent = True
-        DataPipelineName = 'ppDBPipeline2'
+        DataPipelineName = 'PipelineProdutos'
         mmHeight = 5027
         mmLeft = 5556
         mmTop = 5027
@@ -865,7 +870,7 @@ object frm_report: Tfrm_report
         UserName = 'DBText4'
         Border.mmPadding = 0
         DataField = 'nome'
-        DataPipeline = ppDBPipeline2
+        DataPipeline = PipelineProdutos
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -874,7 +879,7 @@ object frm_report: Tfrm_report
         ParentDataPipeline = False
         TextAlignment = taCentered
         Transparent = True
-        DataPipelineName = 'ppDBPipeline2'
+        DataPipelineName = 'PipelineProdutos'
         mmHeight = 5027
         mmLeft = 27252
         mmTop = 5027
@@ -887,7 +892,7 @@ object frm_report: Tfrm_report
         UserName = 'DBText1'
         Border.mmPadding = 0
         DataField = 'tamanho'
-        DataPipeline = ppDBPipeline2
+        DataPipeline = PipelineProdutos
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -896,7 +901,7 @@ object frm_report: Tfrm_report
         ParentDataPipeline = False
         TextAlignment = taCentered
         Transparent = True
-        DataPipelineName = 'ppDBPipeline2'
+        DataPipelineName = 'PipelineProdutos'
         mmHeight = 5027
         mmLeft = 121444
         mmTop = 5027
@@ -909,7 +914,7 @@ object frm_report: Tfrm_report
         UserName = 'DBText8'
         Border.mmPadding = 0
         DataField = 'preco'
-        DataPipeline = ppDBPipeline2
+        DataPipeline = PipelineProdutos
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -918,7 +923,7 @@ object frm_report: Tfrm_report
         ParentDataPipeline = False
         TextAlignment = taCentered
         Transparent = True
-        DataPipelineName = 'ppDBPipeline2'
+        DataPipelineName = 'PipelineProdutos'
         mmHeight = 5027
         mmLeft = 155311
         mmTop = 5027
@@ -969,10 +974,10 @@ object frm_report: Tfrm_report
     object ppParameterList2: TppParameterList
     end
   end
-  object ppDBPipeline3: TppDBPipeline
+  object PipelineEstoque: TppDBPipeline
     DataSource = form_conexao_tabelas.dsEstoque
-    UserName = 'DBPipeline3'
-    Left = 112
+    UserName = 'PipelineEstoque'
+    Left = 176
     Top = 16
     object ppDBPipeline3ppField1: TppField
       Alignment = taRightJustify
@@ -1011,7 +1016,7 @@ object frm_report: Tfrm_report
   end
   object Estoque: TppReport
     AutoStop = False
-    DataPipeline = ppDBPipeline3
+    DataPipeline = PipelineEstoque
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.PaperName = 'A4'
@@ -1073,7 +1078,7 @@ object frm_report: Tfrm_report
     RTFSettings.DefaultFont.Style = []
     RTFSettings.Title = 'Report'
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
@@ -1092,11 +1097,11 @@ object frm_report: Tfrm_report
     CloudDriveSettings.OneDriveSettings.OAuth2.RedirectURI = 'http://localhost'
     CloudDriveSettings.OneDriveSettings.OAuth2.RedirectPort = 0
     CloudDriveSettings.OneDriveSettings.DirectorySupport = True
-    Left = 168
+    Left = 232
     Top = 16
-    Version = '22.01'
+    Version = '22.03'
     mmColumnWidth = 0
-    DataPipelineName = 'ppDBPipeline3'
+    DataPipelineName = 'PipelineEstoque'
     object ppTitleBand3: TppTitleBand
       Border.mmPadding = 0
       mmBottomOffset = 0
@@ -1304,7 +1309,7 @@ object frm_report: Tfrm_report
         UserName = 'DBText3'
         Border.mmPadding = 0
         DataField = 'id'
-        DataPipeline = ppDBPipeline3
+        DataPipeline = PipelineEstoque
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -1312,7 +1317,7 @@ object frm_report: Tfrm_report
         Font.Style = [fsBold]
         TextAlignment = taCentered
         Transparent = True
-        DataPipelineName = 'ppDBPipeline3'
+        DataPipelineName = 'PipelineEstoque'
         mmHeight = 5027
         mmLeft = 1660
         mmTop = 5027
@@ -1325,7 +1330,7 @@ object frm_report: Tfrm_report
         UserName = 'DBText4'
         Border.mmPadding = 0
         DataField = 'produto_id'
-        DataPipeline = ppDBPipeline3
+        DataPipeline = PipelineEstoque
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -1333,7 +1338,7 @@ object frm_report: Tfrm_report
         Font.Style = [fsBold]
         TextAlignment = taCentered
         Transparent = True
-        DataPipelineName = 'ppDBPipeline3'
+        DataPipelineName = 'PipelineEstoque'
         mmHeight = 5027
         mmLeft = 30163
         mmTop = 5027
@@ -1346,7 +1351,7 @@ object frm_report: Tfrm_report
         UserName = 'DBText1'
         Border.mmPadding = 0
         DataField = 'nome_produto'
-        DataPipeline = ppDBPipeline3
+        DataPipeline = PipelineEstoque
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -1354,7 +1359,7 @@ object frm_report: Tfrm_report
         Font.Style = [fsBold]
         TextAlignment = taCentered
         Transparent = True
-        DataPipelineName = 'ppDBPipeline3'
+        DataPipelineName = 'PipelineEstoque'
         mmHeight = 5027
         mmLeft = 59796
         mmTop = 5027
@@ -1367,7 +1372,7 @@ object frm_report: Tfrm_report
         UserName = 'DBText2'
         Border.mmPadding = 0
         DataField = 'quantidade_em_estoque'
-        DataPipeline = ppDBPipeline3
+        DataPipeline = PipelineEstoque
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -1375,7 +1380,7 @@ object frm_report: Tfrm_report
         Font.Style = [fsBold]
         TextAlignment = taCentered
         Transparent = True
-        DataPipelineName = 'ppDBPipeline3'
+        DataPipelineName = 'PipelineEstoque'
         mmHeight = 5027
         mmLeft = 142082
         mmTop = 5027

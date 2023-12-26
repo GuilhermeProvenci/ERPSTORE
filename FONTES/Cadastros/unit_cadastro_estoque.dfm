@@ -4,7 +4,6 @@ inherited form_cadastro_estoque: Tform_cadastro_estoque
   ClientWidth = 722
   ExplicitWidth = 722
   ExplicitHeight = 608
-  PixelsPerInch = 96
   TextHeight = 13
   inherited pnl_fundo: TPanel
     Width = 722
@@ -48,7 +47,7 @@ inherited form_cadastro_estoque: Tform_cadastro_estoque
       ExplicitWidth = 722
       inherited lbl_titulo: TLabel
         Width = 146
-        Height = 21
+        Height = 48
         Caption = 'Inclus'#227'o de Estoque'
         ExplicitWidth = 146
       end
@@ -61,14 +60,14 @@ inherited form_cadastro_estoque: Tform_cadastro_estoque
         ExplicitWidth = 722
       end
     end
-    inherited edt_id: TEdit
-      Left = 31
-      Width = 24
-      Hint = 'Id produto'
-      ExplicitLeft = 31
-      ExplicitWidth = 24
+    inherited pnl_salvar: TPanel
+      Left = 494
+      Top = 544
+      TabOrder = 6
+      ExplicitLeft = 494
+      ExplicitTop = 544
     end
-    inherited edt_nome: TEdit
+    inherited edt_nome: TgpEdit
       Left = 669
       Top = 151
       Width = 12
@@ -78,14 +77,21 @@ inherited form_cadastro_estoque: Tform_cadastro_estoque
       ExplicitTop = 151
       ExplicitWidth = 12
     end
-    inherited edt_3: TEdit
+    inherited edt_id: TgpEdit
+      Left = 31
+      Width = 24
+      Hint = 'Id produto'
+      ExplicitLeft = 31
+      ExplicitWidth = 24
+    end
+    inherited edt_3: TgpEdit
       Left = 436
       Hint = 'Quantidade a inserir'
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 4
       ExplicitLeft = 436
     end
-    inherited edt_4: TEdit
+    inherited edt_4: TgpEdit
       Tag = 0
       Left = 669
       Top = 77
@@ -96,13 +102,6 @@ inherited form_cadastro_estoque: Tform_cadastro_estoque
       ExplicitLeft = 669
       ExplicitTop = 77
       ExplicitWidth = 12
-    end
-    inherited pnl_salvar: TPanel
-      Left = 494
-      Top = 544
-      TabOrder = 6
-      ExplicitLeft = 494
-      ExplicitTop = 544
     end
     object lccb_nome: TDBLookupComboBox
       Left = 61

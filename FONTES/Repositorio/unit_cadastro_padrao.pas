@@ -48,6 +48,9 @@ type
 
   public
     { Public declarations }
+
+    NomeForm: string;
+    NomeTabela: string;
     NomeClass : String;
     property ID: Integer read FID write FID;
     property FormState: TFormState read FFormState write FFormState;
@@ -55,9 +58,7 @@ type
 
 var
   form_cadastro_padrao: Tform_cadastro_padrao;
-  var
-  NomeForm: string;
-  NomeTabela: string;
+
 
 implementation
 

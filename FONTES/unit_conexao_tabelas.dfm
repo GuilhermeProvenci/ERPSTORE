@@ -1,8 +1,8 @@
 object form_conexao_tabelas: Tform_conexao_tabelas
-  OldCreateOrder = False
   Height = 485
   Width = 871
   object qryConsultaClientes: TFDQuery
+    Active = True
     Connection = form_conexao.FDConnection
     SQL.Strings = (
       'select *'
@@ -159,6 +159,7 @@ object form_conexao_tabelas: Tform_conexao_tabelas
       FieldName = 'ID'
       Origin = 'ID'
       ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
     end
     object qryConsultaCondicionalID_Cliente: TIntegerField
       FieldName = 'ID_Cliente'
