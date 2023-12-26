@@ -362,13 +362,11 @@ end;
 
 procedure InsertGenerico(const NomeTabela: string; const NomesCampos: string; const Valores: array of string);
 var
-  qryInserir: TFDQuery;
+  qryInserir: TgpQry;
   i: Integer;
 begin
-  qryInserir := TFDQuery.Create(nil);
+  qryInserir := TgpQry.Create(nil);
   try
-    qryInserir.Connection := unit_conexao.form_conexao.FDConnection; // Defina aqui a sua conex�o
-
     qryInserir.SQL.Text := 'INSERT INTO ' + NomeTabela + '(' + NomesCampos + ') VALUES (';
     for i := 0 to High(Valores) do
     begin
@@ -378,7 +376,7 @@ begin
     end;
     qryInserir.SQL.Add(')');
 
-    // Definir os valores como par�metros
+    // Definir os valores como parametros
     for i := 0 to High(Valores) do
     begin
       qryInserir.Params[i].Value := Valores[i];
@@ -394,12 +392,11 @@ end;
 
 procedure NomeCampos(const NomeTabela: string; NomesCampos: TStrings);
 var
-  qry: TFDQuery;
+  qry: TgpQry;
   i: Integer;
 begin
-  qry := TFDQuery.Create(nil);
+  qry := TgpQry.Create(nil);
   try
-    qry.Connection := unit_conexao.form_conexao.FDConnection; // Defina aqui a sua conex�o
     qry.SQL.Text := 'SELECT * FROM ' + NomeTabela + ' WHERE 1 = 0'; // N�o traz dados, apenas estrutura
     qry.Open;
 
@@ -463,11 +460,10 @@ end;
 
 procedure maxID(const TableName: string; Edit: TEdit);
 var
-  qrySelect: TFDQuery;
+  qrySelect: TgpQry;
 begin
-  qrySelect := TFDQuery.Create(nil);
+  qrySelect := TgpQry.Create(nil);
   try
-   qrySelect.Connection := unit_conexao.form_conexao.FDConnection; // Defina aqui a sua conex�o
     qrySelect.SQL.Text := 'SELECT max(id) as id FROM ' + TableName;
     qrySelect.Open;
 
@@ -582,20 +578,17 @@ end;
 
 procedure AtualizarGenerica(const NomeTabela: string; const NomesCamposAtualizar: string; Valores: array of string; const Condicao: string; NomesCampos: TStringList);
 var
-  qryAtualizar: TFDQuery;
+  qryAtualizar: TgpQry;
   SQLAtualizar: string;
   i: Integer;
 begin
-  qryAtualizar := TFDQuery.Create(nil);
+  qryAtualizar := TgpQry.Create(nil);
   try
-    qryAtualizar.Connection := unit_conexao.form_conexao.FDConnection;
-
-    // Crie a instru��o SQL de atualiza��o
     SQLAtualizar := 'UPDATE ' + NomeTabela + ' SET ' + NomesCamposAtualizar + ' WHERE ' + Condicao;
 
     qryAtualizar.SQL.Text := SQLAtualizar;
 
-    // Defina os par�metros com nomes correspondentes aos nomes dos campos da tabela
+    // Defina os parametros com nomes correspondentes aos nomes dos campos da tabela
     for i := 0 to NomesCampos.Count - 1 do
     begin
       qryAtualizar.ParamByName(NomesCampos[i]).Value := Valores[i];
