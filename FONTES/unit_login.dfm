@@ -12,9 +12,7 @@ object form_login: Tform_login
   Font.Height = -11
   Font.Name = 'Segoe UI'
   Font.Style = []
-  OldCreateOrder = False
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object pnl_fundo: TPanel
     Left = 0
@@ -44,14 +42,14 @@ object form_login: Tform_login
         Height = 30
         Align = alBottom
         Alignment = taCenter
-        Caption = 'Mari Modas'
+        Caption = 'ERPSTORE'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clSilver
         Font.Height = -21
         Font.Name = 'Segoe UI'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitWidth = 117
+        ExplicitWidth = 102
       end
       object lbl_versao: TLabel
         Left = 0
@@ -76,14 +74,14 @@ object form_login: Tform_login
         Height = 30
         Align = alTop
         Alignment = taCenter
-        Caption = 'Bem-Vindo ao ERP Mari Modas'
+        Caption = 'Bem-Vindo ao ERPSTORE'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clSilver
         Font.Height = -21
         Font.Name = 'Segoe UI'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitWidth = 307
+        ExplicitWidth = 248
       end
     end
   end
