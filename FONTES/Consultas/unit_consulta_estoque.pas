@@ -5,13 +5,14 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, unit_consulta_padrao, Data.DB,
-  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls;
+  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, gplQry;
 
 type
   Tform_consulta_estoque = class(Tform_consulta_padrao)
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
+    qryEstoque: TgpQry;
   public
     { Public declarations }
   end;

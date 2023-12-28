@@ -20,6 +20,7 @@ inherited form_consulta_estoque: Tform_consulta_estoque
       end
       inherited lbl_titulo: TLabel
         Width = 201
+        Height = 56
         Caption = 'CONSULTA ESTOQUE'
         ExplicitWidth = 201
       end
@@ -35,7 +36,11 @@ inherited form_consulta_estoque: Tform_consulta_estoque
       ExplicitWidth = 869
       inherited lbl_duplo_clique: TLabel
         Left = 574
+        Height = 38
         ExplicitLeft = 574
+      end
+      inherited lbl_excluir: TLabel
+        Height = 38
       end
     end
     inherited pnl_pesquisa: TPanel
@@ -71,22 +76,28 @@ inherited form_consulta_estoque: Tform_consulta_estoque
           item
             Expanded = False
             FieldName = 'produto_id'
+            Width = 64
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'nome_produto'
+            Width = 64
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'quantidade_em_estoque'
+            Width = 64
             Visible = True
           end>
       end
       inherited pnl_resultado: TPanel
         Width = 829
         ExplicitWidth = 829
+        inherited lbl_resultado: TLabel
+          Height = 41
+        end
       end
     end
   end

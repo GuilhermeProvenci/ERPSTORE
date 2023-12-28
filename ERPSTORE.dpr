@@ -28,7 +28,8 @@ uses
   gplForm in 'LIB\gplForm.pas',
   gplEdit in 'LIB\gplEdit.pas',
   class_produtos in 'CLASSES\class_produtos.pas',
-  gplCombo in 'LIB\gplCombo.pas';
+  gplCombo in 'LIB\gplCombo.pas',
+  unit_consulta_vendas in 'FONTES\Consultas\unit_consulta_vendas.pas' {form_consulta_vendas};
 
 {$R *.res}
 

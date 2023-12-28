@@ -1,8 +1,8 @@
 object form_conexao_tabelas: Tform_conexao_tabelas
+  OldCreateOrder = True
   Height = 485
   Width = 871
   object qryConsultaClientes: TFDQuery
-    Active = True
     Connection = form_conexao.FDConnection
     SQL.Strings = (
       'select *'
@@ -37,7 +37,6 @@ object form_conexao_tabelas: Tform_conexao_tabelas
     end
   end
   object qryConsultaProdutos: TFDQuery
-    Active = True
     Connection = form_conexao.FDConnection
     SQL.Strings = (
       'select *'
@@ -76,7 +75,7 @@ object form_conexao_tabelas: Tform_conexao_tabelas
     Connection = form_conexao.FDConnection
     SQL.Strings = (
       'select * from estoque')
-    Left = 416
+    Left = 392
     Top = 40
     object qryConsultaEstoqueid: TFDAutoIncField
       FieldName = 'id'
@@ -149,7 +148,6 @@ object form_conexao_tabelas: Tform_conexao_tabelas
     Top = 40
   end
   object qryConsultaCondicional: TFDQuery
-    Active = True
     Connection = form_conexao.FDConnection
     SQL.Strings = (
       'select * from condicional')
@@ -172,5 +170,37 @@ object form_conexao_tabelas: Tform_conexao_tabelas
       Origin = 'Nome_Cliente'
       Size = 255
     end
+  end
+  object qryConsultaVendas: TFDQuery
+    Active = True
+    Connection = form_conexao.FDConnection
+    SQL.Strings = (
+      'select * from Vendas')
+    Left = 392
+    Top = 120
+    object qryConsultaVendasid: TIntegerField
+      FieldName = 'id'
+      Required = True
+    end
+    object qryConsultaVendasid_cliente: TIntegerField
+      FieldName = 'id_cliente'
+    end
+    object qryConsultaVendasvalor: TBCDField
+      FieldName = 'valor'
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaVendasobservacao: TStringField
+      FieldName = 'observacao'
+      Size = 255
+    end
+    object qryConsultaVendasdata_venda: TDateField
+      FieldName = 'data_venda'
+    end
+  end
+  object DataSourceVendas: TDataSource
+    DataSet = qryConsultaVendas
+    Left = 448
+    Top = 120
   end
 end

@@ -1621,7 +1621,7 @@ object form_principal: Tform_principal
         OnMouseEnter = pnl_botao_notasMouseEnter
       end
     end
-    object pnl_botao_compra: TPanel
+    object pnl_botao_vendas: TPanel
       Tag = 6
       AlignWithMargins = True
       Left = 3
@@ -1635,9 +1635,9 @@ object form_principal: Tform_principal
       Color = 1644825
       ParentBackground = False
       TabOrder = 6
-      OnClick = pnl_botao_compraClick
+      OnClick = pnl_botao_vendasClick
       OnMouseEnter = pnl_botao_notasMouseEnter
-      object img_botao_compras: TImage
+      object img_botao_vendas: TImage
         Tag = 6
         AlignWithMargins = True
         Left = 10
@@ -1664,24 +1664,24 @@ object form_principal: Tform_principal
           B542E823EA045C3401BBC7600BF558A5AFD66FCA0B3A4773402FBE5F8CF69FAB
           AAC1A47B0CDB71AB2849FA527EC649C079ACD56BE699B0DDCFB83F01765F00BB
           5A0AD37EC655FFC3F56FC0EF4FA4A61F545A79320000000049454E44AE426082}
-        OnClick = pnl_botao_compraClick
+        OnClick = pnl_botao_vendasClick
         OnMouseEnter = pnl_botao_notasMouseEnter
         ExplicitHeight = 30
       end
-      object lbl_botao_compras: TLabel
+      object lbl_botao_vendas: TLabel
         Tag = 6
         Left = 48
         Top = 14
-        Width = 48
+        Width = 37
         Height = 15
-        Caption = 'Compras'
+        Caption = 'Vendas'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Height = -12
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        OnClick = pnl_botao_compraClick
+        OnClick = pnl_botao_vendasClick
         OnMouseEnter = pnl_botao_notasMouseEnter
       end
     end

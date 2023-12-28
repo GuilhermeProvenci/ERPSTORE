@@ -139,9 +139,9 @@ type
     pnl_botao_estoque: TPanel;
     img_botao_estoque: TImage;
     lbl_botao_estoque: TLabel;
-    pnl_botao_compra: TPanel;
-    img_botao_compras: TImage;
-    lbl_botao_compras: TLabel;
+    pnl_botao_vendas: TPanel;
+    img_botao_vendas: TImage;
+    lbl_botao_vendas: TLabel;
     procedure img_botao_sairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -159,7 +159,7 @@ type
     procedure pnl_tab_estadosClick(Sender: TObject);
     procedure pnl_tab_cidadesClick(Sender: TObject);
     procedure pnl_botao_estoqueClick(Sender: TObject);
-    procedure pnl_botao_compraClick(Sender: TObject);
+    procedure pnl_botao_vendasClick(Sender: TObject);
 
 
   private
@@ -179,7 +179,7 @@ implementation
 
 uses unit_configuracao_servidor, unit_fundo_esmaecer,
    unit_consulta_produtos, unit_consulta_clientes, unit_consulta_condicional,
-  unit_consulta_estoque;
+  unit_consulta_estoque, unit_consulta_vendas;
 
 procedure Tform_principal.ApplicationEventsModalBegin(Sender: TObject);
 begin
@@ -213,13 +213,13 @@ begin
   form_principal.Close;
 end;
 
-procedure Tform_principal.pnl_botao_compraClick(Sender: TObject);
+procedure Tform_principal.pnl_botao_vendasClick(Sender: TObject);
 begin
-  form_consulta_clientes := Tform_consulta_clientes.Create ( Self );
-  form_consulta_clientes.parent := pnl_fundo;
+  form_consulta_vendas := Tform_consulta_vendas.Create ( Self );
+  form_consulta_vendas.parent := pnl_fundo;
   prc_controla_menu ( False );
 
-  form_consulta_clientes.Show;
+  form_consulta_vendas.Show;
 end;
 
 procedure Tform_principal.pnl_botao_configuracoesClick(Sender: TObject);

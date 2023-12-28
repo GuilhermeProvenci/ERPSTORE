@@ -39,6 +39,13 @@ type
     qryConsultaCondicionalID: TFDAutoIncField;
     qryConsultaCondicionalID_Cliente: TIntegerField;
     qryConsultaCondicionalNome_Cliente: TStringField;
+    qryConsultaVendas: TFDQuery;
+    DataSourceVendas: TDataSource;
+    qryConsultaVendasid: TIntegerField;
+    qryConsultaVendasid_cliente: TIntegerField;
+    qryConsultaVendasvalor: TBCDField;
+    qryConsultaVendasobservacao: TStringField;
+    qryConsultaVendasdata_venda: TDateField;
     procedure qryConsultaCSTBeforeOpen(DataSet: TDataSet);
   private
     { Private declarations }
