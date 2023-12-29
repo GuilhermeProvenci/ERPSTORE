@@ -21,7 +21,7 @@ uses
   published
     property Table : string read FTable write FTable;
     property DataFieldName: string Read FDataFieldName Write FDataFieldName;
-    property DataField: string Read FDataField Write FDataField;
+    //property DataField: string Read FDataField Write FDataField;
   end;
 
   procedure Register;
@@ -44,7 +44,7 @@ begin
     Exit;
 
   SQL := 'SELECT * FROM ' + FTable;
-  if id <> '0' then
+  if id <> '' then
     SQL := SQL + ' WHERE id = ' + id
   else
     SQL := SQL + ' WHERE id IS NOT NULL';
@@ -57,12 +57,16 @@ begin
 
     while not qry.Eof do
     begin
-      Items.Add(qry.FieldByName(DataField).AsString);
+    if qry.FieldByName(DataFieldName).AsString <> '' then
+      Items.Add(qry.FieldByName(DataFieldName).AsString);
       qry.Next;
     end;
 
     if Items.Count > 0 then
-      ItemIndex := 0;
+      ItemIndex := 0
+    else
+      Text := '';
+
   finally
     qry.Free;
   end;
