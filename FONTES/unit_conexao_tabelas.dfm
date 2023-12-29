@@ -203,4 +203,32 @@ object form_conexao_tabelas: Tform_conexao_tabelas
     Left = 448
     Top = 120
   end
+  object qryConsultaCondicionalPendente: TFDQuery
+    Active = True
+    Connection = form_conexao.FDConnection
+    SQL.Strings = (
+      'select * from condicionalPendente'
+      '')
+    Left = 32
+    Top = 288
+    object qryConsultaCondicionalPendenteID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object qryConsultaCondicionalPendenteID_Condicional: TIntegerField
+      FieldName = 'ID_Condicional'
+    end
+    object qryConsultaCondicionalPendenteProduto: TStringField
+      FieldName = 'Produto'
+      Size = 255
+    end
+    object qryConsultaCondicionalPendenteQuantidade: TIntegerField
+      FieldName = 'Quantidade'
+    end
+  end
+  object DataSourceCondicionalPendente: TDataSource
+    DataSet = qryConsultaCondicionalPendente
+    Left = 152
+    Top = 288
+  end
 end

@@ -157,7 +157,6 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Width = 622
         Height = 525
         Align = alClient
-        DataSource = dsCondPendente
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
@@ -241,21 +240,13 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Font.Style = []
         ParentFont = False
       end
-      object cbb_produtos: TComboBox
-        Left = 82
-        Top = 112
-        Width = 183
-        Height = 21
-        TabOrder = 0
-        OnChange = cbb_produtosChange
-      end
       object edt_cod_clie: TEdit
         Left = 62
         Top = 41
         Width = 26
         Height = 21
         NumbersOnly = True
-        TabOrder = 1
+        TabOrder = 0
         OnKeyDown = edt_cod_clieKeyDown
       end
       object edt_cod_prod: TEdit
@@ -263,23 +254,23 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Top = 112
         Width = 26
         Height = 21
-        ReadOnly = True
-        TabOrder = 2
+        TabOrder = 1
+        OnKeyDown = edt_cod_prodKeyDown
       end
       object edt_qtt: TNumberBox
         Left = 62
         Top = 242
         Width = 203
         Height = 21
-        TabOrder = 3
+        TabOrder = 2
       end
       object edt_qtt_estoque: TEdit
         Left = 62
-        Top = 184
+        Top = 176
         Width = 203
         Height = 21
         ReadOnly = True
-        TabOrder = 4
+        TabOrder = 3
       end
       object pnl_remover: TPanel
         Left = 62
@@ -296,7 +287,7 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Font.Style = []
         ParentBackground = False
         ParentFont = False
-        TabOrder = 5
+        TabOrder = 4
         OnClick = pnl_removerClick
       end
       object pnl_add: TPanel
@@ -314,7 +305,7 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Font.Style = []
         ParentBackground = False
         ParentFont = False
-        TabOrder = 6
+        TabOrder = 5
         OnClick = pnl_addClick
       end
       object edt_obs: TgpEdit
@@ -323,100 +314,28 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Width = 203
         Height = 21
         Hint = 'Observa'#231#227'o do Condicional'
-        TabOrder = 7
+        TabOrder = 6
       end
       object cbb_clientes: TgpCombo
         Left = 82
         Top = 41
         Width = 183
         Height = 21
-        TabOrder = 8
+        TabOrder = 7
+        OnChange = cbb_clientesChange
         Table = 'CLIENTES'
-        DataField = 'Nome'
+        DataFieldName = 'Nome'
+      end
+      object cbb_produtos: TgpCombo
+        Left = 82
+        Top = 112
+        Width = 183
+        Height = 21
+        TabOrder = 8
+        OnChange = cbb_produtosChange
+        Table = 'Produtos'
+        DataFieldName = 'Nome'
       end
     end
-  end
-  object qryProdutos: TFDQuery
-    Connection = form_conexao.FDConnection
-    Left = 248
-    Top = 8
-  end
-  object dsCondPendente: TDataSource
-    DataSet = qryCondPendente
-    Left = 696
-    Top = 8
-  end
-  object qryCondPendente: TFDQuery
-    Connection = form_conexao.FDConnection
-    SQL.Strings = (
-      'SELECT'
-      '    Cond.ID,'
-      '    Cond.Nome_Cliente,'
-      '    C.Nome AS NomeCliente,'
-      '    CP.Produto,'
-      '    CP.Quantidade'
-      'FROM'
-      '    Condicional Cond'
-      'INNER JOIN'
-      '    Clientes C ON Cond.ID_Cliente = C.id'
-      'INNER JOIN'
-      '    CondicionalPendente CP ON Cond.ID = CP.ID_Condicional;'
-      'WHERE ID_Condicional = :id')
-    Left = 592
-    Top = 8
-    ParamData = <
-      item
-        Name = 'ID'
-        DataType = ftInteger
-        ParamType = ptInput
-      end>
-  end
-  object qryCond: TFDQuery
-    Connection = form_conexao.FDConnection
-    SQL.Strings = (
-      
-        'Select id, cliente_id, data_entregue, data_devolucao, nome_clien' +
-        'te from condicional where cliente_id = :id')
-    Left = 432
-    Top = 8
-    ParamData = <
-      item
-        Name = 'ID'
-        DataType = ftInteger
-        ParamType = ptInput
-        Value = Null
-      end>
-    object qryCondid: TFDAutoIncField
-      FieldName = 'id'
-      Origin = 'id'
-      ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = True
-    end
-    object qryCondcliente_id: TIntegerField
-      AutoGenerateValue = arDefault
-      FieldName = 'cliente_id'
-      Origin = 'cliente_id'
-    end
-    object qryConddata_entregue: TDateTimeField
-      AutoGenerateValue = arDefault
-      FieldName = 'data_entregue'
-      Origin = 'data_entregue'
-    end
-    object qryConddata_devolucao: TDateTimeField
-      AutoGenerateValue = arDefault
-      FieldName = 'data_devolucao'
-      Origin = 'data_devolucao'
-    end
-    object qryCondnome_cliente: TStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'nome_cliente'
-      Origin = 'nome_cliente'
-      Size = 100
-    end
-  end
-  object dsCond: TDataSource
-    DataSet = qryCond
-    Left = 488
-    Top = 8
   end
 end

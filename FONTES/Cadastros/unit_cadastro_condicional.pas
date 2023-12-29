@@ -25,27 +25,17 @@ type
     pnl_add: TPanel;
     edt_cod_clie: TEdit;
     edt_cod_prod: TEdit;
-    qryProdutos: TFDQuery;
-    cbb_produtos: TComboBox;
     lbl_qtt_estoque: TLabel;
     edt_qtt_estoque: TEdit;
     dbg_registros: TDBGrid;
-    dsCondPendente: TDataSource;
-    qryCondPendente: TFDQuery;
     pnl_registros: TPanel;
-    qryCond: TFDQuery;
-    dsCond: TDataSource;
-    qryCondid: TFDAutoIncField;
-    qryCondcliente_id: TIntegerField;
-    qryConddata_entregue: TDateTimeField;
-    qryConddata_devolucao: TDateTimeField;
-    qryCondnome_cliente: TStringField;
     pnl_remover: TPanel;
     pnl_campos: TPanel;
     Splitter1: TSplitter;
     edt_obs: TgpEdit;
     lbl_obs: TLabel;
     cbb_clientes: TgpCombo;
+    cbb_produtos: TgpCombo;
     procedure btn_fecharClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -55,9 +45,11 @@ type
     procedure pnl_removerClick(Sender: TObject);
     procedure edt_cod_clieKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure edt_cod_prodKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
-    qryEstoque, qryInsertCond, qryClientes :   TgpQry;
+    qryClientes, qryProdutos, qryEstoque, qryCondicional,qryCondPendente  :   TgpQry;
     clienteID, condicionalID: Integer;
   public
     { Public declarations }
@@ -91,93 +83,78 @@ begin
   edt_cod_clie.Text := qryClientes.FieldByName('id').AsString;
   clienteID := StrToIntDef(edt_cod_clie.Text, 0);
 
+  qryCondicional.SQLExec('Select id, ID_Cliente, nome_cliente from condicional where ID_Cliente = :1',
+  [clienteID]);
 
-  with qryCond do
-  begin
-    Close;
-    SQL.Clear;
-    SQL.Add('Select id, cliente_id, data_entregue, data_devolucao, nome_cliente from condicional where cliente_id = :id_cliente');
-    ParamByName('id_cliente').DataType := ftInteger;
-    ParamByName('id_cliente').Value := clienteID;
-    Open;
-  end;
+  condicionalID := qryCondicional.FieldByName('id').AsInteger;
 
-
-  condicionalID := qryCond.FieldByName('id').AsInteger;
-
-
-
-with qryCondPendente do
-begin
-  Close;
-  SQL.Clear;
-  SQL.Add('Select * from condicional_pendente where id_condicional = :id');
-  ParamByName('id').DataType := ftInteger;
-  ParamByName('id').Value := qryCond.FieldByName('id').AsInteger;
-  Open;
-end;
+  qryCondPendente.SQLExec('Select * from condicionalPendente where id_condicional = :1',
+                          [qryCondicional.FieldByName('id').AsInteger]);
 
 end;
 
 
 procedure Tform_cadastro_condicional.cbb_produtosChange(Sender: TObject);
 begin
-  with qryProdutos do
-  begin
-    Close;
-    SQL.Clear;
-    SQL.Add('SELECT id, nome FROM produtos WHERE nome = :nome');
-    ParamByName('nome').Value := cbb_produtos.Items[cbb_produtos.ItemIndex];
-    Open;
-  end;
 
+  qryProdutos.SQLExec('SELECT id, nome FROM produtos WHERE nome = :1',
+  [cbb_produtos.Items[cbb_produtos.ItemIndex]]);
 
   edt_cod_prod.Clear;
   edt_cod_prod.Text := qryProdutos.FieldByName('id').AsString;
 
   qryEstoque.SQLExec('SELECT * FROM estoque WHERE produto_id = :1',[edt_cod_prod.Text]);
 
+  if qryEstoque.FieldByName('quantidade_em_estoque').AsString <> '' then
+    edt_qtt_estoque.Text := qryEstoque.FieldByName('quantidade_em_estoque').AsString
+  else
   edt_qtt_estoque.Clear;
-  edt_qtt_estoque.Text := qryEstoque.FieldByName('quantidade_em_estoque').AsString;
 end;
 
 procedure Tform_cadastro_condicional.edt_cod_clieKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
  if key = VK_RETURN then
+ begin
     cbb_clientes.LoadField(edt_cod_clie.Text);
+    cbb_clientes.OnChange(cbb_clientes);
+ end;
+end;
+
+procedure Tform_cadastro_condicional.edt_cod_prodKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+ if key = VK_RETURN then
+ begin
+    cbb_produtos.LoadField(edt_cod_prod.Text);
+    cbb_produtos.OnChange(cbb_produtos);
+ end;
 end;
 
 procedure Tform_cadastro_condicional.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-FreeAndNil(qryEstoque);
-FreeAndNil(qryInsertCond);
 FreeAndNil(qryClientes);
+FreeAndNil(qryProdutos);
+FreeAndNil(qryEstoque);
+FreeAndNil(qryCondicional);
+FreeAndNil(qryCondPendente);
 FreeAndNil(form_cadastro_condicional);
 end;
 
 procedure Tform_cadastro_condicional.FormCreate(Sender: TObject);
-var
-i, j : integer;
 begin
-  qryInsertCond := TgpQry.Create(self);
-  qryEstoque := TgpQry.Create(self);
-  qryClientes := TgpQry.Create(self);
 
+qryClientes := TgpQry.Create(self);
+qryProdutos := TgpQry.Create(self);
+qryEstoque := TgpQry.Create(self);
+qryCondicional:= TgpQry.Create(self);
+qryCondPendente:= TgpQry.Create(self);
 
-for I := 0 to form_conexao_tabelas.qryConsultaProdutos.RecordCount - 1 do
-begin
-  cbb_produtos.Items.Add(form_conexao_tabelas.qryConsultaProdutos.FieldByName('nome').AsString);
-  form_conexao_tabelas.qryConsultaProdutos.Next;
-end;
-
- for j := 0 to form_conexao_tabelas.qryConsultaClientes.RecordCount - 1 do
-begin
-  cbb_clientes.Items.Add(form_conexao_tabelas.qryConsultaClientes.FieldByName('nome').AsString);
-  form_conexao_tabelas.qryConsultaClientes.Next;
-end;
-
+cbb_clientes.LoadField('');
+cbb_clientes.OnChange(cbb_clientes);
+cbb_produtos.LoadField('');
+cbb_produtos.OnChange(cbb_produtos);
 
 end;
 
@@ -218,6 +195,9 @@ procedure Tform_cadastro_condicional.pnl_addClick(Sender: TObject);
 var
   saldoEstoque: Integer;
 begin
+//reajustar toda o lógica, trabalhar com Transaction
+
+
   qryEstoque.SQLExec('SELECT id, produto_id, nome_produto, quantidade_em_estoque FROM estoque WHERE produto_id = :1', [edt_cod_prod.Text]);
 
   if not qryEstoque.IsEmpty then
@@ -225,7 +205,7 @@ begin
     // Obtenha o saldo em estoque do produto
     saldoEstoque := qryEstoque.FieldByName('quantidade_em_estoque').AsInteger;
 
-    qryInsertCond.SQLExec(
+    qryCondPendente.SQLExec(
       'INSERT INTO condicional_pendente (id_produto, nome_produto, quantidade_condicional, id_condicional, nome_cliente) ' +
       'VALUES (:1, :2, :3, :4, :5)',
       [edt_cod_prod.Text, cbb_produtos.Items[cbb_produtos.ItemIndex],

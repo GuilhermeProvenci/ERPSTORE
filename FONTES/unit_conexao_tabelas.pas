@@ -46,6 +46,12 @@ type
     qryConsultaVendasvalor: TBCDField;
     qryConsultaVendasobservacao: TStringField;
     qryConsultaVendasdata_venda: TDateField;
+    qryConsultaCondicionalPendente: TFDQuery;
+    DataSourceCondicionalPendente: TDataSource;
+    qryConsultaCondicionalPendenteID: TIntegerField;
+    qryConsultaCondicionalPendenteID_Condicional: TIntegerField;
+    qryConsultaCondicionalPendenteProduto: TStringField;
+    qryConsultaCondicionalPendenteQuantidade: TIntegerField;
     procedure qryConsultaCSTBeforeOpen(DataSet: TDataSet);
   private
     { Private declarations }

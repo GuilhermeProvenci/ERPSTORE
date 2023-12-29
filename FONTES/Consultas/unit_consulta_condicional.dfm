@@ -76,12 +76,17 @@ inherited form_consulta_condicional: Tform_consulta_condicional
           end
           item
             Expanded = False
-            FieldName = 'ID_Cliente'
+            FieldName = 'ID_Condicional'
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'Nome_Cliente'
+            FieldName = 'Produto'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'Quantidade'
             Visible = True
           end>
       end
@@ -95,6 +100,6 @@ inherited form_consulta_condicional: Tform_consulta_condicional
     end
   end
   inherited ds_consulta: TDataSource
-    DataSet = form_conexao_tabelas.qryConsultaCondicional
+    DataSet = form_conexao_tabelas.qryConsultaCondicionalPendente
   end
 end
