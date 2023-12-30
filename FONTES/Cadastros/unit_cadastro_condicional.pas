@@ -159,31 +159,23 @@ cbb_produtos.OnChange(cbb_produtos);
 end;
 
 procedure Tform_cadastro_condicional.pnl_removerClick(Sender: TObject);
-
+var
+  ID: Integer;
 begin
- // Verifica se há um registro selecionado no TDBGrid
-  if not qryCondPendente.IsEmpty then
+  if not dbg_registros.DataSource.DataSet.IsEmpty then
   begin
-    // Obtém o ID do registro selecionado
-    var ID: Integer := qryCondPendente.FieldByName('id').AsInteger;
-
-    // Desfaz a transação removendo o registro da tabela condicional_pendente
-    with TgpQry.Create(nil) do
-    begin
-      SQLExec('DELETE FROM condicional_pendente WHERE id = :1', [ID.ToString]);
-      Free;
+    ID := dbg_registros.DataSource.DataSet.FieldByName('id').AsInteger;
+    try
+      qryEstoque.SQLExec(
+        'UPDATE estoque SET quantidade_em_estoque = quantidade_em_estoque + :1 WHERE produto_id = :2',
+        [dbg_registros.DataSource.DataSet.FieldByName('quantidade').AsInteger, dbg_registros.DataSource.DataSet.FieldByName('id_produto').AsInteger]
+      );
+      dbg_registros.DataSource.DataSet.Delete;
+      CriarMensagem('aviso', 'Registro removido com sucesso!');
+    except
+      on E: Exception do
+        CriarMensagem('erro', 'Erro ao remover o registro: ' + E.Message);
     end;
-
-    // Atualiza o saldo do estoque desfazendo a quantidade condicional
-    with qryEstoque do
-    begin
-      SQLExec('UPDATE estoque SET quantidade_em_estoque = quantidade_em_estoque + :1 WHERE id = :2', [qryCondPendente.FieldByName('quantidade_condicional').ToString, qryCondPendente.FieldByName('id_produto').ToString] );
-    end;
-
-    // Recarrega os dados do TDBGrid
-    qryCondPendente.Refresh;
-
-    CriarMensagem('aviso', 'Registro removido com sucesso!');
   end
   else
   begin
@@ -191,34 +183,38 @@ begin
   end;
 end;
 
+
 procedure Tform_cadastro_condicional.pnl_addClick(Sender: TObject);
 var
-  saldoEstoque: Integer;
+  produtoID, estoqueID: Integer;
 begin
-//reajustar toda o lógica, trabalhar com Transaction
-
-
-  qryEstoque.SQLExec('SELECT id, produto_id, nome_produto, quantidade_em_estoque FROM estoque WHERE produto_id = :1', [edt_cod_prod.Text]);
+  qryEstoque.SQLExec('SELECT id, produto_id, quantidade_em_estoque FROM estoque WHERE produto_id = :1', [edt_cod_prod.Text]);
 
   if not qryEstoque.IsEmpty then
   begin
-    // Obtenha o saldo em estoque do produto
-    saldoEstoque := qryEstoque.FieldByName('quantidade_em_estoque').AsInteger;
+    try
+      estoqueID := qryEstoque.FieldByName('id').AsInteger;
+      produtoID := qryEstoque.FieldByName('produto_id').AsInteger;
+      cbb_clientes.OnChange(cbb_clientes);
 
-    qryCondPendente.SQLExec(
-      'INSERT INTO condicional_pendente (id_produto, nome_produto, quantidade_condicional, id_condicional, nome_cliente) ' +
-      'VALUES (:1, :2, :3, :4, :5)',
-      [edt_cod_prod.Text, cbb_produtos.Items[cbb_produtos.ItemIndex],
-       edt_qtt.Text, condicionalID, qryClientes.FieldByName('nome').AsString]);
+      qryCondPendente.SQLExec(
+        'INSERT INTO condicionalPendente (id_Condicional, id_produto, quantidade, observacao) ' +
+        'VALUES (:1, :2, :3, :4)',
+        [condicionalID, produtoID, edt_qtt.Text, edt_obs.text]
+      );
 
-    qryEstoque.SQLExec(
-      'UPDATE estoque SET quantidade_em_estoque = :1 WHERE id = :2',
-      [saldoEstoque - edt_qtt.Value, edt_cod_prod.Text]
-    );
+      qryEstoque.SQLExec(
+        'UPDATE estoque SET quantidade_em_estoque = :1 WHERE id = :2',
+        [qryEstoque.FieldByName('quantidade_em_estoque').AsInteger - edt_qtt.Value, estoqueID]
+      );
 
-    CriarMensagem('aviso', 'Inserção realizada com sucesso!');
-    qryCondPendente.Refresh;
-    dbg_registros.Refresh;
+      CriarMensagem('aviso', 'Inserção realizada com sucesso!');
+      form_conexao_tabelas.qryConsultaCondicionalPendente.Refresh;
+      dbg_registros.Refresh;
+    except
+      on E: Exception do
+        CriarMensagem('erro', 'Erro ao inserir na tabela: ' + E.Message);
+    end;
   end
   else
   begin
@@ -226,7 +222,6 @@ begin
     Exit;
   end;
 end;
-
 
 
 initialization

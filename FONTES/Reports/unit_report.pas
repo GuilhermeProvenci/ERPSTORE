@@ -125,10 +125,6 @@ begin
     CriarMensagem('aviso', 'Consulta não possui Relatório');
 
   //TESTE DINAMICO//
-
-
-
-
 //  DataSource := form_conexao_tabelas.GetDataSourceByTableName(Table);
 //  pipeline := TppDBPipeline(FindComponent('Pipeline'+Table));
 //  pipeline.DataSource := DataSource;

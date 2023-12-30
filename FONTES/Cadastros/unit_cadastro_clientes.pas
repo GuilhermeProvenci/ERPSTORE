@@ -35,9 +35,21 @@ procedure Tform_cadastro_clientes.pnl_salvarClick(Sender: TObject);
   qryCondicional : tgpQry;
 begin
  inherited;
-   qryCondicional := tgpQry.Create(self);
+ Sleep(1000);//wait data base commit
+ qryCondicional := tgpQry.Create(self);
+ if FormState = fsInsert then
+ begin
    qryCondicional.SQLExec('INSERT INTO Condicional (ID_Cliente, Nome_Cliente) values (:1, :2) ',
-                          [TClientes(FClasseInstance).ID, TClientes(FClasseInstance).Nome]);
+   [TClientes(FClasseInstance).ID, TClientes(FClasseInstance).Nome]);
+ end
+ else if FormState = fsEdit then
+  begin
+    qryCondicional.SQLExec(
+      'UPDATE Condicional SET Nome_Cliente = :1 WHERE ID_Cliente = :2',
+      [TClientes(FClasseInstance).Nome, TClientes(FClasseInstance).ID]);
+  end;
+
+  qryCondicional.Free;
 end;
 
 initialization

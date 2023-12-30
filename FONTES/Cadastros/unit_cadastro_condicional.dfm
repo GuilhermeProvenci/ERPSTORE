@@ -3,8 +3,8 @@ object form_cadastro_condicional: Tform_cadastro_condicional
   Top = 0
   BorderStyle = bsNone
   Caption = 'form_cadastro_condicional'
-  ClientHeight = 576
-  ClientWidth = 952
+  ClientHeight = 544
+  ClientWidth = 1069
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,16 +20,16 @@ object form_cadastro_condicional: Tform_cadastro_condicional
   object pnl_fundo: TPanel
     Left = 0
     Top = 0
-    Width = 952
-    Height = 576
+    Width = 1069
+    Height = 544
     Margins.Left = 15
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
     object Splitter1: TSplitter
-      Left = 325
+      Left = 357
       Top = 49
-      Height = 527
+      Height = 495
       Align = alRight
       ExplicitLeft = 160
       ExplicitTop = 216
@@ -38,7 +38,7 @@ object form_cadastro_condicional: Tform_cadastro_condicional
     object pnl_topo: TPanel
       Left = 0
       Top = 0
-      Width = 952
+      Width = 1069
       Height = 49
       Align = alTop
       BevelOuter = bvNone
@@ -65,7 +65,7 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         ExplicitHeight = 21
       end
       object btn_fechar: TSpeedButton
-        Left = 899
+        Left = 1016
         Top = 0
         Width = 53
         Height = 48
@@ -136,7 +136,7 @@ object form_cadastro_condicional: Tform_cadastro_condicional
       object pnl_separador_topo: TPanel
         Left = 0
         Top = 48
-        Width = 952
+        Width = 1069
         Height = 1
         Align = alBottom
         Color = clSilver
@@ -145,36 +145,75 @@ object form_cadastro_condicional: Tform_cadastro_condicional
       end
     end
     object pnl_registros: TPanel
-      Left = 328
+      Left = 360
       Top = 49
-      Width = 624
-      Height = 527
+      Width = 709
+      Height = 495
       Align = alRight
       TabOrder = 1
       object dbg_registros: TDBGrid
         Left = 1
         Top = 1
-        Width = 622
-        Height = 525
+        Width = 707
+        Height = 493
         Align = alClient
+        DataSource = form_conexao_tabelas.DataSourceCondicionalPendente
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
         TitleFont.Height = -11
         TitleFont.Name = 'Tahoma'
         TitleFont.Style = []
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'id'
+            Width = 53
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'nome'
+            Title.Caption = 'Cliente'
+            Width = 191
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'id_produto'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'Nome_1'
+            Title.Caption = 'Produto'
+            Width = 195
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'quantidade'
+            Title.Caption = 'Quantidade'
+            Width = 62
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'observacao'
+            Visible = True
+          end>
       end
     end
     object pnl_campos: TPanel
       Left = 0
       Top = 49
-      Width = 325
-      Height = 527
+      Width = 357
+      Height = 495
       Align = alClient
       TabOrder = 2
       DesignSize = (
-        325
-        527)
+        357
+        495)
       object lbl_qtt_estoque: TLabel
         Left = 29
         Top = 153
@@ -274,7 +313,7 @@ object form_cadastro_condicional: Tform_cadastro_condicional
       end
       object pnl_remover: TPanel
         Left = 62
-        Top = 451
+        Top = 419
         Width = 209
         Height = 41
         Anchors = [akLeft, akBottom]
@@ -292,7 +331,7 @@ object form_cadastro_condicional: Tform_cadastro_condicional
       end
       object pnl_add: TPanel
         Left = 62
-        Top = 396
+        Top = 364
         Width = 209
         Height = 41
         Anchors = [akLeft, akBottom]

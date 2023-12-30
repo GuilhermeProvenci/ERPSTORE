@@ -20,7 +20,6 @@ inherited form_consulta_condicional: Tform_consulta_condicional
       end
       inherited lbl_titulo: TLabel
         Width = 283
-        Height = 56
         Caption = 'CONSULTA DE CONDICIONAL'
         ExplicitWidth = 283
       end
@@ -36,11 +35,7 @@ inherited form_consulta_condicional: Tform_consulta_condicional
       ExplicitWidth = 962
       inherited lbl_duplo_clique: TLabel
         Left = 667
-        Height = 38
         ExplicitLeft = 667
-      end
-      inherited lbl_excluir: TLabel
-        Height = 38
       end
     end
     inherited pnl_pesquisa: TPanel
@@ -71,31 +66,43 @@ inherited form_consulta_condicional: Tform_consulta_condicional
         Columns = <
           item
             Expanded = False
-            FieldName = 'ID'
+            FieldName = 'id'
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'ID_Condicional'
+            FieldName = 'nome'
+            Title.Caption = 'Cliente'
+            Width = 127
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'Produto'
+            FieldName = 'id_produto'
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'Quantidade'
+            FieldName = 'Nome_1'
+            Title.Caption = 'Produto'
+            Width = 209
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'quantidade'
+            Title.Caption = 'Quantidade'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'observacao'
             Visible = True
           end>
       end
       inherited pnl_resultado: TPanel
         Width = 922
         ExplicitWidth = 922
-        inherited lbl_resultado: TLabel
-          Height = 41
-        end
       end
     end
   end

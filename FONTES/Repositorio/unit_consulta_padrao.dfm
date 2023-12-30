@@ -11,8 +11,10 @@ object form_consulta_padrao: Tform_consulta_padrao
   Font.Height = -11
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OldCreateOrder = True
   OnClose = FormClose
   OnCreate = FormCreate
+  PixelsPerInch = 96
   TextHeight = 13
   object pnl_principal: TPanel
     Left = 0

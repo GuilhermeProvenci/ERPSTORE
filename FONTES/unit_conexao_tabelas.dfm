@@ -172,7 +172,6 @@ object form_conexao_tabelas: Tform_conexao_tabelas
     end
   end
   object qryConsultaVendas: TFDQuery
-    Active = True
     Connection = form_conexao.FDConnection
     SQL.Strings = (
       'select * from Vendas')
@@ -207,23 +206,61 @@ object form_conexao_tabelas: Tform_conexao_tabelas
     Active = True
     Connection = form_conexao.FDConnection
     SQL.Strings = (
-      'select * from condicionalPendente'
-      '')
+      'SELECT'
+      '  condicionalPendente.id,'
+      '  clientes.nome,'
+      '  condicionalPendente.id_produto,'
+      '  produtos.Nome,'
+      '  condicionalPendente.quantidade,'
+      '  condicionalPendente.observacao'
+      'FROM'
+      '  condicionalPendente'
+      'INNER JOIN'
+      
+        '  condicional ON condicionalPendente.id_condicional = condiciona' +
+        'l.id'
+      'INNER JOIN'
+      '  clientes ON condicional.ID_Cliente = clientes.ID'
+      'INNER JOIN'
+      '  produtos ON condicionalPendente.id_produto = produtos.id')
     Left = 32
     Top = 288
-    object qryConsultaCondicionalPendenteID: TIntegerField
-      FieldName = 'ID'
-      Required = True
+    object qryConsultaCondicionalPendenteid: TFDAutoIncField
+      FieldName = 'id'
+      Origin = 'ID'
+      ProviderFlags = [pfInWhere, pfInKey]
     end
-    object qryConsultaCondicionalPendenteID_Condicional: TIntegerField
-      FieldName = 'ID_Condicional'
-    end
-    object qryConsultaCondicionalPendenteProduto: TStringField
-      FieldName = 'Produto'
+    object qryConsultaCondicionalPendentenome: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'nome'
+      Origin = 'nome'
+      ProviderFlags = []
+      ReadOnly = True
       Size = 255
     end
-    object qryConsultaCondicionalPendenteQuantidade: TIntegerField
-      FieldName = 'Quantidade'
+    object qryConsultaCondicionalPendenteid_produto: TIntegerField
+      FieldName = 'id_produto'
+      Origin = 'id_produto'
+      Required = True
+    end
+    object qryConsultaCondicionalPendenteNome_1: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'Nome_1'
+      Origin = 'nome'
+      ProviderFlags = []
+      ReadOnly = True
+      Size = 255
+    end
+    object qryConsultaCondicionalPendentequantidade: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'quantidade'
+      Origin = 'Quantidade'
+    end
+    object qryConsultaCondicionalPendenteobservacao: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'observacao'
+      Origin = 'observacao'
+      Size = 255
     end
   end
   object DataSourceCondicionalPendente: TDataSource

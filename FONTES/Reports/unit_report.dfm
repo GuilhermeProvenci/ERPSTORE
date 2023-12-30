@@ -10,8 +10,8 @@ object frm_report: Tfrm_report
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
+  OldCreateOrder = True
+  PixelsPerInch = 96
   TextHeight = 13
   object Panel2: TPanel
     Left = 8
@@ -162,7 +162,7 @@ object frm_report: Tfrm_report
     CloudDriveSettings.OneDriveSettings.DirectorySupport = True
     Left = 88
     Top = 16
-    Version = '22.03'
+    Version = '22.01'
     mmColumnWidth = 0
     DataPipelineName = 'PipelineClientes'
     object ppTitleBand1: TppTitleBand
@@ -630,7 +630,7 @@ object frm_report: Tfrm_report
     CloudDriveSettings.OneDriveSettings.DirectorySupport = True
     Left = 56
     Top = 120
-    Version = '22.03'
+    Version = '22.01'
     mmColumnWidth = 0
     DataPipelineName = 'PipelineProdutos'
     object ppTitleBand2: TppTitleBand
@@ -1101,7 +1101,7 @@ object frm_report: Tfrm_report
     CloudDriveSettings.OneDriveSettings.DirectorySupport = True
     Left = 232
     Top = 16
-    Version = '22.03'
+    Version = '22.01'
     mmColumnWidth = 0
     DataPipelineName = 'PipelineEstoque'
     object ppTitleBand3: TppTitleBand
