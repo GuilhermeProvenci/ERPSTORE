@@ -160,21 +160,33 @@ end;
 
 procedure Tform_cadastro_condicional.pnl_removerClick(Sender: TObject);
 var
-  ID: Integer;
+  DataSet: TDataSet;
+  Quantidade: Integer;
+  IdProduto: Integer;
 begin
-  if not dbg_registros.DataSource.DataSet.IsEmpty then
+  DataSet := dbg_registros.DataSource.DataSet;
+
+  if not DataSet.IsEmpty then
   begin
-    ID := dbg_registros.DataSource.DataSet.FieldByName('id').AsInteger;
-    try
-      qryEstoque.SQLExec(
-        'UPDATE estoque SET quantidade_em_estoque = quantidade_em_estoque + :1 WHERE produto_id = :2',
-        [dbg_registros.DataSource.DataSet.FieldByName('quantidade').AsInteger, dbg_registros.DataSource.DataSet.FieldByName('id_produto').AsInteger]
-      );
-      dbg_registros.DataSource.DataSet.Delete;
-      CriarMensagem('aviso', 'Registro removido com sucesso!');
-    except
-      on E: Exception do
-        CriarMensagem('erro', 'Erro ao remover o registro: ' + E.Message);
+    Quantidade := DataSet.FieldByName('quantidade').AsInteger;
+    IdProduto := DataSet.FieldByName('id_produto').AsInteger;
+    if (IdProduto > 0) then
+    begin
+      try
+        qryEstoque.SQLExec(
+          'UPDATE estoque SET quantidade_em_estoque = quantidade_em_estoque + :1 WHERE produto_id = :2',
+          [Quantidade, IdProduto]
+        );
+        DataSet.Delete;
+        CriarMensagem('aviso', 'Registro removido com sucesso!');
+      except
+        on E: Exception do
+          CriarMensagem('erro', 'Erro ao remover o registro: ' + E.Message);
+      end;
+    end
+    else
+    begin
+      CriarMensagem('erro', 'Não é possível remover o registro. Verifique os campos necessários.');
     end;
   end
   else
@@ -184,36 +196,46 @@ begin
 end;
 
 
+
 procedure Tform_cadastro_condicional.pnl_addClick(Sender: TObject);
 var
   produtoID, estoqueID: Integer;
 begin
-  qryEstoque.SQLExec('SELECT id, produto_id, quantidade_em_estoque FROM estoque WHERE produto_id = :1', [edt_cod_prod.Text]);
+  qryEstoque.SQLExec('SELECT id, produto_id, quantidade_em_estoque FROM estoque WHERE produto_id = :1',
+  [edt_cod_prod.Text]);
+  qryCondicional.SQLExec('Select id, ID_Cliente, nome_cliente from condicional where ID_Cliente = :1',
+  [edt_cod_clie.text]);
+
+  condicionalID := qryCondicional.FieldByName('id').AsInteger;
 
   if not qryEstoque.IsEmpty then
   begin
-    try
-      estoqueID := qryEstoque.FieldByName('id').AsInteger;
-      produtoID := qryEstoque.FieldByName('produto_id').AsInteger;
-      cbb_clientes.OnChange(cbb_clientes);
+    estoqueID := qryEstoque.FieldByName('id').AsInteger;
+    produtoID := qryEstoque.FieldByName('produto_id').AsInteger;
+    if (estoqueID <> 0) and (produtoID <> 0) and (condicionalID <> 0) and (StrToIntDef(edt_qtt.Text, 0) <> 0) then
+    begin
+      try
+        qryCondPendente.SQLExec(
+          'INSERT INTO condicionalPendente (id_Condicional, id_produto, quantidade, observacao) ' +
+          'VALUES (:1, :2, :3, :4)',
+          [condicionalID, produtoID, StrToInt(edt_qtt.Text), edt_obs.Text]
+        );
+        qryEstoque.SQLExec(
+          'UPDATE estoque SET quantidade_em_estoque = quantidade_em_estoque - :1 WHERE id = :2',
+          [StrToInt(edt_qtt.Text), estoqueID]
+        );
 
-      qryCondPendente.SQLExec(
-        'INSERT INTO condicionalPendente (id_Condicional, id_produto, quantidade, observacao) ' +
-        'VALUES (:1, :2, :3, :4)',
-        [condicionalID, produtoID, edt_qtt.Text, edt_obs.text]
-      );
-
-      qryEstoque.SQLExec(
-        'UPDATE estoque SET quantidade_em_estoque = :1 WHERE id = :2',
-        [qryEstoque.FieldByName('quantidade_em_estoque').AsInteger - edt_qtt.Value, estoqueID]
-      );
-
-      CriarMensagem('aviso', 'Inserção realizada com sucesso!');
-      form_conexao_tabelas.qryConsultaCondicionalPendente.Refresh;
-      dbg_registros.Refresh;
-    except
-      on E: Exception do
-        CriarMensagem('erro', 'Erro ao inserir na tabela: ' + E.Message);
+        CriarMensagem('aviso', 'Inserção realizada com sucesso!');
+        form_conexao_tabelas.qryConsultaCondicionalPendente.Refresh;
+        dbg_registros.Refresh;
+      except
+        on E: Exception do
+          CriarMensagem('erro', 'Erro ao inserir na tabela: ' + E.Message);
+      end;
+    end
+    else
+    begin
+      CriarMensagem('erro', 'Não é possível adicionar o registro. Verifique os campos necessários.');
     end;
   end
   else
@@ -222,6 +244,7 @@ begin
     Exit;
   end;
 end;
+
 
 
 initialization
