@@ -6,22 +6,22 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, gplQry;
 
-  type
+type
   TgpEdit = class(TEdit)
   private
     FTexto: string;
     FNumero: Real;
-    FDataFieldName : string;
+    FDataFieldName: string;
     FDataField: string;
-    FTable : string;
+    FTable: string;
   public
     property Texto: string read FTexto write FTexto;
     property Numero: Real read FNumero write FNumero;
-    procedure LoadField(id : string);
+    procedure LoadField(const id: string);
   published
-    property Table : string read FTable write FTable;
-    property DataFieldName: string Read FDataFieldName Write FDataFieldName;
-    property DataField: string Read FDataField Write FDataField;
+    property Table: string read FTable write FTable;
+    property DataFieldName: string read FDataFieldName write FDataFieldName;
+    property DataField: string read FDataField write FDataField;
   end;
 
 procedure Register;
@@ -35,25 +35,29 @@ end;
 
 { TgpEdit }
 
-procedure TgpEdit.LoadField(id: string);
+procedure TgpEdit.LoadField(const id: string);
 var
   SQL: string;
-  qry : TgpQry;
+  qry: TgpQry;
 begin
   if FTable = '' then
     Exit;
 
   SQL := 'SELECT * FROM ' + FTable;
   if id <> '0' then
-    SQL := SQL + ' WHERE id = ' + id
-  else
-    SQL := SQL + ' WHERE id is not null';
+    SQL := SQL + ' WHERE id = ' + id;
 
-  qry:= TgpQry.Create(self);
-  qry.SQLExec(SQL, []);
-
-  self.Text := qry.FieldByName(DataField).AsString;
+  qry := TgpQry.Create(Self);
+  try
+    qry.SQLExec(SQL, []);
+    if not qry.IsEmpty then
+      Text := qry.FieldByName(DataField).AsString;
+  except
+    on E: Exception do
+      ShowMessage('Erro ao carregar campo: ' + E.Message);
+  end;
+  qry.Free;
 end;
 
-
 end.
+

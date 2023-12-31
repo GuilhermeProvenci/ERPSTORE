@@ -6,25 +6,25 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, gplQry;
 
-  type
+type
   TgpCombo = class(TComboBox)
   private
     FTexto: string;
     FNumero: Real;
-    FDataFieldName : string;
+    FDataFieldName: string;
     FDataField: string;
-    FTable : string;
+    FTable: string;
   public
     property Texto: string read FTexto write FTexto;
     property Numero: Real read FNumero write FNumero;
-    procedure LoadField(id : string);
+    procedure LoadField(const id: string);
   published
-    property Table : string read FTable write FTable;
-    property DataFieldName: string Read FDataFieldName Write FDataFieldName;
-    //property DataField: string Read FDataField Write FDataField;
+    property Table: string read FTable write FTable;
+    property DataFieldName: string read FDataFieldName write FDataFieldName;
+    // property DataField: string read FDataField write FDataField;
   end;
 
-  procedure Register;
+procedure Register;
 
 implementation
 
@@ -35,7 +35,7 @@ begin
   RegisterComponents('GPL', [TgpCombo]);
 end;
 
-procedure TgpCombo.LoadField(id: string);
+procedure TgpCombo.LoadField(const id: string);
 var
   SQL: string;
   qry: TgpQry;
@@ -57,13 +57,18 @@ begin
 
     while not qry.Eof do
     begin
-    if qry.FieldByName(DataFieldName).AsString <> '' then
-      Items.Add(qry.FieldByName(DataFieldName).AsString);
+      if qry.FieldByName(DataFieldName).AsString <> '' then
+        Items.Add(qry.FieldByName(DataFieldName).AsString);
       qry.Next;
     end;
 
     if Items.Count > 0 then
-      ItemIndex := 0
+    begin
+      if Items.Count > 0 then
+        ItemIndex := 0
+      else
+        ItemIndex := -1;
+    end
     else
       Text := '';
 
@@ -72,7 +77,5 @@ begin
   end;
 end;
 
-
 end.
-
 
