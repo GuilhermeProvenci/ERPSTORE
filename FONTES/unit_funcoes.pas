@@ -16,6 +16,7 @@ uses
   procedure MudarBotao ( Form: Tform; Botao : TPanel );
   function Criptografia( Senha: string ): string;
   function CriarMensagem ( Tipo, MSG : String ) : boolean;
+  function StringReplaceAll(const Texto: string; const CaracteresRemover: string): string;
 
   procedure prcDrawColumnCell( Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -864,6 +865,16 @@ begin
 
   End;
 
+end;
+
+function StringReplaceAll(const Texto: string; const CaracteresRemover: string): string;
+var
+  i: Integer;
+begin
+  Result := Texto;
+
+  for i := 1 to Length(CaracteresRemover) do
+    Result := StringReplace(Result, CaracteresRemover[i], '', [rfReplaceAll]);
 end;
 
 
