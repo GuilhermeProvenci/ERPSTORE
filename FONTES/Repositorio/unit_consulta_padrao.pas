@@ -88,6 +88,9 @@ begin
 frm_report := Tfrm_report.Create(self);
 frm_report.NomeReport := UpperCase(NomeReport);
 frm_report.Table := NomeTabela;
+
+frm_report.Grid := self.dbg_registros;
+
 frm_report.ShowModal;
 FreeAndNil(frm_report);
 end;
