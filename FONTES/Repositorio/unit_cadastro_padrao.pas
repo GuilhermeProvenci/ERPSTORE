@@ -123,7 +123,7 @@ end;
 procedure Tform_cadastro_padrao.FormCreate(Sender: TObject);
 
 begin
-
+  Self.LogInfo('Cadastro de ' + NomeTabela + 'criado com sucesso');
   NomeForm := Self.Name;
   Delete(NomeForm, 1, Length('form_cadastro_')); // Remove 'form_cadastro_'
   NomeClass:= 'T' + NomeForm;
@@ -192,6 +192,7 @@ begin
   end;
 
   CriarMensagem('aviso', 'Registro Salvo com sucesso');
+  Self.LogInfo('Inserção na Tabela de ' + NomeTabela + ' realizada com sucesso');
   self.Close;
 
 end;
@@ -200,7 +201,10 @@ procedure Tform_cadastro_padrao.SetClass(const NomeClasse: string);
 begin
   FClasseType := GetClass(NomeClasse);
   if FClasseType = nil then
+  begin
     raise Exception.CreateFmt('Classe %s não encontrada.', [NomeClasse]);
+    Self.LogError('Falha no momento de Criar a Classe:' + NomeTabela);
+  end;
 end;
 
 
