@@ -46,6 +46,7 @@ uses
   procedure AddColumn(const TableName, ColumnName, ColumnType: string);
 
   procedure CarregarCamposClasse(form: TForm; Classe: TObject);
+  function SubsTudo(Text: String; const Substituicoes: array of string): String;
 
 
 type
@@ -1266,6 +1267,21 @@ begin
     end;
   finally
     Contexto.Free;
+  end;
+end;
+
+function SubsTudo(Text: String; const Substituicoes: array of string): String;
+var
+  i: Integer;
+begin
+  Result := Text;
+  if Length(Substituicoes) mod 2 <> 0 then
+    raise Exception.Create('O número de elementos na matriz de substituições deve ser par');
+  i := 0;
+  while i < Length(Substituicoes) do
+  begin
+    Result := StringReplace(Result, Substituicoes[i], Substituicoes[i + 1], [rfReplaceAll, rfIgnoreCase]);
+    Inc(i, 2);
   end;
 end;
 
