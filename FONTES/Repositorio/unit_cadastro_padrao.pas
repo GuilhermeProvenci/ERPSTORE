@@ -70,7 +70,7 @@ uses unit_mensagem, unit_funcoes, unit_conexao, unit_conexao_tabelas,
 
 procedure Tform_cadastro_padrao.btn_fecharClick(Sender: TObject);
 begin
- if CriarMensagem('DELETE', 'Tem certeza que deseja Sair sem salvar?') = True then
+ if CriarMensagem('CONFIRMACAO', 'Tem certeza que deseja Sair sem salvar?') = True then
  begin
  qryInsert.close;
  self.Close;
@@ -140,31 +140,28 @@ procedure Tform_cadastro_padrao.FormShow(Sender: TObject);
 var
   Instancia: TObject;
 begin
-  case FormState of
-    fsView:
+  case FormMode of
+    fmView:
     begin
       CarregarCampos(ID, Self);
       pnl_salvar.Enabled := false;
     end;
 
-    fsEdit, fsInsert:
+    fmEdit:
     begin
-      if FormState = fsEdit then
-      begin
         CarregarCampos(ID, Self);
         lbl_titulo.Caption := 'EDIÇÃO DE ' + UpperCase(NomeTabela);
         CarregarCamposClasse(self, FClasseInstance);
-      end
-      else
-      begin
-        maxID(NomeTabela, edt_id);
-        lbl_titulo.Caption := 'INSERÇÃO EM ' + UpperCase(NomeTabela);
-      end;
     end;
+
+    fmInsert:
+    begin
+        maxID(NomeTabela, edt_id);
+        lbl_titulo.Caption := 'CADASTRO DE ' + UpperCase(NomeTabela);
+     end;
+
+
   end;
-
-
-
 end;
 
 

@@ -8,7 +8,7 @@ uses
   Vcl.Forms, Vcl.ExtCtrls, Vcl.Graphics, Vcl.StdCtrls,
   Vcl.DBCtrls, Vcl.Mask, Winapi.Windows, Vcl.DBGrids, Vcl.Grids, Data.DB, FireDAC.Comp.Client,
   System.Classes, Vcl.Controls, unit_cadastro_padrao,
-  System.SysUtils, gplQry, gplEdit;
+  System.SysUtils, gplQry, gplEdit, gplForm;
 
   function SomenteNumeros( AString: String ): String;
   function RemoveCaracteres( AString: String ): String;
@@ -45,7 +45,7 @@ uses
   procedure DropTable(const TableName: string);
   procedure AddColumn(const TableName, ColumnName, ColumnType: string);
 
-  procedure CarregarCamposClasse(form: TForm; Classe: TObject);
+  procedure CarregarCamposClasse(form: TgpForm; Classe: TObject);
   function SubsTudo(Text: String; const Substituicoes: array of string): String;
 
 
@@ -1228,7 +1228,7 @@ begin
   end;
 end;
 
-procedure CarregarCamposClasse(form: TForm; Classe: TObject);
+procedure CarregarCamposClasse(form: TgpForm; Classe: TObject);
 var
   Contexto: TRttiContext;
   Propriedade: TRttiProperty;
@@ -1243,7 +1243,7 @@ begin
       Componente := form.Components[i];
       DataFieldName := '';
       if (Componente is TgpEdit) then
-        DataFieldName := TgpEdit(Componente).DataFieldName
+        DataFieldName := TgpEdit(Componente).Conf.TableFieldName
       else
         Continue;
 

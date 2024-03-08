@@ -1,6 +1,5 @@
 inherited form_cadastro_clientes: Tform_cadastro_clientes
   Caption = 'Clientes'
-  PixelsPerInch = 96
   TextHeight = 13
   inherited pnl_fundo: TPanel
     inherited lbl_informacao: TLabel
@@ -39,7 +38,6 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
     inherited pnl_topo: TPanel
       inherited lbl_titulo: TLabel
         Width = 219
-        Height = 48
         Caption = 'Cadastro de Pessoas / clientes'
         ExplicitWidth = 219
       end
@@ -49,28 +47,6 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
       Top = 194
       TabOrder = 6
       ExplicitTop = 194
-    end
-    object cbb_classificacao: TComboBox [8]
-      Tag = 99
-      Left = 220
-      Top = 203
-      Width = 145
-      Height = 24
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ItemIndex = 0
-      ParentFont = False
-      TabOrder = 5
-      Text = 'Bronze'
-      StyleName = 'classificacao'
-      Items.Strings = (
-        'Bronze'
-        'Prata '
-        'Ouro'
-        'Diamante')
     end
     inherited edt_nome: TgpEdit
       StyleName = 'nome'
@@ -84,8 +60,26 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
       DataFieldName = 'TELEFONE'
     end
     inherited edt_4: TgpEdit
+      Top = 204
       StyleName = 'ENDERECO'
       DataFieldName = 'ENDERECO'
+      ExplicitTop = 204
+    end
+    object cmbClassificacao: TgpCombo
+      Tag = 99
+      Left = 220
+      Top = 204
+      Width = 165
+      Height = 21
+      ItemIndex = 0
+      TabOrder = 5
+      Text = 'Bronze'
+      Items.Strings = (
+        'Bronze'
+        'Prata '
+        'Ouro'
+        'Diamante')
+      DataFieldName = 'Classificacao'
     end
   end
 end

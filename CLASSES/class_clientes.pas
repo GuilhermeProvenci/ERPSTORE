@@ -3,7 +3,7 @@
 interface
 
 uses
-  System.Classes, FireDAC.Comp.Client, System.SysUtils, System.Rtti, VCL.Forms;
+  System.Classes, FireDAC.Comp.Client, System.SysUtils, System.Rtti, VCL.Forms, gplForm, gplCombo, unit_funcoes;
 
 type
   TClientes = class(TComponent)
@@ -13,18 +13,16 @@ type
     FTelefone: string;
     FEndereco: string;
     FClassificacao: string;
-    FOwnerForm : TForm;
+    FOwnerForm : TgpForm;
     procedure SetID(const Value: Integer);
-  //  procedure CarregarCampos(form : Tform);
   public
-   // constructor Create(AID: Integer; ANome, ATelefone, AEndereco: string; AClassificacao: TClassificacao);
-    constructor Create(form : Tform);
+    constructor Create(form : TgpForm);
     property ID: Integer read FID write SetID;
     property Nome: string read FNome write FNome;
     property Telefone: string read FTelefone write FTelefone ;
     property Endereco: string read FEndereco write FEndereco;
     property Classificacao: string read FClassificacao write FClassificacao;
-    property OwnerForm: TForm read FOwnerForm write FOwnerForm;
+    property OwnerForm: TgpForm read FOwnerForm write FOwnerForm;
     function ObterDesconto: Double;
     procedure TestMensage;
   end;
@@ -36,16 +34,12 @@ implementation
 uses
   gplEdit, Vcl.Dialogs, StrUtils;
 
-//constructor TClientes.Create(AID: Integer; ANome, ATelefone, AEndereco: string; AClassificacao: TClassificacao);
-constructor TClientes.Create(form : Tform);
+constructor TClientes.Create(form : TgpForm);
 begin
   inherited Create(nil);
-//  FID := AID;
-//  FNome := ANome;
-//  FTelefone := ATelefone;
-//  FEndereco := AEndereco;
-//  FClassificacao := AClassificacao;
    OwnerForm := form;
+   CarregarCamposClasse(OwnerForm, Self);
+    TestMensage;
 end;
 
 procedure TClientes.SetID(const Value: Integer);
@@ -60,37 +54,6 @@ begin
 
 end;
 
-//procedure TClientes.CarregarCampos(form: TForm);
-//var
-//  Contexto: TRttiContext;
-//  Propriedade: TRttiProperty;
-//  Valor: TValue;
-//  Componente: TComponent;
-//  DataFieldName: string;
-//begin
-//  Contexto := TRttiContext.Create;
-//  try
-//    for var i: integer := 0 to form.ComponentCount - 1 do
-//    begin
-//      Componente := form.Components[i];
-//      DataFieldName := '';
-//      if (Componente is TgpEdit) then
-//        DataFieldName := TgpEdit(Componente).DataFieldName
-//      else
-//        Continue;
-//      for Propriedade in Contexto.GetType(Self.ClassType).GetProperties do
-//      begin
-//        if SameText(Propriedade.Name, DataFieldName) then
-//        begin
-//          Valor := TgpEdit(Componente).Text;
-//          Propriedade.SetValue(Self, Valor);
-//        end;
-//      end;
-//    end;
-//  finally
-//    Contexto.Free;
-//  end;
-//end;
 
 function TClientes.ObterDesconto: Double;
 begin

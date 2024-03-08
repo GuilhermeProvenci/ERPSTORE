@@ -116,6 +116,7 @@
         <DCCReference Include="gplEdit.pas"/>
         <DCCReference Include="gplForm.pas"/>
         <DCCReference Include="gplCombo.pas"/>
+        <DCCReference Include="..\CLASSES\class_auxi.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

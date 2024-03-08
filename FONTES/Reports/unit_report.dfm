@@ -10,8 +10,6 @@ object frm_report: Tfrm_report
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = True
-  PixelsPerInch = 96
   TextHeight = 13
   object Panel2: TPanel
     Left = 8
@@ -171,7 +169,7 @@ object frm_report: Tfrm_report
     CloudDriveSettings.OneDriveSettings.DirectorySupport = True
     Left = 88
     Top = 16
-    Version = '22.01'
+    Version = '22.03'
     mmColumnWidth = 0
     DataPipelineName = 'PipelineClientes'
     object ppTitleBand1: TppTitleBand
@@ -639,7 +637,7 @@ object frm_report: Tfrm_report
     CloudDriveSettings.OneDriveSettings.DirectorySupport = True
     Left = 56
     Top = 120
-    Version = '22.01'
+    Version = '22.03'
     mmColumnWidth = 0
     DataPipelineName = 'PipelineProdutos'
     object ppTitleBand2: TppTitleBand
@@ -1110,7 +1108,7 @@ object frm_report: Tfrm_report
     CloudDriveSettings.OneDriveSettings.DirectorySupport = True
     Left = 232
     Top = 16
-    Version = '22.01'
+    Version = '22.03'
     mmColumnWidth = 0
     DataPipelineName = 'PipelineEstoque'
     object ppTitleBand3: TppTitleBand
@@ -1453,98 +1451,6 @@ object frm_report: Tfrm_report
       end
     end
     object ppParameterList3: TppParameterList
-    end
-  end
-  object frxReportConsulta: TfrxReport
-    Version = '2024.1.2'
-    DotMatrixReport = False
-    IniFile = '\Software\Fast Reports'
-    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
-    PreviewOptions.Zoom = 1.000000000000000000
-    PrintOptions.Printer = 'Default'
-    PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 45298.849191307870000000
-    ReportOptions.LastChange = 45298.856251770830000000
-    ScriptLanguage = 'PascalScript'
-    ScriptText.Strings = (
-      ''
-      'begin'
-      ''
-      'end.')
-    Left = 176
-    Top = 136
-    Datasets = <>
-    Variables = <>
-    Style = <>
-    object Data: TfrxDataPage
-      Height = 1000.000000000000000000
-      Width = 1000.000000000000000000
-    end
-    object Page1: TfrxReportPage
-      PaperWidth = 210.000000000000000000
-      PaperHeight = 297.000000000000000000
-      PaperSize = 9
-      LeftMargin = 10.000000000000000000
-      RightMargin = 10.000000000000000000
-      TopMargin = 10.000000000000000000
-      BottomMargin = 10.000000000000000000
-      Frame.Typ = []
-      MirrorMode = []
-      object ReportTitle1: TfrxReportTitle
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 18.897650000000000000
-        Width = 718.110700000000000000
-      end
-      object MasterData1: TfrxMasterData
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 147.401670000000000000
-        Width = 718.110700000000000000
-        RowCount = 0
-      end
-      object PageFooter1: TfrxPageFooter
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 230.551330000000000000
-        Width = 718.110700000000000000
-        object Memo1: TfrxMemoView
-          AllowVectorExport = True
-          Left = 642.520100000000000000
-          Width = 75.590600000000000000
-          Height = 18.897650000000000000
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[Page#]')
-        end
-      end
-      object PageHeader1: TfrxPageHeader
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 64.252010000000000000
-        Width = 718.110700000000000000
-      end
     end
   end
 end

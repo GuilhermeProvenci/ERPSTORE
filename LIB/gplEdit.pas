@@ -4,24 +4,16 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
-  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, gplQry;
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, gplQry, class_auxi;
 
 type
   TgpEdit = class(TEdit)
   private
-    FTexto: string;
-    FNumero: Real;
-    FDataFieldName: string;
-    FDataField: string;
-    FTable: string;
+    FConf : TAuxi;
   public
-    property Texto: string read FTexto write FTexto;
-    property Numero: Real read FNumero write FNumero;
     procedure LoadField(const id: string);
   published
-    property Table: string read FTable write FTable;
-    property DataFieldName: string read FDataFieldName write FDataFieldName;
-    property DataField: string read FDataField write FDataField;
+    property Conf: TAuxi read FConf write FConf;
   end;
 
 procedure Register;
@@ -40,10 +32,10 @@ var
   SQL: string;
   qry: TgpQry;
 begin
-  if FTable = '' then
+  if Conf.Table = '' then
     Exit;
 
-  SQL := 'SELECT * FROM ' + FTable;
+  SQL := 'SELECT * FROM ' + Conf.Table;
   if id <> '0' then
     SQL := SQL + ' WHERE id = ' + id;
 
@@ -51,7 +43,7 @@ begin
   try
     qry.SQLExec(SQL, []);
     if not qry.IsEmpty then
-      Text := qry.FieldByName(DataField).AsString;
+      Text := qry.FieldByName(Conf.TableFieldName).AsString;
   except
     on E: Exception do
       ShowMessage('Erro ao carregar campo: ' + E.Message);

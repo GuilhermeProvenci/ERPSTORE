@@ -6,10 +6,10 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Forms,
   Vcl.Controls, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
   Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, FireDAC.Comp.Client,
-  unit_cadastro_padrao, unit_report;
+  unit_cadastro_padrao, unit_report, gplForm;
 
 type
-  Tform_consulta_padrao = class(TForm)
+  Tform_consulta_padrao = class(TgpForm)
     pnl_principal: TPanel;
     pnl_cabecalho: TPanel;
     btn_fechar: TSpeedButton;
@@ -49,7 +49,7 @@ type
     vID : Integer;
   public
     { Public declarations }
-    procedure CriaForm(const Nome: string; FormState: TFormState; ID: Integer);
+    procedure CriaForm(const Nome: string; FormMode: TFormMode; ID: Integer);
     var
     NomeTabela : string;
     NomeForm: string;
@@ -78,7 +78,7 @@ procedure Tform_consulta_padrao.btn_inserirClick(Sender: TObject);
 begin
 // Abrir a tela de cadastro em modo de inserção
 //CriaForm(NomeForm, False);
-CriaForm(NomeForm, fsInsert, 0); // ID pode ser 0 ou outro valor inicial
+CriaForm(NomeForm, fmInsert, 0); // ID pode ser 0 ou outro valor inicial
 
 
 end;
@@ -95,7 +95,7 @@ frm_report.ShowModal;
 FreeAndNil(frm_report);
 end;
 
-procedure Tform_consulta_padrao.CriaForm(const Nome: string; FormState: TFormState; ID: Integer);
+procedure Tform_consulta_padrao.CriaForm(const Nome: string; FormMode: TFormMode; ID: Integer);
 var
   Tela: TForm;
   ClasseForm: TFormClass;
@@ -104,27 +104,27 @@ begin
   ClasseForm := TFormClass(FindClass(Nome));
   Tela := ClasseForm.Create(Application);
 
-  case FormState of
-    fsView:
+  case FormMode of
+    fmView:
       begin
         // Lógica para exibir dados em modo de visualização
       end;
-    fsEdit:
+    fmEdit:
       begin
         // Lógica para edição de dados
         if Tela is Tform_cadastro_padrao then
         begin
           Tform_cadastro_padrao(Tela).ID := ID;
-          Tform_cadastro_padrao(Tela).FormState := FormState;
+          Tform_cadastro_padrao(Tela).FormMode := FormMode;
         end;
       end;
-    fsInsert:
+    fmInsert:
       begin
         // Lógica para inserção de novos dados
         if Tela is Tform_cadastro_padrao then
         begin
           Tform_cadastro_padrao(Tela).ID := ID;
-          Tform_cadastro_padrao(Tela).FormState := FormState;
+          Tform_cadastro_padrao(Tela).FormMode := FormMode;
         end;
       end;
   end;
@@ -142,7 +142,7 @@ begin
     vID := ds_consulta.DataSet.FieldByName('ID').AsInteger;
     // Abrir o formulário em modo de edição
    // CriaForm(NomeForm, True);
-    CriaForm(NomeForm, fsEdit, vID);
+    CriaForm(NomeForm, fmEdit, vID);
 
     ds_consulta.DataSet.Refresh;
     dbg_registros.Update;

@@ -8,12 +8,12 @@ uses
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.ExtCtrls,
-  Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls, gplEdit, gplQry;
+  Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls, gplEdit, gplQry, gplCombo;
 
 type
   Tform_cadastro_clientes = class(Tform_cadastro_padrao)
-    cbb_classificacao: TComboBox;
     Label1: TLabel;
+    cmbClassificacao: TgpCombo;
     procedure pnl_salvarClick(Sender: TObject);
   private
     { Private declarations }

@@ -4,33 +4,30 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
-  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls;
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, class_auxi;
 
 type
-  TFormState = (fsView, fsEdit, fsInsert);
+  TFormMode = (fmView, fmEdit, fmInsert);
 
   TLogEventType = (etInfo, etWarning, etError);
   TLogEvent = procedure(Sender: TObject; EventType: TLogEventType; const Message: string) of object;
 
   TgpForm = class(TForm)
   private
-    FTexto: string;
-    FNumero: Real;
-    FFormState: TFormState;
+    FConf : TAuxi;
+    FFormMode: TFormMode;
     FOnLog: TLogEvent;
 
     procedure Log(EventType: TLogEventType; const Message: string);
   public
-    property Texto: string read FTexto write FTexto;
-    property Numero: Real read FNumero write FNumero;
-
     procedure LogInfo(const Message: string);
     procedure LogWarning(const Message: string);
     procedure LogError(const Message: string);
     procedure GravaLog(const Message: string);
 
   published
-    property FormState: TFormState read FFormState write FFormState;
+    property Conf: TAuxi read FConf write FConf;
+    property FormMode: TFormMode read FFormMode write FFormMode;
     property OnLog: TLogEvent read FOnLog write FOnLog;
   end;
 

@@ -11,12 +11,10 @@ object form_cadastro_padrao: Tform_cadastro_padrao
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = True
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 13
   object pnl_fundo: TPanel
     Left = 0
