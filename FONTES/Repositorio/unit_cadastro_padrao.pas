@@ -27,9 +27,9 @@ type
     Image1: TImage;
     qryInsert: TFDQuery;
     edt_nome: TgpEdit;
-    edt_id: TgpEdit;
     edt_3: TgpEdit;
     edt_4: TgpEdit;
+    edt_id: TgpEdit;
     procedure btn_fecharClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure pnl_salvarClick(Sender: TObject);
@@ -121,7 +121,6 @@ begin
 end;
 
 procedure Tform_cadastro_padrao.FormCreate(Sender: TObject);
-
 begin
   Self.LogInfo('Cadastro de ' + NomeTabela + 'criado com sucesso');
   NomeForm := Self.Name;

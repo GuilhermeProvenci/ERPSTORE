@@ -50,20 +50,17 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
     end
     inherited edt_nome: TgpEdit
       StyleName = 'nome'
-      DataFieldName = 'Nome'
-    end
-    inherited edt_id: TgpEdit
-      StyleName = 'id'
     end
     inherited edt_3: TgpEdit
       StyleName = 'telefone'
-      DataFieldName = 'TELEFONE'
     end
     inherited edt_4: TgpEdit
       Top = 204
       StyleName = 'ENDERECO'
-      DataFieldName = 'ENDERECO'
       ExplicitTop = 204
+    end
+    inherited edt_id: TgpEdit
+      StyleName = 'id'
     end
     object cmbClassificacao: TgpCombo
       Tag = 99
@@ -79,7 +76,6 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
         'Prata '
         'Ouro'
         'Diamante')
-      DataFieldName = 'Classificacao'
     end
   end
 end

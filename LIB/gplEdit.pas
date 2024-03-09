@@ -11,6 +11,8 @@ type
   private
     FConf : TAuxi;
   public
+    constructor Create;
+    Destructor Destroy;
     procedure LoadField(const id: string);
   published
     property Conf: TAuxi read FConf write FConf;
@@ -26,6 +28,16 @@ begin
 end;
 
 { TgpEdit }
+
+constructor TgpEdit.Create;
+begin
+  FConf := TAuxi.Create;
+end;
+
+destructor TgpEdit.Destroy;
+begin
+  FConf.Free;
+end;
 
 procedure TgpEdit.LoadField(const id: string);
 var

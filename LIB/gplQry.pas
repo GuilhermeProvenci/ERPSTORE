@@ -42,7 +42,8 @@ procedure Register;
 implementation
 
 uses
-  Vcl.Dialogs, FireDAC.Stan.Param, System.Math, unit_funcoes;
+  Vcl.Dialogs, FireDAC.Stan.Param, System.Math // {$IFDEF GPL}{$ENDIF}
+  , unit_funcoes;
 
 procedure Register;
 begin
@@ -120,8 +121,11 @@ begin
       ExecSQL;
   except
     on E: Exception do
-      //ShowMessage('Erro ao executar a consulta: ' + E.Message)
+      //{$IFDEF GPL}
       CriarMensagem('ERRO', 'Erro ao executar a consulta: ' + E.Message);
+      //{$ELSE}
+      //ShowMessage('Erro ao executar a consulta: ' + E.Message);
+      //{$ENDIF}
   end;
 
 end;
@@ -157,8 +161,13 @@ begin
     except
       on E: Exception do
       begin
-        //ShowMessage(E.Message);
-        CriarMensagem('ERRO',E.Message );
+
+      //{$IFDEF GPL}
+      CriarMensagem('ERRO',E.Message );
+     // {$ELSE}
+      //ShowMessage(E.Message);
+      //{$ENDIF}
+
         Exit;
       end;
     end;

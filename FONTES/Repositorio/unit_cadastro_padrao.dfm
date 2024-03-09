@@ -305,22 +305,6 @@ object form_cadastro_padrao: Tform_cadastro_padrao
       ParentFont = False
       TabOrder = 2
     end
-    object edt_id: TgpEdit
-      Tag = 99
-      Left = 27
-      Top = 128
-      Width = 187
-      Height = 24
-      Hint = 'Preencha com o valor desejado'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 1
-      DataFieldName = 'Id'
-    end
     object edt_3: TgpEdit
       Tag = 99
       Left = 566
@@ -350,6 +334,21 @@ object form_cadastro_padrao: Tform_cadastro_padrao
       Font.Style = []
       ParentFont = False
       TabOrder = 4
+    end
+    object edt_id: TgpEdit
+      Tag = 99
+      Left = 25
+      Top = 128
+      Width = 176
+      Height = 24
+      Hint = 'Preencha com o valor desejado'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 1
     end
   end
   object qryInsert: TFDQuery
