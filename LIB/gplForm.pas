@@ -20,6 +20,9 @@ type
 
     procedure Log(EventType: TLogEventType; const Message: string);
   public
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+
     procedure LogInfo(const Message: string);
     procedure LogWarning(const Message: string);
     procedure LogError(const Message: string);
@@ -41,6 +44,18 @@ begin
 end;
 
 { TgpForm }
+
+constructor TgpForm.Create(AOwner: TComponent);
+begin
+  inherited;
+  FConf := TAuxi.Create;
+end;
+
+destructor TgpForm.Destroy;
+begin
+  FConf.Free;
+  inherited;
+end;
 
 procedure TgpForm.Log(EventType: TLogEventType; const Message: string);
 begin

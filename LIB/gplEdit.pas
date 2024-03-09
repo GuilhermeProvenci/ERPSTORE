@@ -11,8 +11,8 @@ type
   private
     FConf : TAuxi;
   public
-    constructor Create;
-    Destructor Destroy;
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
     procedure LoadField(const id: string);
   published
     property Conf: TAuxi read FConf write FConf;
@@ -29,14 +29,16 @@ end;
 
 { TgpEdit }
 
-constructor TgpEdit.Create;
+constructor TgpEdit.Create(AOwner: TComponent);
 begin
+  inherited;
   FConf := TAuxi.Create;
 end;
 
 destructor TgpEdit.Destroy;
 begin
   FConf.Free;
+  inherited;
 end;
 
 procedure TgpEdit.LoadField(const id: string);
@@ -44,10 +46,10 @@ var
   SQL: string;
   qry: TgpQry;
 begin
-  if Conf.Table = '' then
+  if FConf.Table = '' then
     Exit;
 
-  SQL := 'SELECT * FROM ' + Conf.Table;
+  SQL := 'SELECT * FROM ' + FConf.Table;
   if id <> '0' then
     SQL := SQL + ' WHERE id = ' + id;
 
@@ -55,7 +57,7 @@ begin
   try
     qry.SQLExec(SQL, []);
     if not qry.IsEmpty then
-      Text := qry.FieldByName(Conf.TableFieldName).AsString;
+      Text := qry.FieldByName(FConf.TableFieldName).AsString;
   except
     on E: Exception do
       ShowMessage('Erro ao carregar campo: ' + E.Message);

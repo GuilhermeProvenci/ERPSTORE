@@ -11,6 +11,8 @@ type
   private
     FConf : TAuxi;
   public
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
     procedure LoadField(const id: string);
   published
     property Conf: TAuxi read FConf write FConf;
@@ -20,11 +22,23 @@ procedure Register;
 
 implementation
 
-{ TgpCombo }
-
 procedure Register;
 begin
   RegisterComponents('GPL', [TgpCombo]);
+end;
+
+{ TgpCombo }
+
+constructor TgpCombo.Create(AOwner: TComponent);
+begin
+  inherited;
+  FConf := TAuxi.Create;
+end;
+
+destructor TgpCombo.Destroy;
+begin
+  FConf.Free;
+  inherited;
 end;
 
 procedure TgpCombo.LoadField(const id: string);
@@ -32,10 +46,10 @@ var
   SQL: string;
   qry: TgpQry;
 begin
-  if Conf.Table = '' then
+  if FConf.Table = '' then
     Exit;
 
-  SQL := 'SELECT * FROM ' + Conf.Table;
+  SQL := 'SELECT * FROM ' + FConf.Table;
   if id <> '' then
     SQL := SQL + ' WHERE id = ' + id
   else
@@ -49,25 +63,21 @@ begin
 
     while not qry.Eof do
     begin
-      if qry.FieldByName(Conf.TableFieldName).AsString <> '' then
-        Items.Add(qry.FieldByName(Conf.TableFieldName).AsString);
+      if qry.FieldByName(FConf.TableFieldName).AsString <> '' then
+        Items.Add(qry.FieldByName(FConf.TableFieldName).AsString);
       qry.Next;
     end;
 
     if Items.Count > 0 then
-    begin
-      if Items.Count > 0 then
-        ItemIndex := 0
-      else
-        ItemIndex := -1;
-    end
+      ItemIndex := 0
     else
-      Text := '';
+      ItemIndex := -1;
 
   finally
     qry.Free;
   end;
 end;
+
 
 end.
 

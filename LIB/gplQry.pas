@@ -3,7 +3,7 @@ unit gplQry;
 interface
 
 uses
-  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, IniFiles, System.Classes, System.SysUtils;
+  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, IniFiles, System.Classes, System.SysUtils, class_auxi;
 
 type
   TConnectionParams = record
@@ -17,6 +17,7 @@ type
   TgpQry = class(TFDQuery)
   private
     FConnection: TFDConnection;
+    FConf: TAuxi;
     FTexto: String;
     FNumero: Real;
     FColumn: TStrings;
@@ -29,8 +30,10 @@ type
     procedure SetConnectionFromIni;
   public
     constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
     procedure SQLExec(const ASQL: string; const AParams: array of Variant) ;
   published
+    property Conf: TAuxi read FConf write FConf;
     property Texto: String read FTexto write FTexto;
     property Numero: Real read FNumero write FNumero;
     property Column: TStrings read FColumn write SetColumn;
@@ -55,10 +58,19 @@ end;
 constructor TgpQry.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+  FConf := TAuxi.Create;
   FConnection := TFDConnection.Create(Self);
   SetConnectionFromIni;
   Connection := FConnection;
 end;
+
+destructor TgpQry.Destroy;
+begin
+  FConnection.Free;
+  FConf.Free;
+  inherited;
+end;
+
 
 function TgpQry.GetConnectionParamsFromIni: TConnectionParams;
 var
