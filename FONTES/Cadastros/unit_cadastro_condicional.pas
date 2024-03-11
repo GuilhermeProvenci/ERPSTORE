@@ -9,10 +9,10 @@ uses
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, unit_conexao_tabelas, Vcl.Grids,
-  Vcl.DBGrids, gplQry, gplEdit, gplCombo;
+  Vcl.DBGrids, gplQry, gplEdit, gplCombo, class_auxi, gplForm;
 
 type
-  Tform_cadastro_condicional = class(TForm)
+  Tform_cadastro_condicional = class(TgpForm)
     pnl_fundo: TPanel;
     lbl_cliente: TLabel;
     lbl_produtos: TLabel;
@@ -181,7 +181,10 @@ begin
         CriarMensagem('aviso', 'Registro removido com sucesso!');
       except
         on E: Exception do
+        begin
           CriarMensagem('erro', 'Erro ao remover o registro: ' + E.Message);
+          Self.LogWarning('Erro ao Remover Registro do Condicional: ' + E.Message);
+        end;
       end;
     end
     else

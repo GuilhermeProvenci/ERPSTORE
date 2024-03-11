@@ -76,11 +76,9 @@ end;
 
 procedure Tform_consulta_padrao.btn_inserirClick(Sender: TObject);
 begin
-// Abrir a tela de cadastro em modo de inserção
-//CriaForm(NomeForm, False);
-CriaForm(NomeForm, fmInsert, 0); // ID pode ser 0 ou outro valor inicial
-
-
+  // Abrir a tela de cadastro em modo de inserção
+  Self.LogInfo('Iniciando Inserção na Tabela de ' + NomeTabela);
+  CriaForm(NomeForm, fmInsert, 0); // ID pode ser 0 ou outro valor inicial
 end;
 
 procedure Tform_consulta_padrao.Button1Click(Sender: TObject);
@@ -130,6 +128,7 @@ begin
   end;
 
   Tela.ShowModal;
+  Self.LogInfo('Criando Tela:' + NomeTabela + '...');
 end;
 
 

@@ -8,7 +8,7 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, gplForm, gplEdit;
+  FireDAC.Comp.Client, gplForm, gplEdit, class_auxi;
 
 type
   TFormState = (fsView, fsEdit, fsInsert);
@@ -74,10 +74,8 @@ begin
  begin
  qryInsert.close;
  self.Close;
+ Self.LogInfo('Fechando Tela: ' + NomeTabela);
  end;
-
-
-
 end;
 
 procedure Tform_cadastro_padrao.CarregarCampos(ID: Integer; Form: TForm);
@@ -122,7 +120,6 @@ end;
 
 procedure Tform_cadastro_padrao.FormCreate(Sender: TObject);
 begin
-  Self.LogInfo('Cadastro de ' + NomeTabela + 'criado com sucesso');
   NomeForm := Self.Name;
   Delete(NomeForm, 1, Length('form_cadastro_')); // Remove 'form_cadastro_'
   NomeClass:= 'T' + NomeForm;
@@ -133,6 +130,7 @@ begin
 
   SetClass(NomeClass);
   InstanceClass;
+  Self.LogInfo('Tela de ' + NomeTabela + 'criada com sucesso');
 end;
 
 procedure Tform_cadastro_padrao.FormShow(Sender: TObject);
@@ -166,7 +164,6 @@ end;
 
 procedure Tform_cadastro_padrao.pnl_salvarClick(Sender: TObject);
 begin
-
  ValidarCampoObrigatorios(Self);
 
   case FormState of
@@ -190,7 +187,6 @@ begin
   CriarMensagem('aviso', 'Registro Salvo com sucesso');
   Self.LogInfo('Inserção na Tabela de ' + NomeTabela + ' realizada com sucesso');
   self.Close;
-
 end;
 
 procedure Tform_cadastro_padrao.SetClass(const NomeClasse: string);

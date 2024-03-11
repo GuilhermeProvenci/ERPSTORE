@@ -11,11 +11,9 @@ object form_cadastro_condicional: Tform_cadastro_condicional
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object pnl_fundo: TPanel
     Left = 0
@@ -362,8 +360,6 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Height = 21
         TabOrder = 7
         OnChange = cbb_clientesChange
-        Table = 'CLIENTES'
-        DataFieldName = 'Nome'
       end
       object cbb_produtos: TgpCombo
         Left = 82
@@ -372,8 +368,6 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Height = 21
         TabOrder = 8
         OnChange = cbb_produtosChange
-        Table = 'Produtos'
-        DataFieldName = 'Nome'
       end
     end
   end
