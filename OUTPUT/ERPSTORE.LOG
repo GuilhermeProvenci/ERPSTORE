@@ -1,3 +1,6 @@
 [2024-03-10 22:33:30] Tform_cadastro_clientes: [INFO] Cadastro de criado com sucesso
 [2024-03-10 22:33:44] Tform_cadastro_clientes: [INFO] Fechando Tela: clientes
 [2024-03-10 22:33:44] Tform_consulta_clientes: [INFO] Criando Tela:clientes...
+[2024-03-11 22:20:13] Tform_consulta_clientes: [INFO] Iniciando Inserção na Tabela de clientes
+[2024-03-11 22:20:14] Tform_cadastro_clientes: [INFO] Tela de clientescriada com sucesso
+[2024-03-11 22:20:28] Tform_cadastro_produtos: [INFO] Tela de produtoscriada com sucesso

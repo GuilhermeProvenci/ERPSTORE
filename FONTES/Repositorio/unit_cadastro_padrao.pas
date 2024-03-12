@@ -11,7 +11,6 @@ uses
   FireDAC.Comp.Client, gplForm, gplEdit, class_auxi;
 
 type
-  TFormState = (fsView, fsEdit, fsInsert);
   Tform_cadastro_padrao = class(TgpForm)
     pnl_fundo: TPanel;
     lbl_informacao: TLabel;
@@ -40,20 +39,15 @@ type
     procedure InstanceClass;
   private
     { Private declarations }
-    FID: Integer;
-    FFormState: TFormState;
   protected
     FClasseType: TClass;
     FClasseInstance: TObject;
 
   public
     { Public declarations }
-
     NomeForm: string;
     NomeTabela: string;
     NomeClass : String;
-    property ID: Integer read FID write FID;
-    property FormState: TFormState read FFormState write FFormState;
   end;
 
 var
@@ -85,7 +79,7 @@ var
 begin
   Query := TgpQry.Create(Self);
   try
-    Query.SQLExec('SELECT * FROM ' + NomeTabela + ' WHERE ID = :1', [ID.ToString]);
+    Query.SQLExec('SELECT * FROM ' + NomeTabela + ' WHERE ID = :1', [edt_id.Conf.ID]);
 
     //Query.SQL.Text := 'SELECT * FROM ' + NomeTabela + ' WHERE ID = :ID';
     //Query.Params.ParamByName('ID').AsInteger := ID;
@@ -140,13 +134,13 @@ begin
   case FormMode of
     fmView:
     begin
-      CarregarCampos(ID, Self);
+      CarregarCampos(edt_id.Conf.ID, Self);
       pnl_salvar.Enabled := false;
     end;
 
     fmEdit:
     begin
-        CarregarCampos(ID, Self);
+        CarregarCampos(edt_id.Conf.ID, Self);
         lbl_titulo.Caption := 'EDIÇÃO DE ' + UpperCase(NomeTabela);
         CarregarCamposClasse(self, FClasseInstance);
     end;
@@ -166,16 +160,16 @@ procedure Tform_cadastro_padrao.pnl_salvarClick(Sender: TObject);
 begin
  ValidarCampoObrigatorios(Self);
 
-  case FormState of
-    fsView:
+  case FormMode of
+    fmView:
       begin
         //
       end;
-    fsEdit:
+    fmEdit:
       begin
         ChamarUpdateGenerico(NomeTabela, Self);
       end;
-    fsInsert:
+    fmInsert:
       begin
         CarregarCamposClasse(self, FClasseInstance);
         ChamarInsertGenerico(NomeTabela, Self);

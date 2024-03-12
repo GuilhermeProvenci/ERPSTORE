@@ -106,7 +106,7 @@ object form_cadastro_padrao: Tform_cadastro_padrao
         Left = 15
         Top = 0
         Width = 88
-        Height = 48
+        Height = 21
         Margins.Left = 15
         Margins.Top = 0
         Margins.Right = 0
@@ -120,7 +120,6 @@ object form_cadastro_padrao: Tform_cadastro_padrao
         Font.Style = []
         ParentFont = False
         Layout = tlCenter
-        ExplicitHeight = 21
       end
       object btn_fechar: TSpeedButton
         Left = 697
