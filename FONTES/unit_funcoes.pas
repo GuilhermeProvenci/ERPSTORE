@@ -10,6 +10,12 @@ uses
   System.Classes, Vcl.Controls, unit_cadastro_padrao,
   System.SysUtils, gplQry, gplEdit, gplForm;
 
+type
+  TFieldValue = record
+    FieldName: String;
+    Value: Variant;
+  end;
+
   function SomenteNumeros( AString: String ): String;
   function RemoveCaracteres( AString: String ): String;
   procedure ValidarCampoObrigatorios ( Form : TForm );
@@ -24,7 +30,6 @@ uses
   procedure prc_ajusta_tamanho_linha ( dbg: TDBGrid );
   procedure prc_ajustar_colunas_grid(const xDBGrid: TDBGrid);
 
-
   procedure InsertGenerico(const NomeTabela: string; const NomesCampos: string; const Valores: array of string);
   procedure NomeCampos(const NomeTabela: string; NomesCampos: TStrings);
   procedure ChamarInsertGenerico(const NomeTabela: string; AContainer: TWinControl);
@@ -32,6 +37,7 @@ uses
 
   procedure maxID(const TableName: string; Edit: TEdit);
   procedure limpaEDit(Form : Tform);
+  function CalcCamp(const TextSQL: String; const Params: array of Variant; iComp: TObject = nil): TArray<TFieldValue>;
   function CalcDoisCamp(TextSQL: String; var Val1, Val2: integer) : integer;
 
   procedure ChamarUpdateGenerico(const NomeTabela: string; AContainer: TWinControl);
@@ -503,6 +509,29 @@ begin
   Result := Limpos;
 end;
 
+function CalcCamp(const TextSQL: String; const Params: array of Variant; iComp: TObject = nil): TArray<TFieldValue>;
+var
+  vQuer: TgpQry;
+  i: Integer;
+begin
+  vQuer := TgpQry.Create(vQuer);
+  try
+    with vQuer do
+    begin
+      SQL.Add(TextSQL);
+      Open;
+      SetLength(Result, FieldCount);
+      for i := 0 to FieldCount - 1 do
+      begin
+        Result[i].FieldName := Fields[i].FieldName;
+        Result[i].Value := Fields[i].Value;
+      end;
+    end;
+  finally
+    vQuer.Close;
+    FreeAndNil(vQuer);
+  end;
+end;
 
 function CalcDoisCamp(TextSQL: String; var Val1, Val2: integer) : integer;
 var
