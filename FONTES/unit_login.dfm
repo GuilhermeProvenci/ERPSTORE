@@ -346,6 +346,7 @@ object form_login: Tform_login
           Font.Style = []
           ParentFont = False
           TabOrder = 0
+          OnKeyPress = edt_loginKeyPress
         end
         object pnl_barra_login: TPanel
           Left = 0

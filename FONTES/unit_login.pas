@@ -35,6 +35,7 @@ type
     procedure lbl_botao_entrarMouseLeave(Sender: TObject);
     procedure pnl_botao_entrarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure edt_loginKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -47,6 +48,11 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure Tform_login.edt_loginKeyPress(Sender: TObject; var Key: Char);
+begin
+  pnl_botao_entrarClick(self);
+end;
 
 procedure Tform_login.FormCreate(Sender: TObject);
 begin

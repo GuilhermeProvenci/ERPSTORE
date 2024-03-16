@@ -8,7 +8,7 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, gplForm, gplEdit, class_auxi;
+  FireDAC.Comp.Client, gplForm, gplEdit, class_auxi, gplCombo;
 
 type
   Tform_cadastro_padrao = class(TgpForm)
@@ -76,6 +76,7 @@ procedure Tform_cadastro_padrao.CarregarCampos(ID: Integer; Form: TForm);
 var
   Query: TgpQry;
   i: Integer;
+  fieldName : string;
 begin
   Query := TgpQry.Create(Self);
   try
@@ -87,14 +88,23 @@ begin
 
     for i := 0 to Form.ComponentCount - 1 do
     begin
-      if (Form.Components[i].Tag = 99) and  (Form.Components[i] is TEdit)  then
-          TEdit(Form.Components[i]).Text := Query.FieldByName((Form.Components[i] as TControl).StyleName).AsString
-      else if (Form.Components[i].Tag = 99) and  (Form.Components[i] is TComboBox)  then
-          TComboBox(Form.Components[i]).Text := Query.FieldByName((Form.Components[i] as TComboBox).StyleName).AsString
-        else if (Form.Components[i].Tag = 99) and (Form.Components[i] is TDateTimePicker) then
-          TDateTimePicker(Form.Components[i]).Date := Query.FieldByName(Form.Components[i].Name).AsDateTime;
+      if (Form.Components[i].Tag = 99) and  (Form.Components[i] is TgpEdit)  then
+      begin
+        //fieldName :=  (Form.Components[i] as TgpEdit).Conf.TableFieldName;
+        //TgpEdit(Form.Components[i]).Text := Query.FieldByName(fieldName).AsString
+        TgpEdit(Form.Components[i]).LoadField(Conf.ID.ToString);
+      end
+      else if (Form.Components[i].Tag = 99) and  (Form.Components[i] is TgpCombo)  then
+      begin
+        //fieldName :=  (Form.Components[i] as TgpCombo).Conf.TableFieldName;
+        //TgpCombo(Form.Components[i]).Text := Query.FieldByName(fieldName).AsString
+      end
+      else if (Form.Components[i].Tag = 99) and (Form.Components[i] is TDateTimePicker) then
+      begin
+        //fieldName :=  (Form.Components[i] as TDateTimePicker).Name;
+        //TDateTimePicker(Form.Components[i]).Date := Query.FieldByName(fieldName).AsDateTime;
       end;
-
+    end;
   finally
     Query.Free;
   end;
@@ -140,8 +150,8 @@ begin
 
     fmEdit:
     begin
-        CarregarCampos(edt_id.Conf.ID, Self);
         lbl_titulo.Caption := 'EDIÇÃO DE ' + UpperCase(NomeTabela);
+        CarregarCampos(edt_id.Conf.ID, Self);
         CarregarCamposClasse(self, FClasseInstance);
     end;
 
@@ -150,8 +160,6 @@ begin
         maxID(NomeTabela, edt_id);
         lbl_titulo.Caption := 'CADASTRO DE ' + UpperCase(NomeTabela);
      end;
-
-
   end;
 end;
 

@@ -111,7 +111,7 @@ begin
         // Lógica para edição de dados
         if Tela is Tform_cadastro_padrao then
         begin
-          Tform_cadastro_padrao(Tela).edt_id.Conf.ID := dbg_registros.DataSource.DataSet.FieldByName('id').Value.ToInteger;
+          Tform_cadastro_padrao(Tela).edt_id.Conf.ID := dbg_registros.DataSource.DataSet.FieldByName('id').AsInteger;
           Tform_cadastro_padrao(Tela).FormMode := FormMode;
         end;
       end;
