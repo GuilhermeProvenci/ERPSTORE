@@ -34,7 +34,7 @@ type
     procedure pnl_salvarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure CarregarCampos(ID: Integer; Form: TForm);
+    procedure CarregarCampos(ID: Integer; Table: string);
     procedure SetClass(const NomeClasse: string);
     procedure InstanceClass;
   private
@@ -72,7 +72,7 @@ begin
  end;
 end;
 
-procedure Tform_cadastro_padrao.CarregarCampos(ID: Integer; Form: TForm);
+procedure Tform_cadastro_padrao.CarregarCampos(ID: Integer; Table: string);
 var
   Query: TgpQry;
   i: Integer;
@@ -80,26 +80,26 @@ var
 begin
   Query := TgpQry.Create(Self);
   try
-    Query.SQLExec('SELECT * FROM ' + NomeTabela + ' WHERE ID = :1', [edt_id.Conf.ID]);
+    Query.SQLExec('SELECT * FROM ' + NomeTabela + ' WHERE ID = :1', [ID]);
 
     //Query.SQL.Text := 'SELECT * FROM ' + NomeTabela + ' WHERE ID = :ID';
     //Query.Params.ParamByName('ID').AsInteger := ID;
     //Query.Open;
 
-    for i := 0 to Form.ComponentCount - 1 do
+    for i := 0 to Self.ComponentCount - 1 do
     begin
-      if (Form.Components[i].Tag = 99) and  (Form.Components[i] is TgpEdit)  then
+      if (Self.Components[i].Tag = 99) and  (Self.Components[i] is TgpEdit)  then
       begin
         //fieldName :=  (Form.Components[i] as TgpEdit).Conf.TableFieldName;
         //TgpEdit(Form.Components[i]).Text := Query.FieldByName(fieldName).AsString
-        TgpEdit(Form.Components[i]).LoadField(Conf.ID.ToString);
+        TgpEdit(Self.Components[i]).LoadField(ID.ToString, 'clientes');
       end
-      else if (Form.Components[i].Tag = 99) and  (Form.Components[i] is TgpCombo)  then
+      else if (Self.Components[i].Tag = 99) and  (Self.Components[i] is TgpCombo)  then
       begin
         //fieldName :=  (Form.Components[i] as TgpCombo).Conf.TableFieldName;
         //TgpCombo(Form.Components[i]).Text := Query.FieldByName(fieldName).AsString
       end
-      else if (Form.Components[i].Tag = 99) and (Form.Components[i] is TDateTimePicker) then
+      else if (Self.Components[i].Tag = 99) and (Self.Components[i] is TDateTimePicker) then
       begin
         //fieldName :=  (Form.Components[i] as TDateTimePicker).Name;
         //TDateTimePicker(Form.Components[i]).Date := Query.FieldByName(fieldName).AsDateTime;
@@ -144,14 +144,14 @@ begin
   case FormMode of
     fmView:
     begin
-      CarregarCampos(edt_id.Conf.ID, Self);
+      CarregarCampos(edt_id.Conf.ID, Self.Conf.Table);
       pnl_salvar.Enabled := false;
     end;
 
     fmEdit:
     begin
         lbl_titulo.Caption := 'EDIÇÃO DE ' + UpperCase(NomeTabela);
-        CarregarCampos(edt_id.Conf.ID, Self);
+        CarregarCampos(edt_id.Conf.ID, 'clientes');
         CarregarCamposClasse(self, FClasseInstance);
     end;
 

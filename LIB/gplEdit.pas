@@ -13,7 +13,7 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure LoadField(const id: string);
+    procedure LoadField(const id, table: string);
   published
     property Conf: TAuxi read FConf write FConf;
   end;
@@ -41,15 +41,12 @@ begin
   inherited;
 end;
 
-procedure TgpEdit.LoadField(const id: string);
+procedure TgpEdit.LoadField(const id, table: string);
 var
   SQL: string;
   qry: TgpQry;
 begin
-  if FConf.Table = '' then
-    Exit;
-
-  SQL := 'SELECT * FROM ' + FConf.Table;
+  SQL := 'SELECT * FROM ' + Table;
   if id <> '0' then
     SQL := SQL + ' WHERE id = ' + id;
 
