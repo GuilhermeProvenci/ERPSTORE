@@ -77,38 +77,48 @@ var
   Query: TgpQry;
   i: Integer;
   fieldName : string;
+  Contexto: TRttiContext;
+  Tipo: TRttiType;
+  Propriedade: TRttiProperty;
+  Componente: TComponent;
 begin
   Query := TgpQry.Create(Self);
   try
-    Query.SQLExec('SELECT * FROM ' + NomeTabela + ' WHERE ID = :1', [ID]);
+    Query.SQLExec('SELECT * FROM ' + Table + ' WHERE ID = :1', [ID]);
 
-    //Query.SQL.Text := 'SELECT * FROM ' + NomeTabela + ' WHERE ID = :ID';
-    //Query.Params.ParamByName('ID').AsInteger := ID;
-    //Query.Open;
+    Contexto := TRttiContext.Create;
+    try
+      for i := 0 to Self.ComponentCount - 1 do
+      begin
+        Componente := Self.Components[i];
+        if (Componente.Tag = 99) then
+        begin
+          Tipo := Contexto.GetType(Componente.ClassType);
 
-    for i := 0 to Self.ComponentCount - 1 do
-    begin
-      if (Self.Components[i].Tag = 99) and  (Self.Components[i] is TgpEdit)  then
-      begin
-        //fieldName :=  (Form.Components[i] as TgpEdit).Conf.TableFieldName;
-        //TgpEdit(Form.Components[i]).Text := Query.FieldByName(fieldName).AsString
-        TgpEdit(Self.Components[i]).LoadField(ID.ToString, 'clientes');
-      end
-      else if (Self.Components[i].Tag = 99) and  (Self.Components[i] is TgpCombo)  then
-      begin
-        //fieldName :=  (Form.Components[i] as TgpCombo).Conf.TableFieldName;
-        //TgpCombo(Form.Components[i]).Text := Query.FieldByName(fieldName).AsString
-      end
-      else if (Self.Components[i].Tag = 99) and (Self.Components[i] is TDateTimePicker) then
-      begin
-        //fieldName :=  (Form.Components[i] as TDateTimePicker).Name;
-        //TDateTimePicker(Form.Components[i]).Date := Query.FieldByName(fieldName).AsDateTime;
+          Propriedade := Tipo.GetProperty('Conf');
+          if Assigned(Propriedade) then
+          begin
+            fieldName := Propriedade.GetValue(Componente).AsString;
+            if Assigned(Query.FindField(fieldName)) then
+            begin
+              if (Componente is TgpEdit) then
+                TgpEdit(Componente).Text := Query.FieldByName(fieldName).AsString
+              else if (Componente is TgpCombo) then
+                TgpCombo(Componente).Text := Query.FieldByName(fieldName).AsString
+              else if (Componente is TDateTimePicker) then
+                TDateTimePicker(Componente).Date := Query.FieldByName(fieldName).AsDateTime;
+            end;
+          end;
+        end;
       end;
+    finally
+      Contexto.Free;
     end;
   finally
     Query.Free;
   end;
 end;
+
 
 procedure Tform_cadastro_padrao.FormClose(Sender: TObject;
   var Action: TCloseAction);
@@ -144,14 +154,14 @@ begin
   case FormMode of
     fmView:
     begin
-      CarregarCampos(edt_id.Conf.ID, Self.Conf.Table);
+      CarregarCampos(edt_id.Conf.ID, NomeTabela);
       pnl_salvar.Enabled := false;
     end;
 
     fmEdit:
     begin
         lbl_titulo.Caption := 'EDIÇÃO DE ' + UpperCase(NomeTabela);
-        CarregarCampos(edt_id.Conf.ID, 'clientes');
+        CarregarCampos(edt_id.Conf.ID, NomeTabela);
         CarregarCamposClasse(self, FClasseInstance);
     end;
 
@@ -229,8 +239,6 @@ begin
     RttiContext.Free;
   end;
 end;
-
-
 
 
 end.
