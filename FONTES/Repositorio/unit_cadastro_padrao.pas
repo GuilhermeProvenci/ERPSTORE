@@ -8,7 +8,7 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, gplForm, gplEdit, class_auxi, gplCombo;
+  FireDAC.Comp.Client, gplForm, gplEdit, class_auxi, gplCombo, gplQry;
 
 type
   Tform_cadastro_padrao = class(TgpForm)
@@ -29,6 +29,8 @@ type
     edt_3: TgpEdit;
     edt_4: TgpEdit;
     edt_id: TgpEdit;
+    qryGene: TgpQry;
+    DataSourceGene: TDataSource;
     procedure btn_fecharClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure pnl_salvarClick(Sender: TObject);
@@ -59,7 +61,7 @@ implementation
 {$R *.dfm}
 
 uses unit_mensagem, unit_funcoes, unit_conexao, unit_conexao_tabelas,
-  Vcl.ComCtrls, gplQry, System.Rtti;
+  Vcl.ComCtrls, System.Rtti;
 
 
 procedure Tform_cadastro_padrao.btn_fecharClick(Sender: TObject);
@@ -74,7 +76,6 @@ end;
 
 procedure Tform_cadastro_padrao.CarregarCampos(ID: Integer; Table: string);
 var
-  Query: TgpQry;
   i: Integer;
   fieldName : string;
   Contexto: TRttiContext;
@@ -82,12 +83,13 @@ var
   Propriedade: TRttiProperty;
   Componente: TComponent;
 begin
-  Query := TgpQry.Create(Self);
-  try
-    Query.SQLExec('SELECT * FROM ' + Table + ' WHERE ID = :1', [ID]);
+  qryGene.SQLExec('SELECT * FROM ' + Table + ' WHERE ID = :1', [ID]);
 
-    Contexto := TRttiContext.Create;
-    try
+  Contexto := TRttiContext.Create;
+  try
+    qryGene.First;
+    while not qryGene.Eof do
+    begin
       for i := 0 to Self.ComponentCount - 1 do
       begin
         Componente := Self.Components[i];
@@ -95,29 +97,29 @@ begin
         begin
           Tipo := Contexto.GetType(Componente.ClassType);
 
-          Propriedade := Tipo.GetProperty('Conf');
+          Propriedade := Tipo.GetProperty('Conf.TableFieldName');
           if Assigned(Propriedade) then
           begin
             fieldName := Propriedade.GetValue(Componente).AsString;
-            if Assigned(Query.FindField(fieldName)) then
+            if Assigned(qryGene.FindField(fieldName)) then
             begin
               if (Componente is TgpEdit) then
-                TgpEdit(Componente).Text := Query.FieldByName(fieldName).AsString
+                TgpEdit(Componente).Text := qryGene.FieldByName(fieldName).AsString
               else if (Componente is TgpCombo) then
-                TgpCombo(Componente).Text := Query.FieldByName(fieldName).AsString
+                TgpCombo(Componente).Text := qryGene.FieldByName(fieldName).AsString
               else if (Componente is TDateTimePicker) then
-                TDateTimePicker(Componente).Date := Query.FieldByName(fieldName).AsDateTime;
+                TDateTimePicker(Componente).Date := qryGene.FieldByName(fieldName).AsDateTime;
             end;
           end;
         end;
       end;
-    finally
-      Contexto.Free;
+      qryGene.Next;
     end;
   finally
-    Query.Free;
+    Contexto.Free;
   end;
 end;
+
 
 
 procedure Tform_cadastro_padrao.FormClose(Sender: TObject;

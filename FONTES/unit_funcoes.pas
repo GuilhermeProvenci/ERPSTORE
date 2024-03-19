@@ -1270,7 +1270,6 @@ begin
     for var i: integer := 0 to form.ComponentCount - 1 do
     begin
       Componente := form.Components[i];
-      DataFieldName := '';
       if (Componente is TgpEdit) then
         DataFieldName := TgpEdit(Componente).Conf.TableFieldName
       else

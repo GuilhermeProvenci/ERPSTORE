@@ -113,6 +113,7 @@ begin
         begin
           Tform_cadastro_padrao(Tela).edt_id.Conf.ID := dbg_registros.DataSource.DataSet.FieldByName('id').AsInteger;
           Tform_cadastro_padrao(Tela).FormMode := FormMode;
+          Tform_cadastro_padrao(Tela).DataSourceGene := ds_consulta;
         end;
       end;
     fmInsert:

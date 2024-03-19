@@ -356,4 +356,13 @@ object form_cadastro_padrao: Tform_cadastro_padrao
     Left = 608
     Top = 8
   end
+  object qryGene: TgpQry
+    FieldSize = 30
+    Left = 400
+  end
+  object DataSourceGene: TDataSource
+    DataSet = qryGene
+    Left = 328
+    Top = 16
+  end
 end
