@@ -133,9 +133,9 @@ type
     Shape1: TShape;
     Shape2: TShape;
     ApplicationEvents: TApplicationEvents;
-    pnl_config_nfe: TPanel;
-    img_config_nfe: TImage;
-    lbl_config_nfe: TLabel;
+    pnl_utils: TPanel;
+    img_utils: TImage;
+    lbl_utils: TLabel;
     pnl_botao_estoque: TPanel;
     img_botao_estoque: TImage;
     lbl_botao_estoque: TLabel;

@@ -191,6 +191,10 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="CLASSES\class_auxi.pas"/>
+        <DCCReference Include="FONTES\unit_utils.pas">
+            <Form>Form1</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

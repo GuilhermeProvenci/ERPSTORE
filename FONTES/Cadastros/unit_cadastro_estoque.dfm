@@ -77,13 +77,6 @@ inherited form_cadastro_estoque: Tform_cadastro_estoque
       ExplicitTop = 151
       ExplicitWidth = 12
     end
-    inherited edt_id: TgpEdit
-      Left = 31
-      Width = 24
-      Hint = 'Id produto'
-      ExplicitLeft = 31
-      ExplicitWidth = 24
-    end
     inherited edt_3: TgpEdit
       Left = 436
       Hint = 'Quantidade a inserir'
@@ -102,6 +95,13 @@ inherited form_cadastro_estoque: Tform_cadastro_estoque
       ExplicitLeft = 669
       ExplicitTop = 77
       ExplicitWidth = 12
+    end
+    inherited edt_id: TgpEdit
+      Left = 31
+      Width = 24
+      Hint = 'Id produto'
+      ExplicitLeft = 31
+      ExplicitWidth = 24
     end
     object lccb_nome: TDBLookupComboBox
       Left = 61

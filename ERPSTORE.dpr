@@ -30,7 +30,8 @@ uses
   class_produtos in 'CLASSES\class_produtos.pas',
   gplCombo in 'LIB\gplCombo.pas',
   unit_consulta_vendas in 'FONTES\Consultas\unit_consulta_vendas.pas' {form_consulta_vendas},
-  class_auxi in 'CLASSES\class_auxi.pas';
+  class_auxi in 'CLASSES\class_auxi.pas',
+  unit_utils in 'FONTES\unit_utils.pas' {Form1};
 
 {$R *.res}
 
@@ -41,6 +42,7 @@ begin
   //cria os modulos de dados de conexao e de tabelas
   Application.CreateForm(Tform_conexao, form_conexao);
   Application.CreateForm(Tform_conexao_tabelas, form_conexao_tabelas);
+  Application.CreateForm(TForm1, Form1);
   //testa pra ver se a conexao esta ativa
   var_gbl_versao := GetVersaoArq;
   if form_conexao.FDConnection.Connected then
