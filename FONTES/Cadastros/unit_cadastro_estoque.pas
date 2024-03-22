@@ -8,7 +8,8 @@ uses
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.ExtCtrls,
-  Vcl.StdCtrls, Vcl.Buttons, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, gplEdit;
+  Vcl.StdCtrls, Vcl.Buttons, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, gplEdit,
+  gplQry, class_auxi;
 
 type
   Tform_cadastro_estoque = class(Tform_cadastro_padrao)
@@ -31,7 +32,7 @@ implementation
 
 {$R *.dfm}
 
-uses unit_conexao_tabelas, unit_conexao, unit_funcoes, gplQry;
+uses unit_conexao_tabelas, unit_conexao, unit_funcoes;
 
 procedure Tform_cadastro_estoque.lccb_nomeClick(Sender: TObject);
 var

@@ -12,11 +12,9 @@ object form_principal: Tform_principal
   Font.Height = -11
   Font.Name = 'Segoe UI'
   Font.Style = []
-  OldCreateOrder = False
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object pnl_topo: TPanel
     Left = 0
@@ -485,7 +483,7 @@ object form_principal: Tform_principal
           OnMouseEnter = pnl_botao_notasMouseEnter
         end
       end
-      object pnl_config_nfe: TPanel
+      object pnl_utils: TPanel
         Tag = 14
         AlignWithMargins = True
         Left = 3
@@ -500,7 +498,7 @@ object form_principal: Tform_principal
         ParentBackground = False
         TabOrder = 1
         OnMouseEnter = pnl_botao_notasMouseEnter
-        object img_config_nfe: TImage
+        object img_utils: TImage
           Tag = 14
           AlignWithMargins = True
           Left = 10
@@ -553,13 +551,13 @@ object form_principal: Tform_principal
           OnMouseEnter = pnl_botao_notasMouseEnter
           ExplicitHeight = 28
         end
-        object lbl_config_nfe: TLabel
+        object lbl_utils: TLabel
           Tag = 14
           Left = 48
           Top = 13
-          Width = 65
+          Width = 23
           Height = 15
-          Caption = 'Config NF-e'
+          Caption = 'Utils'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWhite
           Font.Height = -12

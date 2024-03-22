@@ -30,7 +30,10 @@ uses
   class_produtos in 'CLASSES\class_produtos.pas',
   gplCombo in 'LIB\gplCombo.pas',
   unit_consulta_vendas in 'FONTES\Consultas\unit_consulta_vendas.pas' {form_consulta_vendas},
-  class_auxi in 'CLASSES\class_auxi.pas';
+  class_auxi in 'CLASSES\class_auxi.pas',
+  unit_utils in 'FONTES\unit_utils.pas' {Form1},
+  unit_classGenerator in 'FONTES\unit_classGenerator.pas' {FrmClassGenerator},
+  class_generator in 'CLASSES\class_generator.pas';
 
 {$R *.res}
 
