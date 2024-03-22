@@ -32,7 +32,7 @@ implementation
 
 {$R *.dfm}
 
-uses unit_conexao_tabelas, unit_conexao, unit_funcoes, gplQry;
+uses unit_conexao_tabelas, unit_conexao, unit_funcoes;
 
 procedure Tform_cadastro_estoque.lccb_nomeClick(Sender: TObject);
 var

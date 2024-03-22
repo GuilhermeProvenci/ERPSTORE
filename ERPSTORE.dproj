@@ -195,6 +195,11 @@
             <Form>Form1</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="FONTES\unit_classGenerator.pas">
+            <Form>FrmClassGenerator</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="CLASSES\class_generator.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
