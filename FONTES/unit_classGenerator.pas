@@ -4,13 +4,14 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls;
 
 type
   TFrmClassGenerator = class(TForm)
+    gerar: TButton;
     Memo1: TMemo;
-    Button1: TButton;
-    procedure Button1Click(Sender: TObject);
+    Panel1: TPanel;
+    procedure gerarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -26,7 +27,7 @@ implementation
 
 uses class_Generator;
 
-procedure TFrmClassGenerator.Button1Click(Sender: TObject);
+procedure TFrmClassGenerator.gerarClick(Sender: TObject);
 var
   ComponentName, BaseClassName, GeneratedCode: string;
 begin
