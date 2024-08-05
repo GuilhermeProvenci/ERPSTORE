@@ -39,7 +39,7 @@ begin
   inherited Create(nil);
    OwnerForm := form;
    CarregarCamposClasse(OwnerForm, Self);
-    TestMensage;
+//    TestMensage;
 end;
 
 procedure TClientes.SetID(const Value: Integer);

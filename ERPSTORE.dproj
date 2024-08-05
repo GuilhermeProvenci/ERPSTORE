@@ -112,32 +112,25 @@
         </DelphiCompile>
         <DCCReference Include="FONTES\unit_principal.pas">
             <Form>form_principal</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="FONTES\unit_login.pas">
             <Form>form_login</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="FONTES\unit_conexao.pas">
             <Form>form_conexao</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="FONTES\unit_configuracao_servidor.pas">
             <Form>form_configuracao_servidor</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="FONTES\unit_mensagem.pas">
             <Form>form_mensagem</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="FONTES\unit_fundo_esmaecer.pas">
             <Form>form_fundo_esmaecer</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="FONTES\Repositorio\unit_consulta_padrao.pas">
             <Form>form_consulta_padrao</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="FONTES\Consultas\unit_consulta_clientes.pas">
             <Form>form_consulta_clientes</Form>
@@ -162,19 +155,15 @@
         </DCCReference>
         <DCCReference Include="FONTES\Consultas\unit_consulta_condicional.pas">
             <Form>form_consulta_condicional</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="FONTES\Cadastros\unit_cadastro_condicional.pas">
             <Form>form_cadastro_condicional</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="FONTES\Consultas\unit_consulta_estoque.pas">
             <Form>form_consulta_estoque</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="FONTES\Cadastros\unit_cadastro_estoque.pas">
             <Form>form_cadastro_estoque</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="FONTES\Reports\unit_report.pas">
             <Form>form_cadastro_estoque</Form>
@@ -188,16 +177,13 @@
         <DCCReference Include="LIB\gplCombo.pas"/>
         <DCCReference Include="FONTES\Consultas\unit_consulta_vendas.pas">
             <Form>form_consulta_vendas</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="CLASSES\class_auxi.pas"/>
         <DCCReference Include="FONTES\unit_utils.pas">
             <Form>Form1</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="FONTES\unit_classGenerator.pas">
             <Form>FrmClassGenerator</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="CLASSES\class_generator.pas"/>
         <BuildConfiguration Include="Base">

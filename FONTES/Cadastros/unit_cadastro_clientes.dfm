@@ -36,8 +36,6 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
       ParentFont = False
     end
     inherited pnl_topo: TPanel
-      ExplicitLeft = 264
-      ExplicitTop = 456
       inherited lbl_titulo: TLabel
         Width = 219
         Caption = 'Cadastro de Pessoas / clientes'

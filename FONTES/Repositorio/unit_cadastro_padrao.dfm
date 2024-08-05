@@ -348,6 +348,7 @@ object form_cadastro_padrao: Tform_cadastro_padrao
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
+      ReadOnly = True
       TabOrder = 1
     end
   end

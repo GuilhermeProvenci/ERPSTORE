@@ -26,8 +26,6 @@ constructor TProdutos.Create(form : Tform);
 begin
   inherited Create(nil);
 
-  ShowMessage('criou produtos');
-
 end;
 
 

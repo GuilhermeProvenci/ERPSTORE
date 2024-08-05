@@ -17,6 +17,7 @@ type
     FConf : TAuxi;
     FFormMode: TFormMode;
     FOnLog: TLogEvent;
+    FCodigoForm : integer;
 
     procedure Log(EventType: TLogEventType; const Message: string);
   public

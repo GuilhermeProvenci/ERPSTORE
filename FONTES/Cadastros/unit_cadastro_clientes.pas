@@ -35,7 +35,7 @@ var
   qryCondicional: tgpQry;
 begin
   inherited;
-  Sleep(1000); // wait for database commit
+  Sleep(100); // wait for database commit
   qryCondicional := tgpQry.Create(self);
 
   case FormMode of

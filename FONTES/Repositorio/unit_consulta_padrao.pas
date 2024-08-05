@@ -121,7 +121,7 @@ begin
         // Lógica para inserção de novos dados
         if Tela is Tform_cadastro_padrao then
         begin
-          Tform_cadastro_padrao(Tela).edt_id.Conf.ID := dbg_registros.DataSource.DataSet.FieldByName('id').Value.ToInteger;
+          Tform_cadastro_padrao(Tela).edt_id.Conf.ID := dbg_registros.DataSource.DataSet.FieldByName('id').asinteger;
           Tform_cadastro_padrao(Tela).FormMode := FormMode;
         end;
       end;
@@ -134,10 +134,8 @@ end;
 
 procedure Tform_consulta_padrao.dbg_registrosDblClick(Sender: TObject);
 begin
-  // Verifica se há registros no DataSet
   if not ds_consulta.DataSet.IsEmpty then
   begin
-    // Abrir o formulário em modo de edição
    // CriaForm(NomeForm, True);
     CriaForm(NomeForm, fmEdit);
 
