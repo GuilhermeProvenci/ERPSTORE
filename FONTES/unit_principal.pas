@@ -1,83 +1,3 @@
-{$A8,B-,C+,D+,E-,F-,G+,H+,I+,J-,K-,L+,M-,N-,O+,P+,Q-,R-,S-,T-,U-,V+,W-,X+,Y+,Z1}
-{$MINSTACKSIZE $00004000}
-{$MAXSTACKSIZE $00100000}
-{$IMAGEBASE $00400000}
-{$APPTYPE GUI}
-{$WARN SYMBOL_DEPRECATED ON}
-{$WARN SYMBOL_LIBRARY ON}
-{$WARN SYMBOL_PLATFORM ON}
-{$WARN SYMBOL_EXPERIMENTAL ON}
-{$WARN UNIT_LIBRARY ON}
-{$WARN UNIT_PLATFORM ON}
-{$WARN UNIT_DEPRECATED ON}
-{$WARN UNIT_EXPERIMENTAL ON}
-{$WARN HRESULT_COMPAT ON}
-{$WARN HIDING_MEMBER ON}
-{$WARN HIDDEN_VIRTUAL ON}
-{$WARN GARBAGE ON}
-{$WARN BOUNDS_ERROR ON}
-{$WARN ZERO_NIL_COMPAT ON}
-{$WARN STRING_CONST_TRUNCED ON}
-{$WARN FOR_LOOP_VAR_VARPAR ON}
-{$WARN TYPED_CONST_VARPAR ON}
-{$WARN ASG_TO_TYPED_CONST ON}
-{$WARN CASE_LABEL_RANGE ON}
-{$WARN FOR_VARIABLE ON}
-{$WARN CONSTRUCTING_ABSTRACT ON}
-{$WARN COMPARISON_FALSE ON}
-{$WARN COMPARISON_TRUE ON}
-{$WARN COMPARING_SIGNED_UNSIGNED ON}
-{$WARN COMBINING_SIGNED_UNSIGNED ON}
-{$WARN UNSUPPORTED_CONSTRUCT ON}
-{$WARN FILE_OPEN ON}
-{$WARN FILE_OPEN_UNITSRC ON}
-{$WARN BAD_GLOBAL_SYMBOL ON}
-{$WARN DUPLICATE_CTOR_DTOR ON}
-{$WARN INVALID_DIRECTIVE ON}
-{$WARN PACKAGE_NO_LINK ON}
-{$WARN PACKAGED_THREADVAR ON}
-{$WARN IMPLICIT_IMPORT ON}
-{$WARN HPPEMIT_IGNORED ON}
-{$WARN NO_RETVAL ON}
-{$WARN USE_BEFORE_DEF ON}
-{$WARN FOR_LOOP_VAR_UNDEF ON}
-{$WARN UNIT_NAME_MISMATCH ON}
-{$WARN NO_CFG_FILE_FOUND ON}
-{$WARN IMPLICIT_VARIANTS ON}
-{$WARN UNICODE_TO_LOCALE ON}
-{$WARN LOCALE_TO_UNICODE ON}
-{$WARN IMAGEBASE_MULTIPLE ON}
-{$WARN SUSPICIOUS_TYPECAST ON}
-{$WARN PRIVATE_PROPACCESSOR ON}
-{$WARN UNSAFE_TYPE OFF}
-{$WARN UNSAFE_CODE OFF}
-{$WARN UNSAFE_CAST OFF}
-{$WARN OPTION_TRUNCATED ON}
-{$WARN WIDECHAR_REDUCED ON}
-{$WARN DUPLICATES_IGNORED ON}
-{$WARN UNIT_INIT_SEQ ON}
-{$WARN LOCAL_PINVOKE ON}
-{$WARN MESSAGE_DIRECTIVE ON}
-{$WARN TYPEINFO_IMPLICITLY_ADDED ON}
-{$WARN RLINK_WARNING ON}
-{$WARN IMPLICIT_STRING_CAST ON}
-{$WARN IMPLICIT_STRING_CAST_LOSS ON}
-{$WARN EXPLICIT_STRING_CAST OFF}
-{$WARN EXPLICIT_STRING_CAST_LOSS OFF}
-{$WARN CVT_WCHAR_TO_ACHAR ON}
-{$WARN CVT_NARROWING_STRING_LOST ON}
-{$WARN CVT_ACHAR_TO_WCHAR ON}
-{$WARN CVT_WIDENING_STRING_LOST ON}
-{$WARN NON_PORTABLE_TYPECAST ON}
-{$WARN XML_WHITESPACE_NOT_ALLOWED ON}
-{$WARN XML_UNKNOWN_ENTITY ON}
-{$WARN XML_INVALID_NAME_START ON}
-{$WARN XML_INVALID_NAME ON}
-{$WARN XML_EXPECTED_CHARACTER ON}
-{$WARN XML_CREF_NO_RESOLVE ON}
-{$WARN XML_NO_PARM ON}
-{$WARN XML_NO_MATCHING_PARM ON}
-{$WARN IMMUTABLE_STRINGS OFF}
 unit unit_principal;
 
 interface
@@ -88,7 +8,7 @@ uses
   Vcl.ExtCtrls, Vcl.Buttons, Vcl.AppEvnts, unit_funcoes, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
-  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, gplQry;
+  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, gplQry, class_gplObject;
 
 type
   Tform_principal = class(TForm)
@@ -126,9 +46,9 @@ type
     pnl_tab_estados: TPanel;
     img_tab_estados: TImage;
     lbl_tab_estados: TLabel;
-    pnl_tab_paises: TPanel;
-    img_tab_paises: TImage;
-    lbl_tab_paises: TLabel;
+    pnl_tab_Condicional: TPanel;
+    img_tab_Condicional: TImage;
+    lbl_tab_Condicional: TLabel;
     pnl_barra_separadora: TPanel;
     Shape1: TShape;
     Shape2: TShape;
@@ -155,15 +75,13 @@ type
     procedure ApplicationEventsModalEnd(Sender: TObject);
     procedure pnl_botao_clientesClick(Sender: TObject);
     procedure pnl_botao_produtosClick(Sender: TObject);
-    procedure pnl_tab_paisesClick(Sender: TObject);
-    procedure pnl_tab_estadosClick(Sender: TObject);
-    procedure pnl_tab_cidadesClick(Sender: TObject);
+    procedure pnl_tab_CondicionalClick(Sender: TObject);
     procedure pnl_botao_estoqueClick(Sender: TObject);
     procedure pnl_botao_vendasClick(Sender: TObject);
-
-
   private
     procedure prc_EscondeMenus;
+    procedure pnl_botaoClick(Sender: TObject; AFormClass: TFormClass);
+    procedure MostrarSubMenu(ASubMenu, AButton: TPanel);
     { Private declarations }
   public
     procedure prc_controla_menu ( Ativar: boolean );
@@ -180,6 +98,25 @@ implementation
 uses unit_configuracao_servidor, unit_fundo_esmaecer,
    unit_consulta_produtos, unit_consulta_clientes, unit_consulta_condicional,
   unit_consulta_estoque, unit_consulta_vendas;
+
+
+procedure Tform_principal.pnl_botaoClick(Sender: TObject; AFormClass: TFormClass);
+var
+  NewForm: TForm;
+begin
+  NewForm := AFormClass.Create(Self);
+  NewForm.Parent := pnl_fundo;
+  prc_controla_menu(False);
+  NewForm.Show;
+end;
+
+procedure Tform_principal.MostrarSubMenu(ASubMenu: TPanel; AButton: TPanel);
+begin
+  prc_EscondeMenus;
+  ASubMenu.Visible := True;
+  ASubMenu.Top := AButton.Top;
+  ASubMenu.Left := 0;
+end;
 
 procedure Tform_principal.ApplicationEventsModalBegin(Sender: TObject);
 begin
@@ -215,30 +152,12 @@ end;
 
 procedure Tform_principal.pnl_botao_vendasClick(Sender: TObject);
 begin
-  form_consulta_vendas := Tform_consulta_vendas.Create ( Self );
-  form_consulta_vendas.parent := pnl_fundo;
-  prc_controla_menu ( False );
-
-  form_consulta_vendas.Show;
-end;
-
-procedure Tform_principal.pnl_botao_configuracoesClick(Sender: TObject);
-begin
-  //Funcao que esconde um SubMenu caso esteja aberto
-  prc_EscondeMenus;
-
-  //Posicionando e mostrando o SubMenu COnfigurações
-  pnl_submenu_config.Visible := True;
-  pnl_submenu_config.Top :=  pnl_botao_configuracoes.Top;
-  pnl_submenu_config.Left:= 0;
+  pnl_botaoClick(Sender, Tform_consulta_vendas);
 end;
 
 procedure Tform_principal.pnl_botao_estoqueClick(Sender: TObject);
 begin
-  form_consulta_estoque := Tform_consulta_estoque.Create ( Self );
-  form_consulta_estoque.parent := pnl_fundo;
-  prc_controla_menu ( False );
-  form_consulta_estoque.Show;
+  pnl_botaoClick(Sender, Tform_consulta_estoque);
 end;
 
 procedure Tform_principal.pnl_botao_notasMouseEnter(Sender: TObject);
@@ -258,49 +177,27 @@ end;
 
 procedure Tform_principal.pnl_botao_clientesClick(Sender: TObject);
 begin
-  form_consulta_clientes := Tform_consulta_clientes.Create ( Self );
-  form_consulta_clientes.parent := pnl_fundo;
-  prc_controla_menu ( False );
-
-  form_consulta_clientes.Show;
+  pnl_botaoClick(Sender, Tform_consulta_clientes);
 end;
 
 procedure Tform_principal.pnl_botao_produtosClick(Sender: TObject);
 begin
-
-  form_consulta_produtos := Tform_consulta_produtos.Create ( Self );
-
-  form_consulta_produtos.parent := pnl_fundo;
-  prc_controla_menu ( False );
-
-  form_consulta_produtos.Show;
+  pnl_botaoClick(Sender, Tform_consulta_produtos);
 end;
 
 procedure Tform_principal.pnl_botao_cadastrosClick(Sender: TObject);
 begin
-  //Funcao que esconde um SubMenu caso esteja aberto
-  prc_EscondeMenus;
+  MostrarSubMenu(pnl_submenu_cadastros, pnl_botao_cadastros);
+end;
 
-  //Posicionando e mostrando o SubMenu Tabelas
-  pnl_submenu_cadastros.Visible := True;
-  pnl_submenu_cadastros.Top     :=  pnl_botao_cadastros.Top;
-  pnl_submenu_cadastros.Left    := 0;
+procedure Tform_principal.pnl_botao_configuracoesClick(Sender: TObject);
+begin
+  MostrarSubMenu(pnl_submenu_config, pnl_botao_configuracoes);
 end;
 
 procedure Tform_principal.pnl_config_servidorClick(Sender: TObject);
 begin
-
-  //cria o form config servidor
-  form_configuracao_servidor := Tform_configuracao_servidor.Create ( Self );
-
-  //manda abrir o form dentro do painel
-  form_configuracao_servidor.parent := pnl_fundo;
-
-  // desativando os botoes do form principal
-  prc_controla_menu ( False );
-
-  form_configuracao_servidor.Show;
-
+  pnl_botaoClick(Sender, Tform_configuracao_servidor);
 end;
 
 procedure Tform_principal.pnl_fundoMouseEnter(Sender: TObject);
@@ -317,81 +214,9 @@ begin
 end;
 
 
-procedure Tform_principal.pnl_tab_estadosClick(Sender: TObject);
-var
-  Msg:  String;
-  gplQry : TgpQry;
-  qry : TFDQuery;
-  booleano : Boolean;
-  Valor1, Valor2, resultado : integer;
-  Telefone: string;
+procedure Tform_principal.pnl_tab_CondicionalClick(Sender: TObject);
 begin
-//
-//  booleano := TRUE;
-//  gplQry := TgpQry.Create(Self);
-////  gplQry.SQLExec('SELECT id, nome FROM clientes WHERE nome = :1', ['Guilherme Lima']);
-//  gplQry.SQLExec('SELECT id, nome FROM clientes', []);
-//
-//  Msg := 'Resultados da Consulta:'#13#10 + 'Nome: ' + gplQry.FieldByName('Nome').AsString;
-//
-//  if not gplQry.IsEmpty then
-//  begin
-//    gplQry.First;
-//      while not gplQry.Eof do
-//        begin
-//          Msg := Msg + 'Nome: ' + gplQry.FieldByName('Nome').AsString + #13#10;
-//          gplQry.Next;
-//        end;
-//  end;
-//
-//  ShowMessage(Msg);
-//  FreeAndNil(gplQry);
-
-//Resultado := CalcDoisCamp('SELECT id, preco FROM produtos WHERE id = 2', Valor1, Valor2);
-
-
-//ShowMessage('Valor1: ' + Valor1.ToString + #13#10 + 'Valor2: ' + Valor2.ToString +#13#10 + 'Resultado: ' + resultado.ToString);
-
-//AltTableData('condicional_pendente', 'nome_cliente', 'adm21232', 'adm', 'AND quantidade_condicional = 123' );
-
-//CreateTable('Testes', ['campo1','campo2','campo3'],  gplQry);
-
-Telefone := '(123)456-7890';
-Telefone := StringReplaceAll(telefone, '()-');
-ShowMessage(telefone);
-
-
-
-
-end;
-
-
-procedure Tform_principal.pnl_tab_cidadesClick(Sender: TObject);
-begin
-  //cria o form_consulta_origem_mercadoria
-//  form_consulta_cidades := Tform_consulta_cidades.Create ( Self );
-
-  //manda abrir o form dentro do painel
-//  form_consulta_cidades.parent := pnl_fundo;
-
-  // desativando os botoes do form principal
-//  prc_controla_menu ( False );
-
-//  form_consulta_cidades.Show;
-end;
-
-procedure Tform_principal.pnl_tab_paisesClick(Sender: TObject);
-begin
-  //cria o form_consulta_origem_mercadoria
- form_consulta_condicional := Tform_consulta_condicional.Create ( Self );
-
-  //manda abrir o form dentro do painel
-  form_consulta_condicional.parent := pnl_fundo;
-
-  // desativando os botoes do form principal
-  prc_controla_menu ( False );
-
-  form_consulta_condicional.Show;
+  pnl_botaoClick(Sender, Tform_consulta_condicional);
 end;
 
 procedure Tform_principal.prc_controla_menu( Ativar: boolean );

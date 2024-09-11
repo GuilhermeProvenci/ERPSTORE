@@ -88,9 +88,9 @@
         <VerInfo_Locale>1046</VerInfo_Locale>
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
         <VerInfo_Release>4</VerInfo_Release>
-        <VerInfo_Build>2</VerInfo_Build>
+        <VerInfo_Build>3</VerInfo_Build>
         <VerInfo_Debug>true</VerInfo_Debug>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.1.4.2;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.1.4.3;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <BRCC_Defines> ERPSTORE;GPL;$(BRCC_Defines)</BRCC_Defines>
     </PropertyGroup>
@@ -186,6 +186,7 @@
             <Form>FrmClassGenerator</Form>
         </DCCReference>
         <DCCReference Include="CLASSES\class_generator.pas"/>
+        <DCCReference Include="CLASSES\class_gplObject.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

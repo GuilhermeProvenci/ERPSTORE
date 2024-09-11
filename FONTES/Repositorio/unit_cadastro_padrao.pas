@@ -8,7 +8,8 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, gplForm, gplEdit, class_auxi, gplCombo, gplQry;
+  FireDAC.Comp.Client, gplForm, gplEdit, class_auxi, gplCombo, gplQry,
+  class_gplObject;
 
 type
   Tform_cadastro_padrao = class(TgpForm)
@@ -43,7 +44,7 @@ type
     { Private declarations }
   protected
     FClasseType: TClass;
-    FClasseInstance: TObject;
+    FClasseInstance: TgplObject;
 
   public
     { Public declarations }
@@ -192,7 +193,8 @@ begin
     fmInsert:
       begin
         CarregarCamposClasse(self, FClasseInstance);
-        ChamarInsertGenerico(NomeTabela, Self);
+        FClasseInstance.SaveObject;
+        //ChamarInsertGenerico(NomeTabela, Self);
         LimpaEdit(Self);
         MaxID(NomeTabela, edt_id);
       end;
@@ -236,7 +238,10 @@ begin
     else
       Instance := Method.Invoke(RttiType.AsInstance.MetaclassType, [Self]);
 
-    FClasseInstance := Instance.AsObject;
+     if Instance.IsInstanceOf(TgplObject) then
+      FClasseInstance := TgplObject(Instance.AsObject)
+     else
+      raise Exception.Create('Não foi possível instanciar Classe da Tela');
   finally
     RttiContext.Free;
   end;

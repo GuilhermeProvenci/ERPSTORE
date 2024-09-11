@@ -398,7 +398,7 @@ end;
 
 
 
-procedure NomeCampos(const NomeTabela: string; NomesCampos: TStrings);
+procedure NomeCampos(const NomeTabela: string; NomesCampos: TStrings);//refatorar isso, pegar tudo de classe
 var
   qry: TgpQry;
   i: Integer;

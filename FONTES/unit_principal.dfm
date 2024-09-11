@@ -602,7 +602,6 @@ object form_principal: Tform_principal
         Color = 1644825
         ParentBackground = False
         TabOrder = 0
-        OnClick = pnl_tab_cidadesClick
         OnMouseEnter = pnl_botao_notasMouseEnter
         object img_tab_cidades: TImage
           Tag = 10
@@ -715,7 +714,6 @@ object form_principal: Tform_principal
             2A1DDEE1D177A95BAD5614EC453FA68E0B88DBA7E316066EF1E6F6C372DD82B8
             6CAADC8E096E07DF7FEB0DFAB53E00A09C5FAEAF539B1C0000000049454E44AE
             426082}
-          OnClick = pnl_tab_cidadesClick
           OnMouseEnter = pnl_botao_notasMouseEnter
           ExplicitHeight = 26
         end
@@ -732,7 +730,6 @@ object form_principal: Tform_principal
           Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
-          OnClick = pnl_tab_cidadesClick
           OnMouseEnter = pnl_botao_notasMouseEnter
         end
       end
@@ -750,7 +747,6 @@ object form_principal: Tform_principal
         Color = 1644825
         ParentBackground = False
         TabOrder = 1
-        OnClick = pnl_tab_estadosClick
         OnMouseEnter = pnl_botao_notasMouseEnter
         object img_tab_estados: TImage
           Tag = 9
@@ -863,7 +859,6 @@ object form_principal: Tform_principal
             2A1DDEE1D177A95BAD5614EC453FA68E0B88DBA7E316066EF1E6F6C372DD82B8
             6CAADC8E096E07DF7FEB0DFAB53E00A09C5FAEAF539B1C0000000049454E44AE
             426082}
-          OnClick = pnl_tab_estadosClick
           OnMouseEnter = pnl_botao_notasMouseEnter
           ExplicitHeight = 26
         end
@@ -880,11 +875,10 @@ object form_principal: Tform_principal
           Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
-          OnClick = pnl_tab_estadosClick
           OnMouseEnter = pnl_botao_notasMouseEnter
         end
       end
-      object pnl_tab_paises: TPanel
+      object pnl_tab_Condicional: TPanel
         Tag = 9
         AlignWithMargins = True
         Left = 3
@@ -898,9 +892,9 @@ object form_principal: Tform_principal
         Color = 1644825
         ParentBackground = False
         TabOrder = 2
-        OnClick = pnl_tab_paisesClick
+        OnClick = pnl_tab_CondicionalClick
         OnMouseEnter = pnl_botao_notasMouseEnter
-        object img_tab_paises: TImage
+        object img_tab_Condicional: TImage
           Tag = 9
           AlignWithMargins = True
           Left = 10
@@ -1011,11 +1005,11 @@ object form_principal: Tform_principal
             2A1DDEE1D177A95BAD5614EC453FA68E0B88DBA7E316066EF1E6F6C372DD82B8
             6CAADC8E096E07DF7FEB0DFAB53E00A09C5FAEAF539B1C0000000049454E44AE
             426082}
-          OnClick = pnl_tab_paisesClick
+          OnClick = pnl_tab_CondicionalClick
           OnMouseEnter = pnl_botao_notasMouseEnter
           ExplicitHeight = 26
         end
-        object lbl_tab_paises: TLabel
+        object lbl_tab_Condicional: TLabel
           Tag = 9
           Left = 48
           Top = 14
@@ -1028,7 +1022,7 @@ object form_principal: Tform_principal
           Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
-          OnClick = pnl_tab_paisesClick
+          OnClick = pnl_tab_CondicionalClick
           OnMouseEnter = pnl_botao_notasMouseEnter
         end
       end
@@ -1188,9 +1182,9 @@ object form_principal: Tform_principal
         Tag = 2
         Left = 48
         Top = 14
-        Width = 41
+        Width = 42
         Height = 15
-        Caption = 'Pessoas'
+        Caption = 'Clientes'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Height = -12
@@ -1687,7 +1681,7 @@ object form_principal: Tform_principal
   object ApplicationEvents: TApplicationEvents
     OnModalBegin = ApplicationEventsModalBegin
     OnModalEnd = ApplicationEventsModalEnd
-    Left = 729
-    Top = 33
+    Left = 809
+    Top = 17
   end
 end

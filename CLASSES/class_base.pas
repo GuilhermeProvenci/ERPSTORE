@@ -3,7 +3,7 @@ unit %s;
 interface
 
 uses
-  System.Classes, class_auxi;
+  System.Classes, class_auxi, class_gplObject;
 
 type
   %s = class(%s)

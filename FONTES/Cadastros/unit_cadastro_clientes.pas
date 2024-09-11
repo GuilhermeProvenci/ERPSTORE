@@ -31,12 +31,11 @@ implementation
 uses unit_conexao, unit_funcoes, class_clientes;
 
 procedure Tform_cadastro_clientes.pnl_salvarClick(Sender: TObject);
-var
-  qryCondicional: tgpQry;
+//var
+ // qryCondicional: tgpQry;
 begin
   inherited;
-  Sleep(100); // wait for database commit
-  qryCondicional := tgpQry.Create(self);
+{  qryCondicional := tgpQry.Create(self);
 
   case FormMode of
     fmInsert:
@@ -55,7 +54,7 @@ begin
       end;
   end;
 
-  qryCondicional.Free;
+  qryCondicional.Free;}
 end;
 
 initialization

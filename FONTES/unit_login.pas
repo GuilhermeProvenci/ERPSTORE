@@ -81,6 +81,7 @@ begin
   //faremos as validacoes de login e depois -->
   //Fecha o Form de Login
   Close;
+  ModalResult := mrOk;
 end;
 
 end.
