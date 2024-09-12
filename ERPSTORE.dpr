@@ -34,7 +34,8 @@ uses
   unit_utils in 'FONTES\unit_utils.pas' {Form1},
   unit_classGenerator in 'FONTES\unit_classGenerator.pas' {FrmClassGenerator},
   class_generator in 'CLASSES\class_generator.pas',
-  class_gplObject in 'CLASSES\class_gplObject.pas';
+  class_gplObject in 'CLASSES\class_gplObject.pas',
+  class_clientes_C in 'CLASSES\C\class_clientes_C.pas';
 
 {$R *.res}
 

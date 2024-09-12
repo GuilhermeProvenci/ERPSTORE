@@ -187,6 +187,7 @@
         </DCCReference>
         <DCCReference Include="CLASSES\class_generator.pas"/>
         <DCCReference Include="CLASSES\class_gplObject.pas"/>
+        <DCCReference Include="CLASSES\C\class_clientes_C.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

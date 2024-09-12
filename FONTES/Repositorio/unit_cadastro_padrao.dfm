@@ -351,6 +351,14 @@ object form_cadastro_padrao: Tform_cadastro_padrao
       ReadOnly = True
       TabOrder = 1
     end
+    object Button1: TButton
+      Left = 472
+      Top = 17
+      Width = 75
+      Height = 25
+      Caption = 'teste'
+      TabOrder = 6
+    end
   end
   object qryInsert: TFDQuery
     Connection = form_conexao.FDConnection

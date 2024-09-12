@@ -6,61 +6,70 @@ uses
   System.Classes, System.Rtti, FireDAC.Comp.Client, System.SysUtils, gplQry;
 
 type
-  // Atributo personalizado para marcar propriedades persistentes
-  TPersistente = class(TCustomAttribute)
-  end;
-
   TgplObject = class(TPersistent)
   private
     FTable: string;
+    function GetTable : string;
   public
     function SaveObject: boolean;
+    procedure CarregarCampos(ID: string);
   published
-    property Table: string read FTable write FTable;
+    property Table: string read GetTable;
   end;
 
 implementation
 
+function TgplObject.GetTable: string;
+begin
+  Result := ClassName;
+  if Result.StartsWith('T') then
+    Delete(Result, 1, 1);
+end;
+
 function TgplObject.SaveObject: boolean;
 var
   Context: TRttiContext;
-  RttiType: TRttiType;
+  RttiType, CamposType: TRttiType;
   Prop: TRttiProperty;
+  CamposProp: TRttiProperty;
   SQL: string;
   Values, Fields: string;
   Query: TgpQry;
-  Attribute: TCustomAttribute;
+  CamposInstance: TObject;
 begin
   Context := TRttiContext.Create;
   try
     RttiType := Context.GetType(Self.ClassType);
     Fields := '';
     Values := '';
-    for Prop in RttiType.GetProperties do
+
+    // Procura a propriedade chamada "Campos" que contém a instância da classe _C
+    Prop := RttiType.GetProperty('Campos');
+    if Assigned(Prop) and (Prop.PropertyType.TypeKind = tkClass) then
     begin
-      // Verifica se a propriedade é gravável e possui o atributo TPersistente
-      if Prop.IsWritable then
+      CamposInstance := Prop.GetValue(Self).AsObject;
+
+      if Assigned(CamposInstance) then
       begin
-        for Attribute in Prop.GetAttributes do
+        CamposType := Context.GetType(CamposInstance.ClassType);
+
+        for CamposProp in CamposType.GetProperties do
         begin
-          if Attribute is TPersistente then
+          if CamposProp.IsWritable then
           begin
-            Fields := Fields + Prop.Name + ', ';
-            Values := Values + QuotedStr(Prop.GetValue(Self).ToString) + ', ';
-            Break;  // Propriedade encontrada com o atributo, sair do loop
+            Fields := Fields + CamposProp.Name + ', ';
+            Values := Values + QuotedStr(CamposProp.GetValue(CamposInstance).ToString) + ', ';
           end;
         end;
       end;
     end;
 
-    // Remove a última vírgula
     SetLength(Fields, Length(Fields) - 2);
     SetLength(Values, Length(Values) - 2);
 
-    // Constrói a instrução SQL de inserção
+
     SQL := Format('INSERT INTO %s (%s) VALUES (%s)', [FTable, Fields, Values]);
 
-    // Executa a SQL
     Query := TgpQry.Create(nil);
     try
       Query.SQL.Text := SQL;
@@ -68,8 +77,74 @@ begin
     finally
       Query.Free;
     end;
+
+    Result := True;
   finally
     Context.Free;
+  end;
+end;
+
+
+procedure TgplObject.CarregarCampos(ID: string);
+var
+  Contexto: TRttiContext;
+  Propriedade: TRttiProperty;
+  Query: TgpQry;
+  RttiType: TRttiType;
+  PropName: string;
+  PropValue: TValue;
+  CamposObj: TObject;
+begin
+  Contexto := TRttiContext.Create;
+  try
+    RttiType := Contexto.GetType(Self.ClassType);
+    Propriedade := RttiType.GetProperty('Campos');
+    if not Assigned(Propriedade) then
+      raise Exception.Create('Propriedade "Campos" não encontrada na classe.');
+
+    CamposObj := Propriedade.GetValue(Self).AsObject;
+
+    if not Assigned(CamposObj) then
+      raise Exception.Create('Objeto "Campos" não inicializado.');
+
+    // Cria e executa uma query para buscar os dados pelo ID
+    Query := TgpQry.Create(nil);
+    try
+      Query.SQL.Text := Format('SELECT * FROM %s WHERE ID = :ID', [Table]);
+      Query.ParamByName('ID').AsString := ID;
+      Query.Open;
+
+      if not Query.Eof then
+      begin
+        // Itera sobre as propriedades da classe de campos (_C) e define seus valores com base no resultado da query
+        for Propriedade in Contexto.GetType(CamposObj.ClassType).GetProperties do
+        begin
+          PropName := Propriedade.Name;
+          if Query.FieldDefs.IndexOf(PropName) <> -1 then
+          begin
+            case Propriedade.PropertyType.TypeKind of
+              tkInteger:
+                PropValue := Query.FieldByName(PropName).AsInteger;
+              tkFloat:
+                PropValue := Query.FieldByName(PropName).AsFloat;
+              tkString, tkUString, tkWString, tkLString:
+                PropValue := Query.FieldByName(PropName).AsString;
+              // Outros tipos podem ser adicionados conforme necessário
+            else
+              Continue;
+            end;
+
+            Propriedade.SetValue(CamposObj, PropValue);
+          end;
+        end;
+      end
+      else
+        raise Exception.Create('Nenhum registro encontrado para o ID: ' + ID);
+    finally
+      Query.Free;
+    end;
+  finally
+    Contexto.Free;
   end;
 end;
 

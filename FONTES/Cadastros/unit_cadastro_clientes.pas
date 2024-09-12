@@ -15,6 +15,7 @@ type
     Label1: TLabel;
     cmbClassificacao: TgpCombo;
     procedure pnl_salvarClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -29,6 +30,12 @@ implementation
 {$R *.dfm}
 
 uses unit_conexao, unit_funcoes, class_clientes;
+
+procedure Tform_cadastro_clientes.Button1Click(Sender: TObject);
+begin
+  inherited;
+  TClientes(FClasseInstance).TestMensage;
+end;
 
 procedure Tform_cadastro_clientes.pnl_salvarClick(Sender: TObject);
 //var

@@ -62,7 +62,7 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
     inherited edt_id: TgpEdit
       StyleName = 'id'
     end
-    object cmbClassificacao: TgpCombo
+    object cmbClassificacao: TgpCombo [12]
       Tag = 99
       Left = 220
       Top = 204
@@ -76,6 +76,10 @@ inherited form_cadastro_clientes: Tform_cadastro_clientes
         'Prata '
         'Ouro'
         'Diamante')
+    end
+    inherited Button1: TButton
+      TabOrder = 7
+      OnClick = Button1Click
     end
   end
 end

@@ -32,6 +32,7 @@ type
     edt_id: TgpEdit;
     qryGene: TgpQry;
     DataSourceGene: TDataSource;
+    Button1: TButton;
     procedure btn_fecharClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure pnl_salvarClick(Sender: TObject);
@@ -165,7 +166,8 @@ begin
     begin
         lbl_titulo.Caption := 'EDIÇÃO DE ' + UpperCase(NomeTabela);
         CarregarCampos(edt_id.Conf.ID, NomeTabela);
-        CarregarCamposClasse(self, FClasseInstance);
+        FClasseInstance.CarregarCampos(edt_id.Conf.ID.ToString);
+        //CarregarCamposClasse(self, FClasseInstance);
     end;
 
     fmInsert:
