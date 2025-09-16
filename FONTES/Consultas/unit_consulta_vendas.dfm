@@ -1,26 +1,48 @@
 inherited form_consulta_vendas: Tform_consulta_vendas
   Caption = 'form_consulta_vendas'
-  PixelsPerInch = 96
+  StyleElements = [seFont, seClient, seBorder]
   TextHeight = 13
-  inherited pnl_principal: TPanel
-    inherited pnl_cabecalho: TPanel
-      inherited lbl_titulo: TLabel
-        Width = 222
+  inherited pnlMain: TPanel
+    StyleElements = [seFont, seClient, seBorder]
+    inherited pnlTop: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+      inherited lblTitle: TLabel
         Height = 56
-        Caption = 'CONSULTA DE VENDAS'
-        ExplicitWidth = 222
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited pnlSeparator: TPanel
+        StyleElements = [seFont, seClient, seBorder]
       end
     end
-    inherited pnl_Rodape: TPanel
-      inherited lbl_duplo_clique: TLabel
+    inherited pnlBottom: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+      inherited lblDoubleClick: TLabel
         Height = 38
+        StyleElements = [seFont, seClient, seBorder]
       end
-      inherited lbl_excluir: TLabel
+      inherited lblDelete: TLabel
         Height = 38
+        StyleElements = [seFont, seClient, seBorder]
+      end
+    end
+    inherited pnlSearch: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+      inherited lblText: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited edtSearch: TEdit
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited btnInsert: TPanel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited btnReports: TPanel
+        StyleElements = [seFont, seClient, seBorder]
       end
     end
     inherited pnl_dbgrid: TPanel
-      inherited dbg_registros: TDBGrid
+      StyleElements = [seFont, seClient, seBorder]
+      inherited gridRegister: TDBGrid
         Columns = <
           item
             Expanded = False
@@ -29,28 +51,85 @@ inherited form_consulta_vendas: Tform_consulta_vendas
           end
           item
             Expanded = False
-            FieldName = 'id_cliente'
+            FieldName = 'cliente_id'
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'valor'
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'observacao'
+            FieldName = 'numero_venda'
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'data_venda'
             Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'hora_venda'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'valor_subtotal'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'valor_desconto'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'percentual_desconto'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'valor_total'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'forma_pagamento'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'status_venda'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'vendedor'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'observacoes'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'data_cadastro'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'data_atualizacao'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'usuario_cadastro'
+            Visible = True
           end>
       end
-      inherited pnl_resultado: TPanel
-        inherited lbl_resultado: TLabel
+      inherited pnlResult: TPanel
+        StyleElements = [seFont, seClient, seBorder]
+        inherited lblResult: TLabel
           Height = 41
+          StyleElements = [seFont, seClient, seBorder]
         end
       end
     end

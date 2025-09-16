@@ -5,10 +5,10 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, unit_consulta_padrao, Data.DB,
-  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls;
+  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, uFormLinker;
 
 type
-  Tform_consulta_produtos = class(Tform_consulta_padrao)
+  Tform_consulta_produtos = class(TfrmBaseSearch)
   private
     { Private declarations }
   public
@@ -21,7 +21,5 @@ var
 implementation
 
 {$R *.dfm}
-
-uses  unit_conexao_tabelas;
 
 end.

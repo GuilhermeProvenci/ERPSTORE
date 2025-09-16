@@ -1,5 +1,4 @@
 object form_conexao: Tform_conexao
-  OldCreateOrder = False
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
   Height = 298

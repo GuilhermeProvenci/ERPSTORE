@@ -8,7 +8,7 @@ uses
   Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls;
 
 type
-  Tform_consulta_condicional = class(Tform_consulta_padrao)
+  Tform_consulta_condicional = class(TfrmBaseSearch)
   private
     { Private declarations }
   public

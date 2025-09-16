@@ -1,10 +1,10 @@
-object form_cadastro_padrao: Tform_cadastro_padrao
+object frmBaseRegister: TfrmBaseRegister
   Left = 0
   Top = 0
   BorderStyle = bsNone
-  Caption = 'form_cadastro_padrao'
-  ClientHeight = 289
-  ClientWidth = 750
+  Caption = 'frmBaseRegister'
+  ClientHeight = 303
+  ClientWidth = 843
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,95 +13,25 @@ object form_cadastro_padrao: Tform_cadastro_padrao
   Font.Style = []
   Position = poScreenCenter
   OnClose = FormClose
-  OnCreate = FormCreate
-  OnShow = FormShow
   TextHeight = 13
-  object pnl_fundo: TPanel
+  object pnlMain: TPanel
     Left = 0
     Top = 0
-    Width = 750
-    Height = 289
+    Width = 843
+    Height = 303
     Margins.Left = 15
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    DesignSize = (
-      750
-      289)
-    object lbl_informacao: TLabel
-      Left = 17
-      Top = 69
-      Width = 78
-      Height = 17
-      Caption = 'Informa'#231#245'es:'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 8404992
-      Font.Height = -13
-      Font.Name = 'Segoe UI Semibold'
-      Font.Style = []
-      ParentFont = False
-    end
-    object lbl_CODIGO: TLabel
-      Left = 25
-      Top = 110
-      Width = 52
-      Height = 17
-      Caption = 'C'#243'digo *'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clGray
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-    end
-    object lbl_informacao2: TLabel
-      Left = 222
-      Top = 105
-      Width = 5
-      Height = 17
-      Caption = '*'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clGray
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-    end
-    object lbl_informacao3: TLabel
-      Left = 566
-      Top = 105
-      Width = 9
-      Height = 17
-      Caption = ' *'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clGray
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-    end
-    object lbl_informacao4: TLabel
-      Left = 25
-      Top = 179
-      Width = 9
-      Height = 17
-      Caption = ' *'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clGray
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-    end
-    object pnl_topo: TPanel
+    object pnlTop: TPanel
       Left = 0
       Top = 0
-      Width = 750
+      Width = 843
       Height = 49
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
-      object lbl_titulo: TLabel
+      object lblTitle: TLabel
         AlignWithMargins = True
         Left = 15
         Top = 0
@@ -122,8 +52,8 @@ object form_cadastro_padrao: Tform_cadastro_padrao
         Layout = tlCenter
         ExplicitHeight = 21
       end
-      object btn_fechar: TSpeedButton
-        Left = 697
+      object btnClose: TSpeedButton
+        Left = 790
         Top = 0
         Width = 53
         Height = 48
@@ -187,45 +117,18 @@ object form_cadastro_padrao: Tform_cadastro_padrao
           FFFFFFFFFFFFB9B9B9ABABABF4F4F4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-        OnClick = btn_fecharClick
+        OnClick = btnCloseClick
         ExplicitLeft = 698
         ExplicitTop = 1
       end
-      object pnl_separador_topo: TPanel
-        Left = 0
-        Top = 48
-        Width = 750
-        Height = 1
-        Align = alBottom
-        Color = clSilver
-        ParentBackground = False
-        TabOrder = 0
-      end
-    end
-    object pnl_salvar: TPanel
-      Left = 522
-      Top = 225
-      Width = 209
-      Height = 41
-      Anchors = [akRight, akBottom]
-      Caption = 'SALVAR  INFORMA'#199#213'ES'
-      Color = clSilver
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlack
-      Font.Height = -11
-      Font.Name = 'Segoe UI Semibold'
-      Font.Style = []
-      ParentBackground = False
-      ParentFont = False
-      TabOrder = 5
-      OnClick = pnl_salvarClick
-      object Image1: TImage
-        Left = 1
-        Top = 1
-        Width = 24
-        Height = 39
-        Align = alLeft
+      object btnSave: TImage
+        Left = 752
+        Top = 0
+        Width = 38
+        Height = 48
+        Align = alRight
         Center = True
+        DragCursor = crHandPoint
         Picture.Data = {
           07544269746D6170F6060000424DF60600000000000036000000280000001800
           0000180000000100180000000000C0060000C40E0000C40E0000000000000000
@@ -286,92 +189,18 @@ object form_cadastro_padrao: Tform_cadastro_padrao
           FFFF}
         Proportional = True
         Transparent = True
-        ExplicitTop = 9
-        ExplicitHeight = 31
+        OnClick = btnSaveClick
+      end
+      object pnlSeparator: TPanel
+        Left = 0
+        Top = 48
+        Width = 843
+        Height = 1
+        Align = alBottom
+        Color = clSilver
+        ParentBackground = False
+        TabOrder = 0
       end
     end
-    object edt_nome: TgpEdit
-      Tag = 99
-      Left = 222
-      Top = 128
-      Width = 338
-      Height = 24
-      Hint = 'Preencha com o valor desejado'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 2
-    end
-    object edt_3: TgpEdit
-      Tag = 99
-      Left = 566
-      Top = 128
-      Width = 149
-      Height = 24
-      Hint = 'Preencha com o valor desejado'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 3
-    end
-    object edt_4: TgpEdit
-      Tag = 99
-      Left = 27
-      Top = 202
-      Width = 187
-      Height = 24
-      Hint = 'Preencha com o valor desejado'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 4
-    end
-    object edt_id: TgpEdit
-      Tag = 99
-      Left = 25
-      Top = 128
-      Width = 176
-      Height = 24
-      Hint = 'Preencha com o valor desejado'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentFont = False
-      ReadOnly = True
-      TabOrder = 1
-    end
-    object Button1: TButton
-      Left = 472
-      Top = 17
-      Width = 75
-      Height = 25
-      Caption = 'teste'
-      TabOrder = 6
-    end
-  end
-  object qryInsert: TFDQuery
-    Connection = form_conexao.FDConnection
-    Left = 608
-    Top = 8
-  end
-  object qryGene: TgpQry
-    FieldSize = 30
-    Left = 400
-  end
-  object DataSourceGene: TDataSource
-    DataSet = qryGene
-    Left = 328
-    Top = 16
   end
 end

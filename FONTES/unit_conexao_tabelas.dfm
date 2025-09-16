@@ -1,5 +1,4 @@
 object form_conexao_tabelas: Tform_conexao_tabelas
-  OldCreateOrder = True
   Height = 485
   Width = 871
   object qryConsultaClientes: TFDQuery
@@ -12,7 +11,6 @@ object form_conexao_tabelas: Tform_conexao_tabelas
     Top = 40
     object qryConsultaClientesid: TFDAutoIncField
       FieldName = 'id'
-      ReadOnly = True
     end
     object qryConsultaClientesnome: TStringField
       FieldName = 'nome'
@@ -49,7 +47,6 @@ object form_conexao_tabelas: Tform_conexao_tabelas
       FieldName = 'id'
       Origin = 'id'
       ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = True
     end
     object qryConsultaProdutosnome: TStringField
       FieldName = 'nome'
@@ -75,29 +72,99 @@ object form_conexao_tabelas: Tform_conexao_tabelas
     Connection = form_conexao.FDConnection
     SQL.Strings = (
       'select * from estoque')
-    Left = 392
+    Left = 360
     Top = 40
     object qryConsultaEstoqueid: TFDAutoIncField
       FieldName = 'id'
       Origin = 'id'
       ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = True
+      ReadOnly = False
     end
     object qryConsultaEstoqueproduto_id: TIntegerField
       FieldName = 'produto_id'
       Origin = 'produto_id'
       Required = True
     end
-    object qryConsultaEstoquenome_produto: TStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'nome_produto'
-      Origin = 'nome_produto'
-      Size = 255
-    end
     object qryConsultaEstoquequantidade_em_estoque: TIntegerField
+      AutoGenerateValue = arDefault
       FieldName = 'quantidade_em_estoque'
       Origin = 'quantidade_em_estoque'
+    end
+    object qryConsultaEstoquequantidade_minima: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'quantidade_minima'
+      Origin = 'quantidade_minima'
+    end
+    object qryConsultaEstoquepreco_custo: TBCDField
+      AutoGenerateValue = arDefault
+      FieldName = 'preco_custo'
+      Origin = 'preco_custo'
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaEstoquepreco_venda: TBCDField
+      AutoGenerateValue = arDefault
+      FieldName = 'preco_venda'
+      Origin = 'preco_venda'
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaEstoquelote: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'lote'
+      Origin = 'lote'
+      Size = 100
+    end
+    object qryConsultaEstoquedata_entrada: TDateField
+      FieldName = 'data_entrada'
+      Origin = 'data_entrada'
       Required = True
+    end
+    object qryConsultaEstoquedata_validade: TDateField
+      AutoGenerateValue = arDefault
+      FieldName = 'data_validade'
+      Origin = 'data_validade'
+    end
+    object qryConsultaEstoquefornecedor: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'fornecedor'
+      Origin = 'fornecedor'
+      Size = 255
+    end
+    object qryConsultaEstoquelocalizacao: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'localizacao'
+      Origin = 'localizacao'
+      Size = 100
+    end
+    object qryConsultaEstoquestatus: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'status'
+      Origin = 'status'
+      FixedChar = True
+      Size = 9
+    end
+    object qryConsultaEstoqueobservacoes: TMemoField
+      AutoGenerateValue = arDefault
+      FieldName = 'observacoes'
+      Origin = 'observacoes'
+      BlobType = ftMemo
+    end
+    object qryConsultaEstoquedata_cadastro: TDateTimeField
+      AutoGenerateValue = arDefault
+      FieldName = 'data_cadastro'
+      Origin = 'data_cadastro'
+    end
+    object qryConsultaEstoquedata_atualizacao: TDateTimeField
+      AutoGenerateValue = arDefault
+      FieldName = 'data_atualizacao'
+      Origin = 'data_atualizacao'
+    end
+    object qryConsultaEstoqueusuario_cadastro: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'usuario_cadastro'
+      Origin = 'usuario_cadastro'
+      Size = 100
     end
   end
   object qryConsultaCST: TFDQuery
@@ -144,7 +211,7 @@ object form_conexao_tabelas: Tform_conexao_tabelas
   end
   object dsEstoque: TDataSource
     DataSet = qryConsultaEstoque
-    Left = 448
+    Left = 464
     Top = 40
   end
   object qryConsultaCondicional: TFDQuery
@@ -157,7 +224,6 @@ object form_conexao_tabelas: Tform_conexao_tabelas
       FieldName = 'ID'
       Origin = 'ID'
       ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = True
     end
     object qryConsultaCondicionalID_Cliente: TIntegerField
       FieldName = 'ID_Cliente'
@@ -177,29 +243,106 @@ object form_conexao_tabelas: Tform_conexao_tabelas
       'select * from Vendas')
     Left = 392
     Top = 120
-    object qryConsultaVendasid: TIntegerField
+    object qryConsultaVendasid: TFDAutoIncField
       FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+    end
+    object qryConsultaVendascliente_id: TIntegerField
+      FieldName = 'cliente_id'
+      Origin = 'cliente_id'
       Required = True
     end
-    object qryConsultaVendasid_cliente: TIntegerField
-      FieldName = 'id_cliente'
-    end
-    object qryConsultaVendasvalor: TBCDField
-      FieldName = 'valor'
-      Precision = 10
-      Size = 2
-    end
-    object qryConsultaVendasobservacao: TStringField
-      FieldName = 'observacao'
-      Size = 255
+    object qryConsultaVendasnumero_venda: TStringField
+      FieldName = 'numero_venda'
+      Origin = 'numero_venda'
+      Required = True
     end
     object qryConsultaVendasdata_venda: TDateField
       FieldName = 'data_venda'
+      Origin = 'data_venda'
+      Required = True
+    end
+    object qryConsultaVendashora_venda: TTimeField
+      AutoGenerateValue = arDefault
+      FieldName = 'hora_venda'
+      Origin = 'hora_venda'
+    end
+    object qryConsultaVendasvalor_subtotal: TBCDField
+      AutoGenerateValue = arDefault
+      FieldName = 'valor_subtotal'
+      Origin = 'valor_subtotal'
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaVendasvalor_desconto: TBCDField
+      AutoGenerateValue = arDefault
+      FieldName = 'valor_desconto'
+      Origin = 'valor_desconto'
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaVendaspercentual_desconto: TBCDField
+      AutoGenerateValue = arDefault
+      FieldName = 'percentual_desconto'
+      Origin = 'percentual_desconto'
+      Precision = 5
+      Size = 2
+    end
+    object qryConsultaVendasvalor_total: TBCDField
+      AutoGenerateValue = arDefault
+      FieldName = 'valor_total'
+      Origin = 'valor_total'
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaVendasforma_pagamento: TStringField
+      FieldName = 'forma_pagamento'
+      Origin = 'forma_pagamento'
+      Required = True
+      FixedChar = True
+      Size = 14
+    end
+    object qryConsultaVendasstatus_venda: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'status_venda'
+      Origin = 'status_venda'
+      FixedChar = True
+      Size = 9
+    end
+    object qryConsultaVendasvendedor: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'vendedor'
+      Origin = 'vendedor'
+      Size = 100
+    end
+    object qryConsultaVendasobservacoes: TMemoField
+      AutoGenerateValue = arDefault
+      FieldName = 'observacoes'
+      Origin = 'observacoes'
+      BlobType = ftMemo
+    end
+    object qryConsultaVendasdata_cadastro: TDateTimeField
+      AutoGenerateValue = arDefault
+      FieldName = 'data_cadastro'
+      Origin = 'data_cadastro'
+    end
+    object qryConsultaVendasdata_atualizacao: TDateTimeField
+      AutoGenerateValue = arDefault
+      FieldName = 'data_atualizacao'
+      Origin = 'data_atualizacao'
+    end
+    object qryConsultaVendasusuario_cadastro: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'usuario_cadastro'
+      Origin = 'usuario_cadastro'
+      Size = 100
     end
   end
   object DataSourceVendas: TDataSource
     DataSet = qryConsultaVendas
-    Left = 448
+    Left = 548
     Top = 120
   end
   object qryConsultaCondicionalPendente: TFDQuery

@@ -1,169 +1,385 @@
 inherited form_cadastro_estoque: Tform_cadastro_estoque
-  Caption = 'form_cadastro_estoque'
+  Caption = 'Estoque'
   ClientHeight = 608
   ClientWidth = 722
+  StyleElements = [seFont, seClient, seBorder]
+  OnCreate = FormCreate
   ExplicitWidth = 722
   ExplicitHeight = 608
   TextHeight = 13
-  inherited pnl_fundo: TPanel
+  inherited pnlMain: TPanel
     Width = 722
     Height = 608
+    ParentColor = True
+    StyleElements = [seFont, seClient, seBorder]
     ExplicitWidth = 722
     ExplicitHeight = 608
-    inherited lbl_CODIGO: TLabel
-      Left = 669
-      Top = 121
-      Visible = False
-      ExplicitLeft = 669
-      ExplicitTop = 121
-    end
-    inherited lbl_informacao2: TLabel
-      Left = 61
-      Width = 47
-      Caption = 'Produto'
-      ExplicitLeft = 61
-      ExplicitWidth = 47
-    end
-    inherited lbl_informacao3: TLabel
-      Left = 436
-      Width = 123
-      Anchors = [akLeft, akTop, akRight]
-      Caption = ' Quantidade a inserir'
-      ExplicitLeft = 436
-      ExplicitWidth = 123
-    end
-    inherited lbl_informacao4: TLabel
-      Left = 660
-      Top = 54
-      Width = 64
-      Caption = ' * nao usar'
-      Visible = False
-      ExplicitLeft = 660
-      ExplicitTop = 54
-      ExplicitWidth = 64
-    end
-    inherited pnl_topo: TPanel
+    inherited pnlTop: TPanel
       Width = 722
+      TabOrder = 6
+      StyleElements = [seFont, seClient, seBorder]
       ExplicitWidth = 722
-      inherited lbl_titulo: TLabel
-        Width = 146
-        Caption = 'Inclus'#227'o de Estoque'
-        ExplicitWidth = 146
+      inherited lblTitle: TLabel
+        Width = 178
+        Caption = 'CADASTRO DE ESTOQUE'
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitWidth = 178
       end
-      inherited btn_fechar: TSpeedButton
+      inherited btnClose: TSpeedButton
         Left = 669
         ExplicitLeft = 669
       end
-      inherited pnl_separador_topo: TPanel
+      inherited btnSave: TImage
+        Left = 631
+        ExplicitLeft = 631
+      end
+      inherited pnlSeparator: TPanel
         Width = 722
+        StyleElements = [seFont, seClient, seBorder]
         ExplicitWidth = 722
       end
     end
-    inherited pnl_salvar: TPanel
-      Left = 494
-      Top = 544
-      TabOrder = 6
-      ExplicitLeft = 494
-      ExplicitTop = 544
+    object pnl_produto: TPanel
+      Left = 24
+      Top = 85
+      Width = 674
+      Height = 65
+      BevelOuter = bvNone
+      ParentColor = True
+      TabOrder = 0
+      object lbl_produto: TLabel
+        Left = 0
+        Top = 0
+        Width = 674
+        Height = 17
+        Align = alTop
+        Caption = #55357#56507' PRODUTO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 8404992
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 86
+      end
+      object cmbProduto_id: TDBLookupComboBox
+        AlignWithMargins = True
+        Left = 0
+        Top = 32
+        Width = 674
+        Height = 29
+        Margins.Left = 0
+        Margins.Top = 15
+        Margins.Right = 0
+        Margins.Bottom = 0
+        Align = alTop
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 8404992
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentColor = True
+        ParentFont = False
+        TabOrder = 0
+      end
+      object pnl_barra_produto: TPanel
+        Left = 0
+        Top = 61
+        Width = 674
+        Height = 2
+        Align = alTop
+        BevelOuter = bvNone
+        Color = 8404992
+        ParentBackground = False
+        TabOrder = 1
+      end
     end
-    inherited edt_nome: TgpEdit
-      Left = 669
-      Top = 151
-      Width = 12
-      ReadOnly = True
-      Visible = False
-      ExplicitLeft = 669
-      ExplicitTop = 151
-      ExplicitWidth = 12
+    object pnl_quantidade: TPanel
+      Left = 24
+      Top = 165
+      Width = 216
+      Height = 65
+      BevelOuter = bvNone
+      ParentBackground = False
+      TabOrder = 1
+      object lbl_quantidade: TLabel
+        Left = 0
+        Top = 0
+        Width = 216
+        Height = 17
+        Align = alTop
+        Caption = #55357#56621' QUANTIDADE'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 8404992
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 109
+      end
+      object edtQuantidade: TEdit
+        AlignWithMargins = True
+        Left = 0
+        Top = 32
+        Width = 216
+        Height = 24
+        Margins.Left = 0
+        Margins.Top = 15
+        Margins.Right = 0
+        Margins.Bottom = 0
+        Align = alTop
+        BorderStyle = bsNone
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 8404992
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+      end
+      object pnl_barra_quantidade: TPanel
+        Left = 0
+        Top = 56
+        Width = 216
+        Height = 2
+        Align = alTop
+        BevelOuter = bvNone
+        Color = 8404992
+        ParentBackground = False
+        TabOrder = 1
+      end
     end
-    inherited edt_3: TgpEdit
-      Left = 436
-      Hint = 'Quantidade a inserir'
-      Anchors = [akLeft, akTop, akRight]
-      TabOrder = 4
-      ExplicitLeft = 436
+    object pnl_preco_custo: TPanel
+      Left = 257
+      Top = 165
+      Width = 216
+      Height = 65
+      BevelOuter = bvNone
+      ParentBackground = False
+      TabOrder = 2
+      object lbl_preco_custo: TLabel
+        Left = 0
+        Top = 0
+        Width = 216
+        Height = 17
+        Align = alTop
+        Caption = #65533#65533' PRE'#199'O DE CUSTO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 8404992
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 136
+      end
+      object edtPrecoCusto: TEdit
+        AlignWithMargins = True
+        Left = 0
+        Top = 32
+        Width = 216
+        Height = 24
+        Margins.Left = 0
+        Margins.Top = 15
+        Margins.Right = 0
+        Margins.Bottom = 0
+        Align = alTop
+        BorderStyle = bsNone
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 8404992
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+      end
+      object pnl_barra_preco_custo: TPanel
+        Left = 0
+        Top = 56
+        Width = 216
+        Height = 2
+        Align = alTop
+        BevelOuter = bvNone
+        Color = 8404992
+        ParentBackground = False
+        TabOrder = 1
+      end
     end
-    inherited edt_4: TgpEdit
-      Tag = 0
-      Left = 669
-      Top = 77
-      Width = 12
-      Enabled = False
-      TabOrder = 5
-      Visible = False
-      ExplicitLeft = 669
-      ExplicitTop = 77
-      ExplicitWidth = 12
-    end
-    inherited edt_id: TgpEdit
-      Left = 31
-      Width = 24
-      Hint = 'Id produto'
-      ExplicitLeft = 31
-      ExplicitWidth = 24
-    end
-    object lccb_nome: TDBLookupComboBox
-      Left = 61
-      Top = 128
-      Width = 283
-      Height = 24
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      KeyField = 'id'
-      ListField = 'nome'
-      ListSource = form_conexao_tabelas.DataSourceProdutos
-      ParentFont = False
+    object pnl_data_entrada: TPanel
+      Left = 482
+      Top = 162
+      Width = 216
+      Height = 65
+      BevelOuter = bvNone
+      ParentBackground = False
       TabOrder = 3
-      OnClick = lccb_nomeClick
+      object lbl_data_entrada: TLabel
+        Left = 0
+        Top = 0
+        Width = 216
+        Height = 17
+        Align = alTop
+        Caption = #55357#56464' DATA DE ENTRADA'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 8404992
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 143
+      end
+      object dtpDataEntrada: TDateTimePicker
+        AlignWithMargins = True
+        Left = 0
+        Top = 32
+        Width = 216
+        Height = 29
+        Margins.Left = 0
+        Margins.Top = 15
+        Margins.Right = 0
+        Margins.Bottom = 0
+        Align = alTop
+        Date = 45577.000000000000000000
+        Time = 0.715611782405176200
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 8404992
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+      end
+      object pnl_barra_data_entrada: TPanel
+        Left = 0
+        Top = 61
+        Width = 216
+        Height = 2
+        Align = alTop
+        BevelOuter = bvNone
+        Color = 8404992
+        ParentBackground = False
+        TabOrder = 1
+      end
     end
-    object dbg_registros: TDBGrid
-      Left = 40
-      Top = 200
-      Width = 601
-      Height = 305
-      Anchors = [akLeft, akTop, akRight, akBottom]
-      DataSource = dsEstoque
-      TabOrder = 7
-      TitleFont.Charset = DEFAULT_CHARSET
-      TitleFont.Color = clWindowText
-      TitleFont.Height = -11
-      TitleFont.Name = 'Tahoma'
-      TitleFont.Style = []
-      Columns = <
-        item
-          Expanded = False
-          FieldName = 'id'
-          Width = 56
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'produto_id'
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'nome_produto'
-          Width = 252
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'quantidade_em_estoque'
-          Width = 209
-          Visible = True
-        end>
+    object pnl_lote: TPanel
+      Left = 24
+      Top = 245
+      Width = 332
+      Height = 65
+      BevelOuter = bvNone
+      ParentBackground = False
+      TabOrder = 4
+      object lbl_lote: TLabel
+        Left = 0
+        Top = 0
+        Width = 332
+        Height = 17
+        Align = alTop
+        Caption = #55357#57115' LOTE'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 8404992
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 45
+      end
+      object edtLote: TEdit
+        AlignWithMargins = True
+        Left = 0
+        Top = 32
+        Width = 332
+        Height = 24
+        Margins.Left = 0
+        Margins.Top = 15
+        Margins.Right = 0
+        Margins.Bottom = 0
+        Align = alTop
+        BorderStyle = bsNone
+        CharCase = ecUpperCase
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 8404992
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+      end
+      object pnl_barra_lote: TPanel
+        Left = 0
+        Top = 56
+        Width = 332
+        Height = 2
+        Align = alTop
+        BevelOuter = bvNone
+        Color = 8404992
+        ParentBackground = False
+        TabOrder = 1
+      end
     end
-  end
-  inherited qryInsert: TFDQuery
-    Left = 520
+    object pnl_validade: TPanel
+      Left = 366
+      Top = 242
+      Width = 332
+      Height = 65
+      BevelOuter = bvNone
+      ParentBackground = False
+      TabOrder = 5
+      object lbl_validade: TLabel
+        Left = 0
+        Top = 0
+        Width = 332
+        Height = 17
+        Align = alTop
+        Caption = #55357#56467' DATA DE VALIDADE'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 8404992
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 146
+      end
+      object dtpDataValidade: TDateTimePicker
+        AlignWithMargins = True
+        Left = 0
+        Top = 32
+        Width = 332
+        Height = 29
+        Margins.Left = 0
+        Margins.Top = 15
+        Margins.Right = 0
+        Margins.Bottom = 0
+        Align = alTop
+        Date = 45577.000000000000000000
+        Time = 0.715611782405176200
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 8404992
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+      end
+      object pnl_barra_validade: TPanel
+        Left = 0
+        Top = 61
+        Width = 332
+        Height = 2
+        Align = alTop
+        BevelOuter = bvNone
+        Color = 8404992
+        ParentBackground = False
+        TabOrder = 1
+      end
+    end
   end
   object dsEstoque: TDataSource
-    DataSet = form_conexao_tabelas.qryConsultaEstoque
-    Left = 464
-    Top = 8
+    Left = 608
+    Top = 368
   end
 end

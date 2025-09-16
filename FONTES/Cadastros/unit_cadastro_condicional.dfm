@@ -12,8 +12,6 @@ object form_cadastro_condicional: Tform_cadastro_condicional
   Font.Name = 'Tahoma'
   Font.Style = []
   Position = poScreenCenter
-  OnClose = FormClose
-  OnCreate = FormCreate
   TextHeight = 13
   object pnl_fundo: TPanel
     Left = 0
@@ -277,38 +275,6 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Font.Style = []
         ParentFont = False
       end
-      object edt_cod_clie: TEdit
-        Left = 62
-        Top = 41
-        Width = 26
-        Height = 21
-        NumbersOnly = True
-        TabOrder = 0
-        OnKeyDown = edt_cod_clieKeyDown
-      end
-      object edt_cod_prod: TEdit
-        Left = 62
-        Top = 112
-        Width = 26
-        Height = 21
-        TabOrder = 1
-        OnKeyDown = edt_cod_prodKeyDown
-      end
-      object edt_qtt: TNumberBox
-        Left = 62
-        Top = 242
-        Width = 203
-        Height = 21
-        TabOrder = 2
-      end
-      object edt_qtt_estoque: TEdit
-        Left = 62
-        Top = 176
-        Width = 203
-        Height = 21
-        ReadOnly = True
-        TabOrder = 3
-      end
       object pnl_remover: TPanel
         Left = 62
         Top = 419
@@ -324,8 +290,7 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Font.Style = []
         ParentBackground = False
         ParentFont = False
-        TabOrder = 4
-        OnClick = pnl_removerClick
+        TabOrder = 0
       end
       object pnl_add: TPanel
         Left = 62
@@ -342,33 +307,33 @@ object form_cadastro_condicional: Tform_cadastro_condicional
         Font.Style = []
         ParentBackground = False
         ParentFont = False
-        TabOrder = 5
-        OnClick = pnl_addClick
-      end
-      object edt_obs: TgpEdit
-        Left = 62
-        Top = 312
-        Width = 203
-        Height = 21
-        Hint = 'Observa'#231#227'o do Condicional'
-        TabOrder = 6
-      end
-      object cbb_clientes: TgpCombo
-        Left = 82
-        Top = 41
-        Width = 183
-        Height = 21
-        TabOrder = 7
-        OnChange = cbb_clientesChange
-      end
-      object cbb_produtos: TgpCombo
-        Left = 82
-        Top = 112
-        Width = 183
-        Height = 21
-        TabOrder = 8
-        OnChange = cbb_produtosChange
+        TabOrder = 1
       end
     end
+  end
+  object qryClientes: TFDQuery
+    Connection = form_conexao.FDConnection
+    Left = 520
+    Top = 256
+  end
+  object qryProdutos: TFDQuery
+    Connection = form_conexao.FDConnection
+    Left = 592
+    Top = 256
+  end
+  object qryEstoque: TFDQuery
+    Connection = form_conexao.FDConnection
+    Left = 672
+    Top = 256
+  end
+  object qryCondicional: TFDQuery
+    Connection = form_conexao.FDConnection
+    Left = 744
+    Top = 256
+  end
+  object qryCondPendente: TFDQuery
+    Connection = form_conexao.FDConnection
+    Left = 832
+    Top = 256
   end
 end

@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{21E317C8-A257-4BC0-B531-D17AAF9662A8}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="ERPSTORE.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="LIB\LibGPL.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="ERPSTORE">
+        <MSBuild Projects="ERPSTORE.dproj"/>
+    </Target>
+    <Target Name="ERPSTORE:Clean">
+        <MSBuild Projects="ERPSTORE.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ERPSTORE:Make">
+        <MSBuild Projects="ERPSTORE.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="LibGPL">
+        <MSBuild Projects="LIB\LibGPL.dproj"/>
+    </Target>
+    <Target Name="LibGPL:Clean">
+        <MSBuild Projects="LIB\LibGPL.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="LibGPL:Make">
+        <MSBuild Projects="LIB\LibGPL.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="ERPSTORE;LibGPL"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="ERPSTORE:Clean;LibGPL:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="ERPSTORE:Make;LibGPL:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

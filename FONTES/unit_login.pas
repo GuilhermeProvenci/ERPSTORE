@@ -5,10 +5,10 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.pngimage, Vcl.ExtCtrls,
-  Vcl.StdCtrls, unit_funcoes, gplForm;
+  Vcl.StdCtrls, unit_funcoes;
 
 type
-  Tform_login = class(TgpForm)
+  Tform_login = class(TForm)
     pnl_fundo: TPanel;
     pnl_lateral: TPanel;
     pnl_imagem: TPanel;

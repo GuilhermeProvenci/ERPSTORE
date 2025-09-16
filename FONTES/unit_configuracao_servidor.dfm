@@ -11,10 +11,8 @@ object form_configuracao_servidor: Tform_configuracao_servidor
   Font.Height = -11
   Font.Name = 'Segoe UI'
   Font.Style = []
-  OldCreateOrder = False
   OnClose = FormClose
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 13
   object pnl_fundo: TPanel
     Left = 0

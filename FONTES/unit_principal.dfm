@@ -32,7 +32,7 @@ object form_principal: Tform_principal
       Left = 10
       Top = 3
       Width = 48
-      Height = 58
+      Height = 48
       Margins.Left = 10
       Align = alLeft
       AutoSize = True
@@ -189,7 +189,6 @@ object form_principal: Tform_principal
         44AE426082}
       ExplicitLeft = 0
       ExplicitTop = 0
-      ExplicitHeight = 48
     end
     object lbl_titulo: TLabel
       Left = 68
@@ -222,7 +221,7 @@ object form_principal: Tform_principal
       Left = 847
       Top = 3
       Width = 48
-      Height = 58
+      Height = 48
       Cursor = crHandPoint
       Margins.Right = 10
       Align = alRight
@@ -284,14 +283,13 @@ object form_principal: Tform_principal
         FFB3F111AEB22080A44A9100180E1A00C3BF2DF04DE734AF0000000049454E44
         AE426082}
       ExplicitLeft = 581
-      ExplicitHeight = 48
     end
     object img_botao_sair: TImage
       AlignWithMargins = True
       Left = 908
       Top = 3
       Width = 48
-      Height = 58
+      Height = 48
       Cursor = crHandPoint
       Hint = 'Sair do Sistema'
       Margins.Right = 10
@@ -352,7 +350,6 @@ object form_principal: Tform_principal
       ShowHint = True
       OnClick = img_botao_sairClick
       ExplicitLeft = 699
-      ExplicitHeight = 48
     end
     object pnl_barra_separadora: TPanel
       Left = 0
@@ -418,7 +415,7 @@ object form_principal: Tform_principal
           Left = 10
           Top = 3
           Width = 28
-          Height = 35
+          Height = 28
           Margins.Left = 10
           Align = alLeft
           AutoSize = True
@@ -464,7 +461,6 @@ object form_principal: Tform_principal
             49454E44AE426082}
           OnClick = pnl_config_servidorClick
           OnMouseEnter = pnl_botao_notasMouseEnter
-          ExplicitHeight = 28
         end
         object lbl_config_servidor: TLabel
           Tag = 13
@@ -504,7 +500,7 @@ object form_principal: Tform_principal
           Left = 10
           Top = 3
           Width = 28
-          Height = 35
+          Height = 28
           Margins.Left = 10
           Align = alLeft
           AutoSize = True
@@ -549,7 +545,6 @@ object form_principal: Tform_principal
             293CB2A56FA04436FE64823F81114A9A24A678002B2192D90CDED60B00000000
             49454E44AE426082}
           OnMouseEnter = pnl_botao_notasMouseEnter
-          ExplicitHeight = 28
         end
         object lbl_utils: TLabel
           Tag = 14
@@ -609,7 +604,7 @@ object form_principal: Tform_principal
           Left = 10
           Top = 3
           Width = 26
-          Height = 35
+          Height = 26
           Margins.Left = 10
           Align = alLeft
           AutoSize = True
@@ -715,7 +710,6 @@ object form_principal: Tform_principal
             6CAADC8E096E07DF7FEB0DFAB53E00A09C5FAEAF539B1C0000000049454E44AE
             426082}
           OnMouseEnter = pnl_botao_notasMouseEnter
-          ExplicitHeight = 26
         end
         object lbl_tab_cidades: TLabel
           Tag = 10
@@ -754,7 +748,7 @@ object form_principal: Tform_principal
           Left = 10
           Top = 3
           Width = 26
-          Height = 35
+          Height = 26
           Margins.Left = 10
           Align = alLeft
           AutoSize = True
@@ -860,7 +854,6 @@ object form_principal: Tform_principal
             6CAADC8E096E07DF7FEB0DFAB53E00A09C5FAEAF539B1C0000000049454E44AE
             426082}
           OnMouseEnter = pnl_botao_notasMouseEnter
-          ExplicitHeight = 26
         end
         object lbl_tab_estados: TLabel
           Tag = 9
@@ -900,7 +893,7 @@ object form_principal: Tform_principal
           Left = 10
           Top = 3
           Width = 26
-          Height = 35
+          Height = 26
           Margins.Left = 10
           Align = alLeft
           AutoSize = True
@@ -1007,7 +1000,6 @@ object form_principal: Tform_principal
             426082}
           OnClick = pnl_tab_CondicionalClick
           OnMouseEnter = pnl_botao_notasMouseEnter
-          ExplicitHeight = 26
         end
         object lbl_tab_Condicional: TLabel
           Tag = 9
@@ -1061,7 +1053,7 @@ object form_principal: Tform_principal
         Left = 10
         Top = 3
         Width = 28
-        Height = 35
+        Height = 28
         Margins.Left = 10
         Align = alLeft
         AutoSize = True
@@ -1107,7 +1099,6 @@ object form_principal: Tform_principal
           49454E44AE426082}
         OnClick = pnl_botao_configuracoesClick
         OnMouseEnter = pnl_botao_notasMouseEnter
-        ExplicitHeight = 28
       end
       object lbl_botao_config: TLabel
         Tag = 8
@@ -1148,7 +1139,7 @@ object form_principal: Tform_principal
         Left = 10
         Top = 3
         Width = 32
-        Height = 35
+        Height = 32
         Margins.Left = 10
         Align = alLeft
         AutoSize = True
@@ -1176,7 +1167,6 @@ object form_principal: Tform_principal
           0049454E44AE426082}
         OnClick = pnl_botao_clientesClick
         OnMouseEnter = pnl_botao_notasMouseEnter
-        ExplicitHeight = 32
       end
       object lbl_botao_clientes: TLabel
         Tag = 2
@@ -1217,7 +1207,7 @@ object form_principal: Tform_principal
         Left = 10
         Top = 3
         Width = 28
-        Height = 35
+        Height = 28
         Margins.Left = 10
         Align = alLeft
         AutoSize = True
@@ -1267,7 +1257,6 @@ object form_principal: Tform_principal
           6082}
         OnClick = pnl_botao_produtosClick
         OnMouseEnter = pnl_botao_notasMouseEnter
-        ExplicitHeight = 28
       end
       object lbl_botao_produtos: TLabel
         Tag = 3
@@ -1308,7 +1297,7 @@ object form_principal: Tform_principal
         Left = 10
         Top = 3
         Width = 26
-        Height = 35
+        Height = 26
         Margins.Left = 10
         Align = alLeft
         AutoSize = True
@@ -1415,7 +1404,6 @@ object form_principal: Tform_principal
           426082}
         OnClick = pnl_botao_cadastrosClick
         OnMouseEnter = pnl_botao_notasMouseEnter
-        ExplicitHeight = 26
       end
       object lbl_botao_cadastros: TLabel
         Tag = 5
@@ -1455,7 +1443,7 @@ object form_principal: Tform_principal
         Left = 10
         Top = 3
         Width = 28
-        Height = 35
+        Height = 28
         Margins.Left = 10
         Align = alLeft
         AutoSize = True
@@ -1504,7 +1492,6 @@ object form_principal: Tform_principal
           C7BB2FA344363899588193C9DD9DC7D8B8519309FE04863F69929CE2014A97A9
           D95B2E50890000000049454E44AE426082}
         OnMouseEnter = pnl_botao_notasMouseEnter
-        ExplicitHeight = 28
       end
       object lbl_botao_usuarios: TLabel
         Tag = 7
@@ -1544,7 +1531,7 @@ object form_principal: Tform_principal
         Left = 10
         Top = 3
         Width = 28
-        Height = 35
+        Height = 28
         Margins.Left = 10
         Align = alLeft
         AutoSize = True
@@ -1594,7 +1581,6 @@ object form_principal: Tform_principal
           6082}
         OnClick = pnl_botao_estoqueClick
         OnMouseEnter = pnl_botao_notasMouseEnter
-        ExplicitHeight = 28
       end
       object lbl_botao_estoque: TLabel
         Tag = 4
@@ -1635,7 +1621,7 @@ object form_principal: Tform_principal
         Left = 10
         Top = 3
         Width = 30
-        Height = 35
+        Height = 30
         Margins.Left = 10
         Align = alLeft
         AutoSize = True
@@ -1658,7 +1644,6 @@ object form_principal: Tform_principal
           5A0AD37EC655FFC3F56FC0EF4FA4A61F545A79320000000049454E44AE426082}
         OnClick = pnl_botao_vendasClick
         OnMouseEnter = pnl_botao_notasMouseEnter
-        ExplicitHeight = 30
       end
       object lbl_botao_vendas: TLabel
         Tag = 6

@@ -20,10 +20,6 @@ object Form1: TForm1
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitLeft = -94
-    ExplicitTop = -166
-    ExplicitWidth = 722
-    ExplicitHeight = 608
     object lbl_CODIGO: TLabel
       Left = 669
       Top = 121
@@ -60,13 +56,12 @@ object Form1: TForm1
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitWidth = 722
       object lbl_titulo: TLabel
         AlignWithMargins = True
         Left = 15
         Top = 0
         Width = 73
-        Height = 48
+        Height = 21
         Margins.Left = 15
         Margins.Top = 0
         Margins.Right = 0
@@ -80,7 +75,6 @@ object Form1: TForm1
         Font.Style = []
         ParentFont = False
         Layout = tlCenter
-        ExplicitHeight = 21
       end
       object btn_fechar: TSpeedButton
         Left = 575
@@ -159,10 +153,9 @@ object Form1: TForm1
         Color = clSilver
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 722
       end
     end
-    object edt_nome: TgpEdit
+    object edt_nome: TEdit
       Tag = 99
       Left = 669
       Top = 151
@@ -179,7 +172,7 @@ object Form1: TForm1
       TabOrder = 1
       Visible = False
     end
-    object edt_4: TgpEdit
+    object edt_4: TEdit
       Left = 669
       Top = 77
       Width = 12

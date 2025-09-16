@@ -1,20 +1,23 @@
-object form_consulta_padrao: Tform_consulta_padrao
-  Left = 0
-  Top = 0
+object frmBaseSearch: TfrmBaseSearch
+  Left = 477
+  Top = 317
   Align = alClient
   BorderStyle = bsNone
   ClientHeight = 516
   ClientWidth = 833
   Color = clBtnFace
+  DoubleBuffered = True
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poDesigned
   OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   TextHeight = 13
-  object pnl_principal: TPanel
+  object pnlMain: TPanel
     Left = 0
     Top = 0
     Width = 833
@@ -22,7 +25,7 @@ object form_consulta_padrao: Tform_consulta_padrao
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    object pnl_cabecalho: TPanel
+    object pnlTop: TPanel
       Left = 0
       Top = 0
       Width = 833
@@ -31,10 +34,10 @@ object form_consulta_padrao: Tform_consulta_padrao
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 0
-      object btn_fechar: TSpeedButton
-        Left = 763
+      object btnClose: TSpeedButton
+        Left = 760
         Top = 0
-        Width = 70
+        Width = 73
         Height = 56
         Cursor = crHandPoint
         Align = alRight
@@ -96,11 +99,9 @@ object form_consulta_padrao: Tform_consulta_padrao
           FFFFFFFFFFFFB9B9B9ABABABF4F4F4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-        OnClick = btn_fecharClick
-        ExplicitLeft = 820
-        ExplicitHeight = 80
+        OnClick = btnCloseClick
       end
-      object lbl_titulo: TLabel
+      object lblTitle: TLabel
         AlignWithMargins = True
         Left = 15
         Top = 0
@@ -122,7 +123,7 @@ object form_consulta_padrao: Tform_consulta_padrao
         Layout = tlCenter
         ExplicitHeight = 30
       end
-      object pnl_separa_topo: TPanel
+      object pnlSeparator: TPanel
         Left = 0
         Top = 56
         Width = 833
@@ -138,7 +139,7 @@ object form_consulta_padrao: Tform_consulta_padrao
         TabOrder = 0
       end
     end
-    object pnl_Rodape: TPanel
+    object pnlBottom: TPanel
       Left = 0
       Top = 478
       Width = 833
@@ -147,7 +148,7 @@ object form_consulta_padrao: Tform_consulta_padrao
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 1
-      object lbl_duplo_clique: TLabel
+      object lblDoubleClick: TLabel
         AlignWithMargins = True
         Left = 538
         Top = 0
@@ -168,7 +169,7 @@ object form_consulta_padrao: Tform_consulta_padrao
         Layout = tlCenter
         ExplicitHeight = 13
       end
-      object lbl_excluir: TLabel
+      object lblDelete: TLabel
         AlignWithMargins = True
         Left = 10
         Top = 0
@@ -194,7 +195,7 @@ object form_consulta_padrao: Tform_consulta_padrao
         ExplicitHeight = 13
       end
     end
-    object pnl_pesquisa: TPanel
+    object pnlSearch: TPanel
       Left = 0
       Top = 57
       Width = 833
@@ -205,7 +206,7 @@ object form_consulta_padrao: Tform_consulta_padrao
       DesignSize = (
         833
         72)
-      object lbl_texto: TLabel
+      object lblText: TLabel
         Left = 19
         Top = 11
         Width = 321
@@ -218,7 +219,7 @@ object form_consulta_padrao: Tform_consulta_padrao
         Font.Style = []
         ParentFont = False
       end
-      object edt_consulta: TEdit
+      object edtSearch: TEdit
         Left = 19
         Top = 32
         Width = 542
@@ -232,39 +233,44 @@ object form_consulta_padrao: Tform_consulta_padrao
         Font.Style = []
         ParentFont = False
         TabOrder = 0
-        OnKeyDown = edt_consultaKeyDown
+        OnKeyDown = edtSearchKeyDown
       end
-      object btn_inserir: TButton
+      object btnInsert: TPanel
         Left = 684
         Top = 32
         Width = 129
         Height = 25
         Anchors = [akTop, akRight]
+        BevelOuter = bvNone
         Caption = 'Novo / Inserir'
+        Color = 8404992
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
+        Font.Color = clWhite
         Font.Height = -13
         Font.Name = 'Segoe UI Semibold'
         Font.Style = []
+        ParentBackground = False
         ParentFont = False
         TabOrder = 1
-        OnClick = btn_inserirClick
+        OnClick = btnInsertClick
       end
-      object Button1: TButton
+      object btnReports: TPanel
         Left = 567
         Top = 32
         Width = 111
         Height = 25
         Anchors = [akTop, akRight]
+        BevelOuter = bvNone
         Caption = 'Relat'#243'rio'
+        Color = 8404992
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
+        Font.Color = clWhite
         Font.Height = -13
         Font.Name = 'Segoe UI Semibold'
         Font.Style = []
+        ParentBackground = False
         ParentFont = False
         TabOrder = 2
-        OnClick = Button1Click
       end
     end
     object pnl_dbgrid: TPanel
@@ -275,7 +281,7 @@ object form_consulta_padrao: Tform_consulta_padrao
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 3
-      object dbg_registros: TDBGrid
+      object gridRegister: TDBGrid
         AlignWithMargins = True
         Left = 20
         Top = 41
@@ -302,12 +308,12 @@ object form_consulta_padrao: Tform_consulta_padrao
         TitleFont.Height = -13
         TitleFont.Name = 'Segoe UI Semibold'
         TitleFont.Style = []
-        OnDrawColumnCell = dbg_registrosDrawColumnCell
-        OnDblClick = dbg_registrosDblClick
-        OnKeyDown = dbg_registrosKeyDown
-        OnTitleClick = dbg_registrosTitleClick
+        OnDrawColumnCell = gridRegisterDrawColumnCell
+        OnDblClick = gridRegisterDblClick
+        OnKeyDown = gridRegisterKeyDown
+        OnTitleClick = gridRegisterTitleClick
       end
-      object pnl_resultado: TPanel
+      object pnlResult: TPanel
         AlignWithMargins = True
         Left = 20
         Top = 0
@@ -322,7 +328,7 @@ object form_consulta_padrao: Tform_consulta_padrao
         Color = 8404992
         ParentBackground = False
         TabOrder = 1
-        object lbl_resultado: TLabel
+        object lblResult: TLabel
           AlignWithMargins = True
           Left = 15
           Top = 0
@@ -349,5 +355,16 @@ object form_consulta_padrao: Tform_consulta_padrao
   object ds_consulta: TDataSource
     Left = 584
     Top = 9
+  end
+  object TimerArrumaGrid: TTimer
+    Enabled = False
+    Interval = 10
+    OnTimer = TimerArrumaGridTimer
+    Left = 728
+    Top = 400
+  end
+  object FormLinker: TFormLinker
+    Left = 728
+    Top = 328
   end
 end

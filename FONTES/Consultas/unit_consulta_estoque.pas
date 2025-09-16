@@ -5,14 +5,16 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, unit_consulta_padrao, Data.DB,
-  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, gplQry;
+  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
+  FireDAC.Comp.Client, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
+  uFormLinker;
 
 type
-  Tform_consulta_estoque = class(Tform_consulta_padrao)
-    procedure FormCreate(Sender: TObject);
+  Tform_consulta_estoque = class(TfrmBaseSearch)
   private
     { Private declarations }
-    qryEstoque: TgpQry;
   public
     { Public declarations }
   end;
@@ -24,22 +26,5 @@ implementation
 
 {$R *.dfm}
 
-uses unit_conexao, unit_conexao_tabelas;
-
-procedure Tform_consulta_estoque.FormCreate(Sender: TObject);
-begin
-  inherited;
-with form_conexao_tabelas.qryConsultaEstoque do//alteração pra evitar caso mude o sql
-begin                                          //pela tela de condicional
-  close;
-  sql.Clear;
-  sql.Add('select * from estoque');
-  open;
-end;
-
-
-
-
-end;
 
 end.

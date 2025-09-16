@@ -1,41 +1,44 @@
 inherited form_consulta_produtos: Tform_consulta_produtos
-  PixelsPerInch = 96
+  StyleElements = [seFont, seClient, seBorder]
   TextHeight = 13
-  inherited pnl_principal: TPanel
-    inherited pnl_cabecalho: TPanel
-      ExplicitWidth = 833
-      inherited lbl_titulo: TLabel
-        Width = 219
-        Height = 56
-        Caption = 'CONSULTA PRODUTOS'
-        ExplicitWidth = 219
+  inherited pnlMain: TPanel
+    StyleElements = [seFont, seClient, seBorder]
+    inherited pnlTop: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+      inherited lblTitle: TLabel
+        StyleElements = [seFont, seClient, seBorder]
       end
-      inherited pnl_separa_topo: TPanel
-        ExplicitWidth = 833
+      inherited pnlSeparator: TPanel
+        StyleElements = [seFont, seClient, seBorder]
       end
     end
-    inherited pnl_Rodape: TPanel
-      ExplicitTop = 478
-      ExplicitWidth = 833
-      inherited lbl_duplo_clique: TLabel
-        Height = 38
+    inherited pnlBottom: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+      inherited lblDoubleClick: TLabel
+        StyleElements = [seFont, seClient, seBorder]
       end
-      inherited lbl_excluir: TLabel
-        Height = 38
+      inherited lblDelete: TLabel
+        StyleElements = [seFont, seClient, seBorder]
       end
     end
-    inherited pnl_pesquisa: TPanel
-      inherited edt_consulta: TEdit
-        ExplicitWidth = 643
+    inherited pnlSearch: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+      inherited lblText: TLabel
+        StyleElements = [seFont, seClient, seBorder]
       end
-      inherited btn_inserir: TButton
-        ExplicitLeft = 684
+      inherited edtSearch: TEdit
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited btnInsert: TPanel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited btnReports: TPanel
+        StyleElements = [seFont, seClient, seBorder]
       end
     end
     inherited pnl_dbgrid: TPanel
-      ExplicitWidth = 833
-      ExplicitHeight = 349
-      inherited dbg_registros: TDBGrid
+      StyleElements = [seFont, seClient, seBorder]
+      inherited gridRegister: TDBGrid
         Columns = <
           item
             Expanded = False
@@ -49,24 +52,28 @@ inherited form_consulta_produtos: Tform_consulta_produtos
           end
           item
             Expanded = False
-            FieldName = 'preco'
+            FieldName = 'tamanho'
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'tamanho'
+            FieldName = 'preco'
             Visible = True
           end>
       end
-      inherited pnl_resultado: TPanel
-        ExplicitWidth = 793
-        inherited lbl_resultado: TLabel
-          Height = 41
+      inherited pnlResult: TPanel
+        StyleElements = [seFont, seClient, seBorder]
+        inherited lblResult: TLabel
+          StyleElements = [seFont, seClient, seBorder]
         end
       end
     end
   end
   inherited ds_consulta: TDataSource
     DataSet = form_conexao_tabelas.qryConsultaProdutos
+  end
+  inherited FormLinker: TFormLinker
+    ObjectClassName = 'TProduto'
+    RegisterFormName = 'Tform_cadastro_produtos'
   end
 end

@@ -2,69 +2,78 @@ inherited form_consulta_estoque: Tform_consulta_estoque
   Caption = 'form_consulta_estoque'
   ClientHeight = 624
   ClientWidth = 869
+  StyleElements = [seFont, seClient, seBorder]
   ExplicitWidth = 869
   ExplicitHeight = 624
-  PixelsPerInch = 96
   TextHeight = 13
-  inherited pnl_principal: TPanel
+  inherited pnlMain: TPanel
     Width = 869
     Height = 624
+    StyleElements = [seFont, seClient, seBorder]
     ExplicitWidth = 869
     ExplicitHeight = 624
-    inherited pnl_cabecalho: TPanel
+    inherited pnlTop: TPanel
       Width = 869
+      StyleElements = [seFont, seClient, seBorder]
       ExplicitWidth = 869
-      inherited btn_fechar: TSpeedButton
-        Left = 799
-        ExplicitLeft = 799
+      inherited btnClose: TSpeedButton
+        Left = 796
+        ExplicitLeft = 796
       end
-      inherited lbl_titulo: TLabel
-        Width = 201
-        Height = 56
-        Caption = 'CONSULTA ESTOQUE'
-        ExplicitWidth = 201
+      inherited lblTitle: TLabel
+        StyleElements = [seFont, seClient, seBorder]
       end
-      inherited pnl_separa_topo: TPanel
+      inherited pnlSeparator: TPanel
         Width = 869
+        StyleElements = [seFont, seClient, seBorder]
         ExplicitWidth = 869
       end
     end
-    inherited pnl_Rodape: TPanel
+    inherited pnlBottom: TPanel
       Top = 586
       Width = 869
+      StyleElements = [seFont, seClient, seBorder]
       ExplicitTop = 586
       ExplicitWidth = 869
-      inherited lbl_duplo_clique: TLabel
+      inherited lblDoubleClick: TLabel
         Left = 574
-        Height = 38
+        StyleElements = [seFont, seClient, seBorder]
         ExplicitLeft = 574
       end
-      inherited lbl_excluir: TLabel
-        Height = 38
+      inherited lblDelete: TLabel
+        StyleElements = [seFont, seClient, seBorder]
       end
     end
-    inherited pnl_pesquisa: TPanel
+    inherited pnlSearch: TPanel
       Width = 869
+      StyleElements = [seFont, seClient, seBorder]
       ExplicitWidth = 869
-      inherited edt_consulta: TEdit
+      inherited lblText: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited edtSearch: TEdit
         Width = 578
+        StyleElements = [seFont, seClient, seBorder]
         ExplicitWidth = 578
       end
-      inherited btn_inserir: TButton
+      inherited btnInsert: TPanel
         Left = 720
+        StyleElements = [seFont, seClient, seBorder]
         ExplicitLeft = 720
       end
-      inherited Button1: TButton
+      inherited btnReports: TPanel
         Left = 603
+        StyleElements = [seFont, seClient, seBorder]
         ExplicitLeft = 603
       end
     end
     inherited pnl_dbgrid: TPanel
       Width = 869
       Height = 457
+      StyleElements = [seFont, seClient, seBorder]
       ExplicitWidth = 869
       ExplicitHeight = 457
-      inherited dbg_registros: TDBGrid
+      inherited gridRegister: TDBGrid
         Width = 829
         Height = 406
         Columns = <
@@ -76,27 +85,85 @@ inherited form_consulta_estoque: Tform_consulta_estoque
           item
             Expanded = False
             FieldName = 'produto_id'
-            Width = 64
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'nome_produto'
-            Width = 64
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'quantidade_em_estoque'
-            Width = 64
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'quantidade_minima'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'preco_custo'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'preco_venda'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'lote'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'data_entrada'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'data_validade'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'fornecedor'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'localizacao'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'status'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'observacoes'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'data_cadastro'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'data_atualizacao'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'usuario_cadastro'
             Visible = True
           end>
       end
-      inherited pnl_resultado: TPanel
+      inherited pnlResult: TPanel
         Width = 829
+        StyleElements = [seFont, seClient, seBorder]
         ExplicitWidth = 829
-        inherited lbl_resultado: TLabel
-          Height = 41
+        inherited lblResult: TLabel
+          StyleElements = [seFont, seClient, seBorder]
         end
       end
     end
@@ -104,5 +171,9 @@ inherited form_consulta_estoque: Tform_consulta_estoque
   inherited ds_consulta: TDataSource
     DataSet = form_conexao_tabelas.qryConsultaEstoque
     Left = 392
+  end
+  inherited FormLinker: TFormLinker
+    ObjectClassName = 'TEstoque'
+    RegisterFormName = 'Tform_cadastro_estoque'
   end
 end

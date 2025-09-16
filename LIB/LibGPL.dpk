@@ -13,8 +13,8 @@ package LibGPL;
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
 {$OPTIMIZATION OFF}
-{$OVERFLOWCHECKS OFF}
-{$RANGECHECKS OFF}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
 {$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
 {$STACKFRAMES ON}
@@ -29,18 +29,9 @@ package LibGPL;
 
 requires
   rtl,
-  dbrtl,
-  FireDAC,
-  FireDACCommonDriver,
-  FireDACCommon,
-  xmlrtl,
   vcl;
 
 contains
-  gplQry in 'gplQry.pas',
-  gplEdit in 'gplEdit.pas',
-  gplForm in 'gplForm.pas',
-  gplCombo in 'gplCombo.pas',
-  class_auxi in '..\CLASSES\class_auxi.pas';
+  uFormLinker in 'uFormLinker.pas';
 
 end.

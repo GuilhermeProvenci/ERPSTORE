@@ -59,8 +59,7 @@ uses unit_principal, unit_conexao, unit_funcoes;
 
 procedure Tform_configuracao_servidor.btn_fecharClick(Sender: TObject);
 begin
-
-  form_configuracao_servidor.close; //fecha o formulario
+  Self.close;
 
   if form_principal = nil then //se o form principal nao existir
     Application.Terminate;
@@ -69,7 +68,7 @@ end;
 
 procedure Tform_configuracao_servidor.btn_salvarClick(Sender: TObject);
 begin
-  ValidarCampoObrigatorios ( form_configuracao_servidor );
+  ValidarCampoObrigatorios ( Self );
 
 
   //salva as configuracoes no arquivo ini

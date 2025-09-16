@@ -38,7 +38,7 @@ object form_login: Tform_login
       object lbl_titulo: TLabel
         Left = 0
         Top = 517
-        Width = 413
+        Width = 102
         Height = 30
         Align = alBottom
         Alignment = taCenter
@@ -49,12 +49,11 @@ object form_login: Tform_login
         Font.Name = 'Segoe UI'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitWidth = 102
       end
       object lbl_versao: TLabel
         Left = 0
         Top = 547
-        Width = 413
+        Width = 60
         Height = 17
         Align = alBottom
         Alignment = taCenter
@@ -65,12 +64,11 @@ object form_login: Tform_login
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        ExplicitWidth = 60
       end
       object lbl_bemvindo: TLabel
         Left = 0
         Top = 0
-        Width = 413
+        Width = 248
         Height = 30
         Align = alTop
         Alignment = taCenter
@@ -81,7 +79,6 @@ object form_login: Tform_login
         Font.Name = 'Segoe UI'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitWidth = 248
       end
     end
   end
@@ -254,7 +251,7 @@ object form_login: Tform_login
           Left = 10
           Top = 3
           Width = 32
-          Height = 35
+          Height = 32
           Margins.Left = 10
           Align = alLeft
           AutoSize = True
@@ -281,7 +278,6 @@ object form_login: Tform_login
           OnClick = pnl_botao_entrarClick
           OnMouseEnter = lbl_botao_entrarMouseEnter
           OnMouseLeave = lbl_botao_entrarMouseLeave
-          ExplicitHeight = 32
         end
         object lbl_botao_entrar: TLabel
           Tag = 7
@@ -313,7 +309,7 @@ object form_login: Tform_login
         object lbl_login: TLabel
           Left = 0
           Top = 0
-          Width = 249
+          Width = 33
           Height = 13
           Align = alTop
           Caption = 'LOGIN'
@@ -323,7 +319,6 @@ object form_login: Tform_login
           Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
-          ExplicitWidth = 33
         end
         object edt_login: TEdit
           AlignWithMargins = True
@@ -369,7 +364,7 @@ object form_login: Tform_login
         object lbl_senha: TLabel
           Left = 0
           Top = 0
-          Width = 249
+          Width = 35
           Height = 13
           Align = alTop
           Caption = 'SENHA'
@@ -379,7 +374,6 @@ object form_login: Tform_login
           Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
-          ExplicitWidth = 35
         end
         object edt_senha: TEdit
           AlignWithMargins = True

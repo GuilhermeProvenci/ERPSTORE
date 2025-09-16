@@ -3,251 +3,299 @@ unit unit_cadastro_padrao;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls,
+  Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls, uBaseInterfaces, System.Rtti,
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, gplForm, gplEdit, class_auxi, gplCombo, gplQry,
-  class_gplObject;
+  FireDAC.Comp.Client, uBaseClass;
 
 type
-  Tform_cadastro_padrao = class(TgpForm)
-    pnl_fundo: TPanel;
-    lbl_informacao: TLabel;
-    lbl_CODIGO: TLabel;
-    lbl_informacao2: TLabel;
-    lbl_informacao3: TLabel;
-    lbl_informacao4: TLabel;
-    pnl_topo: TPanel;
-    lbl_titulo: TLabel;
-    btn_fechar: TSpeedButton;
-    pnl_separador_topo: TPanel;
-    pnl_salvar: TPanel;
-    Image1: TImage;
-    qryInsert: TFDQuery;
-    edt_nome: TgpEdit;
-    edt_3: TgpEdit;
-    edt_4: TgpEdit;
-    edt_id: TgpEdit;
-    qryGene: TgpQry;
-    DataSourceGene: TDataSource;
-    Button1: TButton;
-    procedure btn_fecharClick(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure pnl_salvarClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure FormShow(Sender: TObject);
-    procedure CarregarCampos(ID: Integer; Table: string);
-    procedure SetClass(const NomeClasse: string);
-    procedure InstanceClass;
-  private
-    { Private declarations }
-  protected
-    FClasseType: TClass;
-    FClasseInstance: TgplObject;
+  TFormMode = (fmInsert, fmEdit);
 
+  TfrmBaseRegister = class(TForm)
+    pnlTop: TPanel;
+    lblTitle: TLabel;
+    btnClose: TSpeedButton;
+    pnlMain: TPanel;
+    btnSave: TImage;
+    pnlSeparator: TPanel;
+    procedure btnCloseClick(Sender: TObject);
+    procedure btnSaveClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    FObjectInstance: IBaseRegister;
+    FFormMode: TFormMode;
+    FObjectID: Integer;
+    procedure SaveObject;
+    procedure LoadObjectToForm;
+    procedure BindControlsToForm;
+    function ValidateForm: Boolean; virtual;
   public
-    { Public declarations }
-    NomeForm: string;
-    NomeTabela: string;
-    NomeClass : String;
+    // MÉTODO REMOVIDO - não precisa mais do método de classe
+    // O OpenRegisterForm agora está no TfrmBaseSearch
+
+    procedure OpenObject(AObjectInstance: IBaseRegister; AMode: TFormMode = fmInsert; AObjectID: Integer = 0);
+    procedure SetObjectInstance(AInstance: IBaseRegister);
+    function GetObjectInstance: IBaseRegister;
+    function GetFormMode: TFormMode;
+    property FormMode: TFormMode read FFormMode write FFormMode;
   end;
 
 var
-  form_cadastro_padrao: Tform_cadastro_padrao;
-
+  frmBaseRegister: TfrmBaseRegister;
 
 implementation
 
 {$R *.dfm}
 
-uses unit_mensagem, unit_funcoes, unit_conexao, unit_conexao_tabelas,
-  Vcl.ComCtrls, System.Rtti;
+uses unit_funcoes, unit_conexao, Vcl.DBCtrls;
 
-
-procedure Tform_cadastro_padrao.btn_fecharClick(Sender: TObject);
+// ========================================
+// MÉTODO OPENOBJECT - SEM SHOWMODAL
+// ========================================
+procedure TfrmBaseRegister.OpenObject(AObjectInstance: IBaseRegister; AMode: TFormMode = fmInsert; AObjectID: Integer = 0);
 begin
- if CriarMensagem('CONFIRMACAO', 'Tem certeza que deseja Sair sem salvar?') = True then
- begin
- qryInsert.close;
- self.Close;
- Self.LogInfo('Fechando Tela: ' + NomeTabela);
- end;
+  FObjectInstance := AObjectInstance;
+  FFormMode := AMode;
+  FObjectID := AObjectID;
+
+  // Atualiza o título baseado no modo
+  case FFormMode of
+    fmInsert: lblTitle.Caption := lblTitle.Caption + ' - NOVO';
+    fmEdit:   lblTitle.Caption := lblTitle.Caption + ' - EDIÇÃO';
+  end;
+
+  BindControlsToForm;
+
+  // Só carrega dados se estiver em modo de edição
+  if FFormMode = fmEdit then
+    LoadObjectToForm;
+
+  // ShowModal será chamado pelo TfrmBaseSearch
 end;
 
-procedure Tform_cadastro_padrao.CarregarCampos(ID: Integer; Table: string);
+// ========================================
+// MÉTODOS DE BINDING E CARREGAMENTO (mantidos)
+// ========================================
+procedure TfrmBaseRegister.BindControlsToForm;
 var
-  i: Integer;
-  fieldName : string;
-  Contexto: TRttiContext;
-  Tipo: TRttiType;
-  Propriedade: TRttiProperty;
-  Componente: TComponent;
+  ctx: TRttiContext;
+  typ: TRttiType;
+  prop: TRttiProperty;
+  ctrl: TComponent;
+  obj: TObject;
 begin
-  qryGene.SQLExec('SELECT * FROM ' + Table + ' WHERE ID = :1', [ID]);
-
-  Contexto := TRttiContext.Create;
-  try
-    qryGene.First;
-    while not qryGene.Eof do
-    begin
-      for i := 0 to Self.ComponentCount - 1 do
-      begin
-        Componente := Self.Components[i];
-        if (Componente.Tag = 99) then
-        begin
-          Tipo := Contexto.GetType(Componente.ClassType);
-
-          Propriedade := Tipo.GetProperty('Conf.TableFieldName');
-          if Assigned(Propriedade) then
-          begin
-            fieldName := Propriedade.GetValue(Componente).AsString;
-            if Assigned(qryGene.FindField(fieldName)) then
-            begin
-              if (Componente is TgpEdit) then
-                TgpEdit(Componente).Text := qryGene.FieldByName(fieldName).AsString
-              else if (Componente is TgpCombo) then
-                TgpCombo(Componente).Text := qryGene.FieldByName(fieldName).AsString
-              else if (Componente is TDateTimePicker) then
-                TDateTimePicker(Componente).Date := qryGene.FieldByName(fieldName).AsDateTime;
-            end;
-          end;
-        end;
-      end;
-      qryGene.Next;
-    end;
-  finally
-    Contexto.Free;
-  end;
-end;
-
-
-
-procedure Tform_cadastro_padrao.FormClose(Sender: TObject;
-  var Action: TCloseAction);
-begin
-//FreeAndNil(Self);
-
- if Assigned(FClasseInstance) then
- FreeAndNil(FClasseInstance);
-
- action := caFree;
- self := Nil;
-end;
-
-procedure Tform_cadastro_padrao.FormCreate(Sender: TObject);
-begin
-  NomeForm := Self.Name;
-  Delete(NomeForm, 1, Length('form_cadastro_')); // Remove 'form_cadastro_'
-  NomeClass:= 'T' + NomeForm;
-  NomeTabela := NomeForm; // Usar o nome que você deu para o from como
-                          // nome da tabela (nomear as tabelas seguindo
-                          // esse padrão
-  limpaEDit(Self);
-
-  SetClass(NomeClass);
-  InstanceClass;
-  Self.LogInfo('Tela de ' + NomeTabela + 'criada com sucesso');
-end;
-
-procedure Tform_cadastro_padrao.FormShow(Sender: TObject);
-var
-  Instancia: TObject;
-begin
-  case FormMode of
-    fmView:
-    begin
-      CarregarCampos(edt_id.Conf.ID, NomeTabela);
-      pnl_salvar.Enabled := false;
-    end;
-
-    fmEdit:
-    begin
-        lbl_titulo.Caption := 'EDIÇÃO DE ' + UpperCase(NomeTabela);
-        CarregarCampos(edt_id.Conf.ID, NomeTabela);
-        FClasseInstance.CarregarCampos(edt_id.Conf.ID.ToString);
-        //CarregarCamposClasse(self, FClasseInstance);
-    end;
-
-    fmInsert:
-    begin
-        maxID(NomeTabela, edt_id);
-        lbl_titulo.Caption := 'CADASTRO DE ' + UpperCase(NomeTabela);
-     end;
-  end;
-end;
-
-
-procedure Tform_cadastro_padrao.pnl_salvarClick(Sender: TObject);
-begin
- ValidarCampoObrigatorios(Self);
-
-  case FormMode of
-    fmView:
-      begin
-        //
-      end;
-    fmEdit:
-      begin
-        ChamarUpdateGenerico(NomeTabela, Self);
-      end;
-    fmInsert:
-      begin
-        CarregarCamposClasse(self, FClasseInstance);
-        FClasseInstance.SaveObject;
-        //ChamarInsertGenerico(NomeTabela, Self);
-        LimpaEdit(Self);
-        MaxID(NomeTabela, edt_id);
-      end;
-  end;
-
-  CriarMensagem('aviso', 'Registro Salvo com sucesso');
-  Self.LogInfo('Inserção na Tabela de ' + NomeTabela + ' realizada com sucesso');
-  self.Close;
-end;
-
-procedure Tform_cadastro_padrao.SetClass(const NomeClasse: string);
-begin
-  FClasseType := GetClass(NomeClasse);
-  if FClasseType = nil then
-  begin
-    raise Exception.CreateFmt('Classe %s não encontrada.', [NomeClasse]);
-    Self.LogError('Falha no momento de Criar a Classe:' + NomeTabela);
-  end;
-end;
-
-
-procedure Tform_cadastro_padrao.InstanceClass; //talvez passar para a unit_funcoes
-var
-  RttiContext: TRttiContext;
-  RttiType: TRttiType;
-  Method: TRttiMethod;
-  Instance: TValue;
-begin
-  if FClasseType = nil then
+  if FObjectInstance = nil then
     Exit;
 
-  RttiContext := TRttiContext.Create;
+  obj := FObjectInstance as TObject;
+  ctx := TRttiContext.Create;
   try
-    RttiType := RttiContext.GetType(FClasseType);
-    Method := RttiType.GetMethod('Create');
-    if not Assigned(Method) then
-      Exit;
+    typ := ctx.GetType(obj.ClassType);
+    for prop in typ.GetProperties do
+    begin
+      // Bind TEdit
+      ctrl := FindComponent('edt' + prop.Name);
+      if Assigned(ctrl) and (ctrl is TEdit) then
+        TEdit(ctrl).Tag := 1;
 
-    if Length(Method.GetParameters) = 0 then
-      Instance := Method.Invoke(RttiType.AsInstance.MetaclassType, [])
-    else
-      Instance := Method.Invoke(RttiType.AsInstance.MetaclassType, [Self]);
-
-     if Instance.IsInstanceOf(TgplObject) then
-      FClasseInstance := TgplObject(Instance.AsObject)
-     else
-      raise Exception.Create('Não foi possível instanciar Classe da Tela');
+      // Bind qualquer ComboBox (TComboBox, TDBComboBox, TDBLookupComboBox, etc.)
+      ctrl := FindComponent('cmb' + prop.Name);
+      if Assigned(ctrl) and ctrl.InheritsFrom(TCustomComboBox) then
+        TCustomComboBox(ctrl).Tag := 1;
+    end;
   finally
-    RttiContext.Free;
+    ctx.Free;
   end;
 end;
 
+procedure TfrmBaseRegister.LoadObjectToForm;
+var
+  ctx: TRttiContext;
+  typ: TRttiType;
+  prop: TRttiProperty;
+  ctrl: TWinControl;
+  cmbCtrl: TComboBox;
+  obj: TObject;
+  propValue: string;
+begin
+  if FObjectInstance = nil then Exit;
+
+  obj := FObjectInstance as TObject;
+  ctx := TRttiContext.Create;
+  try
+    typ := ctx.GetType(obj.ClassType);
+    for prop in typ.GetProperties do
+    begin
+      propValue := prop.GetValue(obj).ToString;
+
+      // Load TEdit
+      ctrl := FindComponent('edt' + prop.Name) as TWinControl;
+      if Assigned(ctrl) and (ctrl is TEdit) then
+        TEdit(ctrl).Text := propValue;
+
+      // Load TComboBox
+      cmbCtrl := FindComponent('cmb' + prop.Name) as TComboBox;
+      if Assigned(cmbCtrl) then
+        cmbCtrl.ItemIndex := cmbCtrl.Items.IndexOf(propValue);
+    end;
+  finally
+    ctx.Free;
+  end;
+end;
+
+function TfrmBaseRegister.ValidateForm: Boolean;
+begin
+  Result := True;
+
+  case FFormMode of
+    fmInsert:
+    begin
+      if not CriarMensagem('CONFIRMACAO', 'Confirma a inclusão do novo registro?') then
+        Result := False;
+    end;
+    fmEdit:
+    begin
+      if not CriarMensagem('CONFIRMACAO', 'Confirma as alterações realizadas?') then
+        Result := False;
+    end;
+  end;
+end;
+
+procedure TfrmBaseRegister.SaveObject;
+var
+  ctx: TRttiContext;
+  typ: TRttiType;
+  prop: TRttiProperty;
+  ctrl: TComponent;
+  obj: TObject;
+  val: TValue;
+  typKind: TTypeKind;
+  s: string;
+  v: Variant;
+begin
+  if FObjectInstance = nil then Exit;
+  if not ValidateForm then Exit;
+
+  obj := FObjectInstance as TObject;
+  ctx := TRttiContext.Create;
+  try
+    typ := ctx.GetType(obj.ClassType);
+
+    for prop in typ.GetProperties do
+    begin
+      // Qualquer Edit (TEdit, TLabeledEdit, TMaskEdit, etc.)
+      ctrl := FindComponent('edt' + prop.Name);
+      if Assigned(ctrl) and ctrl.InheritsFrom(TCustomEdit) then
+      begin
+        s := TCustomEdit(ctrl).Text;
+        typKind := prop.PropertyType.TypeKind;
+
+        case typKind of
+          tkUString, tkString, tkLString, tkWString: val := s;
+          tkInteger: val := StrToIntDef(s, 0);
+          tkFloat: val := StrToFloatDef(s, 0);
+          tkEnumeration:
+            if prop.PropertyType.Handle = TypeInfo(Boolean) then
+              val := SameText(s, 'true')
+            else
+              Continue;
+          else Continue;
+        end;
+
+        prop.SetValue(obj, val);
+      end;
+
+      // Qualquer ComboBox (TComboBox, TDBComboBox, TDBLookupComboBox, etc.)
+      ctrl := FindComponent('cmb' + prop.Name);
+      if Assigned(ctrl) then
+      begin
+        if ctrl.InheritsFrom(TDBLookupComboBox) then
+        begin
+          v := TDBLookupComboBox(ctrl).KeyValue; // valor real do lookup
+          val := TValue.FromVariant(v);
+        end
+        else if ctrl.InheritsFrom(TCustomComboBox) then
+        begin
+          if TCustomComboBox(ctrl).ItemIndex >= 0 then
+            s := TCustomComboBox(ctrl).Items[TCustomComboBox(ctrl).ItemIndex]
+          else
+            s := '';
+
+          typKind := prop.PropertyType.TypeKind;
+          case typKind of
+            tkUString, tkString, tkLString, tkWString: val := s;
+            tkInteger: val := StrToIntDef(s, 0);
+            tkFloat: val := StrToFloatDef(s, 0);
+            tkEnumeration:
+              if prop.PropertyType.Handle = TypeInfo(Boolean) then
+                val := SameText(s, 'true')
+              else
+                Continue;
+            else Continue;
+          end;
+        end
+        else
+          Continue;
+
+        prop.SetValue(obj, val);
+      end;
+    end;
+
+    FObjectInstance.Save;
+
+    case FFormMode of
+      fmInsert: CriarMensagem('AVISO', 'Registro incluído com sucesso');
+      fmEdit:   CriarMensagem('AVISO', 'Registro alterado com sucesso');
+    end;
+
+    Self.Close;
+
+  finally
+    ctx.Free;
+  end;
+end;
+
+
+procedure TfrmBaseRegister.SetObjectInstance(AInstance: IBaseRegister);
+begin
+  FObjectInstance := AInstance;
+end;
+
+procedure TfrmBaseRegister.btnCloseClick(Sender: TObject);
+var
+  mensagem: string;
+begin
+  case FFormMode of
+    fmInsert: mensagem := 'Tem certeza que deseja sair sem incluir o registro?';
+    fmEdit:   mensagem := 'Tem certeza que deseja sair sem salvar as alterações?';
+  end;
+
+  if CriarMensagem('CONFIRMACAO', mensagem) = True then
+    Self.Close;
+end;
+
+procedure TfrmBaseRegister.btnSaveClick(Sender: TObject);
+begin
+  SaveObject;
+end;
+
+procedure TfrmBaseRegister.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  FObjectInstance := nil;
+  Action := caHide;
+end;
+
+function TfrmBaseRegister.GetObjectInstance: IBaseRegister;
+begin
+  Result := FObjectInstance;
+end;
+
+function TfrmBaseRegister.GetFormMode: TFormMode;
+begin
+  Result := FFormMode;
+end;
 
 end.
