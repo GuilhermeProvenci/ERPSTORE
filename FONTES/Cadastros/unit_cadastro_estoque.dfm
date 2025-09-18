@@ -53,7 +53,7 @@ inherited form_cadastro_estoque: Tform_cadastro_estoque
         Width = 674
         Height = 17
         Align = alTop
-        Caption = #55357#56507' PRODUTO'
+        Caption = #55356#57335#65039' PRODUTO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 8404992
         Font.Height = -13
@@ -108,7 +108,7 @@ inherited form_cadastro_estoque: Tform_cadastro_estoque
         Width = 216
         Height = 17
         Align = alTop
-        Caption = #55357#56621' QUANTIDADE'
+        Caption = #55357#56550' QUANTIDADE'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 8404992
         Font.Height = -13
@@ -117,7 +117,7 @@ inherited form_cadastro_estoque: Tform_cadastro_estoque
         ParentFont = False
         ExplicitWidth = 109
       end
-      object edtQuantidade: TEdit
+      object edtQuantidade_em_estoque: TEdit
         AlignWithMargins = True
         Left = 0
         Top = 32
@@ -164,16 +164,16 @@ inherited form_cadastro_estoque: Tform_cadastro_estoque
         Width = 216
         Height = 17
         Align = alTop
-        Caption = #65533#65533' PRE'#199'O DE CUSTO'
+        Caption = #55357#56496' PRE'#199'O DE CUSTO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 8404992
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitWidth = 136
+        ExplicitWidth = 128
       end
-      object edtPrecoCusto: TEdit
+      object edtPreco_Custo: TEdit
         AlignWithMargins = True
         Left = 0
         Top = 32
@@ -220,16 +220,16 @@ inherited form_cadastro_estoque: Tform_cadastro_estoque
         Width = 216
         Height = 17
         Align = alTop
-        Caption = #55357#56464' DATA DE ENTRADA'
+        Caption = #55357#56517' DATA DE ENTRADA'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 8404992
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitWidth = 143
+        ExplicitWidth = 142
       end
-      object dtpDataEntrada: TDateTimePicker
+      object dtpData_Entrada: TDateTimePicker
         AlignWithMargins = True
         Left = 0
         Top = 32
@@ -277,14 +277,14 @@ inherited form_cadastro_estoque: Tform_cadastro_estoque
         Width = 332
         Height = 17
         Align = alTop
-        Caption = #55357#57115' LOTE'
+        Caption = #55357#56598' LOTE'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 8404992
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitWidth = 45
+        ExplicitWidth = 54
       end
       object edtLote: TEdit
         AlignWithMargins = True
@@ -334,16 +334,16 @@ inherited form_cadastro_estoque: Tform_cadastro_estoque
         Width = 332
         Height = 17
         Align = alTop
-        Caption = #55357#56467' DATA DE VALIDADE'
+        Caption = #9203' DATA DE VALIDADE'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 8404992
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitWidth = 146
+        ExplicitWidth = 141
       end
-      object dtpDataValidade: TDateTimePicker
+      object dtpData_Validade: TDateTimePicker
         AlignWithMargins = True
         Left = 0
         Top = 32
@@ -379,7 +379,7 @@ inherited form_cadastro_estoque: Tform_cadastro_estoque
     end
   end
   object dsEstoque: TDataSource
-    Left = 608
-    Top = 368
+    Left = 136
+    Top = 64
   end
 end

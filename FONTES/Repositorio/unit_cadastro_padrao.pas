@@ -50,7 +50,7 @@ implementation
 
 {$R *.dfm}
 
-uses unit_funcoes, unit_conexao, Vcl.DBCtrls;
+uses unit_funcoes, unit_conexao, Vcl.DBCtrls, Variants;
 
 // ========================================
 // MÉTODO OPENOBJECT - SEM SHOWMODAL
@@ -116,10 +116,11 @@ var
   ctx: TRttiContext;
   typ: TRttiType;
   prop: TRttiProperty;
-  ctrl: TWinControl;
-  cmbCtrl: TComboBox;
+  ctrl: TComponent;
   obj: TObject;
-  propValue: string;
+  val: TValue;
+  s: string;
+  dt: TDateTime;
 begin
   if FObjectInstance = nil then Exit;
 
@@ -127,24 +128,50 @@ begin
   ctx := TRttiContext.Create;
   try
     typ := ctx.GetType(obj.ClassType);
+
     for prop in typ.GetProperties do
     begin
-      propValue := prop.GetValue(obj).ToString;
+      val := prop.GetValue(obj);
 
-      // Load TEdit
-      ctrl := FindComponent('edt' + prop.Name) as TWinControl;
-      if Assigned(ctrl) and (ctrl is TEdit) then
-        TEdit(ctrl).Text := propValue;
+      // --- Qualquer Edit (TEdit, TLabeledEdit, TMaskEdit, etc.)
+      ctrl := FindComponent('edt' + prop.Name);
+      if Assigned(ctrl) and ctrl.InheritsFrom(TCustomEdit) then
+      begin
+        TCustomEdit(ctrl).Text := val.ToString;
+        Continue;
+      end;
 
-      // Load TComboBox
-      cmbCtrl := FindComponent('cmb' + prop.Name) as TComboBox;
-      if Assigned(cmbCtrl) then
-        cmbCtrl.ItemIndex := cmbCtrl.Items.IndexOf(propValue);
+      // --- Qualquer ComboBox (TComboBox, TDBComboBox, TDBLookupComboBox, etc.)
+      ctrl := FindComponent('cmb' + prop.Name);
+      if Assigned(ctrl) then
+      begin
+        if ctrl is TDBLookupComboBox then
+          TDBLookupComboBox(ctrl).KeyValue := val.AsVariant
+        else if ctrl is TCustomComboBox then
+          TCustomComboBox(ctrl).ItemIndex := TCustomComboBox(ctrl).Items.IndexOf(val.ToString);
+        Continue;
+      end;
+
+      // --- Qualquer DateTimePicker
+      ctrl := FindComponent('dtp' + prop.Name);
+      if Assigned(ctrl) and (ctrl is TDateTimePicker) then
+      begin
+        if val.IsEmpty then
+          dt := 0
+        else
+          dt := val.AsType<TDateTime>;
+
+        TDateTimePicker(ctrl).Date := dt;
+        Continue;
+      end;
+
     end;
+
   finally
     ctx.Free;
   end;
 end;
+
 
 function TfrmBaseRegister.ValidateForm: Boolean;
 begin
@@ -175,6 +202,7 @@ var
   typKind: TTypeKind;
   s: string;
   v: Variant;
+  b: Boolean;
 begin
   if FObjectInstance = nil then Exit;
   if not ValidateForm then Exit;
@@ -186,52 +214,73 @@ begin
 
     for prop in typ.GetProperties do
     begin
-      // Qualquer Edit (TEdit, TLabeledEdit, TMaskEdit, etc.)
+      typKind := prop.PropertyType.TypeKind;
+
+      // --- Qualquer Edit (TEdit, TLabeledEdit, TMaskEdit, etc.)
       ctrl := FindComponent('edt' + prop.Name);
       if Assigned(ctrl) and ctrl.InheritsFrom(TCustomEdit) then
       begin
         s := TCustomEdit(ctrl).Text;
-        typKind := prop.PropertyType.TypeKind;
-
         case typKind of
-          tkUString, tkString, tkLString, tkWString: val := s;
-          tkInteger: val := StrToIntDef(s, 0);
-          tkFloat: val := StrToFloatDef(s, 0);
+          tkUString, tkString, tkLString, tkWString: val := TValue.From<string>(s);
+          tkInteger: val := TValue.From<Integer>(StrToIntDef(s, 0));
+          tkFloat: val := TValue.From<Double>(StrToFloatDef(s, 0));
           tkEnumeration:
             if prop.PropertyType.Handle = TypeInfo(Boolean) then
-              val := SameText(s, 'true')
+              val := TValue.From<Boolean>(SameText(s, 'true'))
             else
               Continue;
           else Continue;
         end;
-
         prop.SetValue(obj, val);
+        Continue;
       end;
 
-      // Qualquer ComboBox (TComboBox, TDBComboBox, TDBLookupComboBox, etc.)
+      // --- Qualquer ComboBox (TComboBox, TDBComboBox, TDBLookupComboBox, etc.)
       ctrl := FindComponent('cmb' + prop.Name);
       if Assigned(ctrl) then
       begin
-        if ctrl.InheritsFrom(TDBLookupComboBox) then
+        if ctrl is TDBLookupComboBox then
         begin
-          v := TDBLookupComboBox(ctrl).KeyValue; // valor real do lookup
-          val := TValue.FromVariant(v);
+          v := TDBLookupComboBox(ctrl).KeyValue;
+
+          case typKind of
+            tkInteger: val := TValue.From<Integer>(VarAsType(v, varInteger));
+            tkFloat:   val := TValue.From<Double>(VarAsType(v, varDouble));
+            tkUString, tkString, tkLString, tkWString: val := TValue.From<string>(VarToStr(v));
+            tkEnumeration:
+              if prop.PropertyType.Handle = TypeInfo(Boolean) then
+              begin
+                if VarIsNull(v) then
+                  b := False
+                else if VarType(v) = varBoolean then
+                  b := v
+                else if VarType(v) in [varSmallInt, varInteger, varByte, varShortInt] then
+                  b := v <> 0
+                else
+                  b := SameText(VarToStr(v), 'True');
+
+                val := TValue.From<Boolean>(b);
+              end
+              else
+                Continue;
+            else Continue;
+          end;
         end
-        else if ctrl.InheritsFrom(TCustomComboBox) then
+        else if ctrl is TCustomComboBox then
         begin
           if TCustomComboBox(ctrl).ItemIndex >= 0 then
             s := TCustomComboBox(ctrl).Items[TCustomComboBox(ctrl).ItemIndex]
           else
             s := '';
 
-          typKind := prop.PropertyType.TypeKind;
           case typKind of
-            tkUString, tkString, tkLString, tkWString: val := s;
-            tkInteger: val := StrToIntDef(s, 0);
-            tkFloat: val := StrToFloatDef(s, 0);
+            tkUString, tkString, tkLString, tkWString: val := TValue.From<string>(s);
+            tkInteger: val := TValue.From<Integer>(StrToIntDef(s, 0));
+            tkFloat: val := TValue.From<Double>(StrToFloatDef(s, 0));
             tkEnumeration:
               if prop.PropertyType.Handle = TypeInfo(Boolean) then
-                val := SameText(s, 'true')
+                val := TValue.From<Boolean>(SameText(s, 'true'))
               else
                 Continue;
             else Continue;
@@ -241,9 +290,27 @@ begin
           Continue;
 
         prop.SetValue(obj, val);
+        Continue;
       end;
+
+      // --- Qualquer DateTimePicker
+      ctrl := FindComponent('dtp' + prop.Name);
+      if Assigned(ctrl) and (ctrl is TDateTimePicker) then
+      begin
+        case typKind of
+          tkFloat:  // TDateTime é Float
+            val := TValue.From<Double>(TDateTimePicker(ctrl).Date);
+          tkInteger: // se quiser armazenar como número de dias
+            val := TValue.From<Integer>(Trunc(TDateTimePicker(ctrl).Date));
+          else Continue;
+        end;
+        prop.SetValue(obj, val);
+        Continue;
+      end;
+
     end;
 
+    // Salva o objeto
     FObjectInstance.Save;
 
     case FFormMode of
@@ -257,7 +324,6 @@ begin
     ctx.Free;
   end;
 end;
-
 
 procedure TfrmBaseRegister.SetObjectInstance(AInstance: IBaseRegister);
 begin

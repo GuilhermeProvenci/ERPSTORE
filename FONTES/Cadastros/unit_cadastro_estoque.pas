@@ -15,11 +15,11 @@ type
     pnl_barra_produto: TPanel;
     pnl_quantidade: TPanel;
     lbl_quantidade: TLabel;
-    edtQuantidade: TEdit;
+    edtQuantidade_em_estoque: TEdit;
     pnl_barra_quantidade: TPanel;
     pnl_preco_custo: TPanel;
     lbl_preco_custo: TLabel;
-    edtPrecoCusto: TEdit;
+    edtPreco_Custo: TEdit;
     pnl_barra_preco_custo: TPanel;
     pnl_lote: TPanel;
     lbl_lote: TLabel;
@@ -27,11 +27,11 @@ type
     pnl_barra_lote: TPanel;
     pnl_data_entrada: TPanel;
     lbl_data_entrada: TLabel;
-    dtpDataEntrada: TDateTimePicker;
+    dtpData_Entrada: TDateTimePicker;
     pnl_barra_data_entrada: TPanel;
     pnl_validade: TPanel;
     lbl_validade: TLabel;
-    dtpDataValidade: TDateTimePicker;
+    dtpData_Validade: TDateTimePicker;
     pnl_barra_validade: TPanel;
     dsEstoque: TDataSource;
     procedure FormCreate(Sender: TObject);
