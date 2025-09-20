@@ -13,6 +13,7 @@ object frmGeradorClasses: TfrmGeradorClasses
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poScreenCenter
+  OnCreate = FormCreate
   TextHeight = 13
   object pnlMain: TPanel
     Left = 0
@@ -61,6 +62,7 @@ object frmGeradorClasses: TfrmGeradorClasses
         Cursor = crHandPoint
         Anchors = [akTop, akRight]
         Flat = True
+        OnClick = btnCloseClick
       end
       object pnlSeparator: TPanel
         Left = 0
@@ -170,14 +172,14 @@ object frmGeradorClasses: TfrmGeradorClasses
         Width = 418
         Height = 17
         Align = alTop
-        Caption = #55357#56522' TABELAS DISPON'#205'VEIS'
+        Caption = #55357#56460' TABELAS DISPON'#205#141'VEIS'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 8404992
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitWidth = 160
+        ExplicitWidth = 161
       end
       object btnAtualizarTabelas: TSpeedButton
         Left = 288
@@ -245,7 +247,7 @@ object frmGeradorClasses: TfrmGeradorClasses
         Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSelect]
         ParentFont = False
         TabOrder = 0
-        OnClick = gridTabelasClick
+        OnMouseDown = gridTabelasMouseDown
         ColWidths = (
           30
           200
@@ -273,32 +275,71 @@ object frmGeradorClasses: TfrmGeradorClasses
         Width = 418
         Height = 17
         Align = alTop
-        Caption = #55357#56393' PREVIEW DA CLASSE'
+        Caption = #55357#56393' PREVIEW DAS CLASSES'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 8404992
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitWidth = 151
+        ExplicitWidth = 165
       end
-      object memoPreview: TMemo
+      object btnLimparAbas: TSpeedButton
+        Left = 288
+        Top = 5
+        Width = 130
+        Height = 20
+        Cursor = crHandPoint
+        Anchors = [akTop, akRight]
+        Caption = 'LIMPAR PREVIEWS'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 8404992
+        Font.Height = -9
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        OnClick = btnLimparAbasClick
+      end
+      object pgcPreview: TPageControl
         Left = 0
         Top = 32
         Width = 418
         Height = 318
+        ActivePage = tsPreviewVazio
         Anchors = [akLeft, akTop, akRight, akBottom]
-        BorderStyle = bsNone
-        Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 8404992
-        Font.Height = -12
-        Font.Name = 'Courier New'
+        Font.Height = -11
+        Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        ReadOnly = True
-        ScrollBars = ssVertical
         TabOrder = 0
+        object tsPreviewVazio: TTabSheet
+          Caption = 'Selecione uma tabela'
+          object lblInstrucao: TLabel
+            Left = 0
+            Top = 0
+            Width = 410
+            Height = 290
+            Align = alClient
+            Alignment = taCenter
+            Caption = 
+              'Clique em uma tabela na lista '#13#10'para visualizar o preview '#13#10'da c' +
+              'lasse gerada'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clGray
+            Font.Height = -16
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            ParentFont = False
+            Layout = tlCenter
+            WordWrap = True
+            ExplicitLeft = 24
+            ExplicitTop = 24
+            ExplicitWidth = 208
+            ExplicitHeight = 63
+          end
+        end
       end
     end
     object pnl_opcoes: TPanel
@@ -362,8 +403,9 @@ object frmGeradorClasses: TfrmGeradorClasses
   end
   object FDConnection: TFDConnection
     Params.Strings = (
-      'Database=ERPSTORE'
+      'Database=sistema'
       'User_Name=root'
+      'Password='
       'Server=localhost'
       'DriverID=MySQL')
     LoginPrompt = False
