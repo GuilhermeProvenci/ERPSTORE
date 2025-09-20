@@ -163,9 +163,6 @@ object frmGeradorClasses: TfrmGeradorClasses
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 2
-      DesignSize = (
-        418
-        350)
       object lbl_tabelas: TLabel
         Left = 0
         Top = 0
@@ -181,60 +178,12 @@ object frmGeradorClasses: TfrmGeradorClasses
         ParentFont = False
         ExplicitWidth = 161
       end
-      object btnAtualizarTabelas: TSpeedButton
-        Left = 288
-        Top = 313
-        Width = 130
-        Height = 30
-        Cursor = crHandPoint
-        Anchors = [akRight, akBottom]
-        Caption = 'ATUALIZAR LISTA'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = 8404992
-        Font.Height = -11
-        Font.Name = 'Segoe UI'
-        Font.Style = [fsBold]
-        ParentFont = False
-        OnClick = btnAtualizarTabelasClick
-      end
-      object btnSelecionarTodas: TSpeedButton
-        Left = 148
-        Top = 313
-        Width = 130
-        Height = 30
-        Cursor = crHandPoint
-        Anchors = [akRight, akBottom]
-        Caption = 'SELECIONAR TODAS'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = 8404992
-        Font.Height = -11
-        Font.Name = 'Segoe UI'
-        Font.Style = [fsBold]
-        ParentFont = False
-        OnClick = btnSelecionarTodasClick
-      end
-      object btnLimparSelecao: TSpeedButton
-        Left = 8
-        Top = 313
-        Width = 130
-        Height = 30
-        Cursor = crHandPoint
-        Anchors = [akLeft, akBottom]
-        Caption = 'LIMPAR SELE'#199#195'O'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = 8404992
-        Font.Height = -11
-        Font.Name = 'Segoe UI'
-        Font.Style = [fsBold]
-        ParentFont = False
-        OnClick = btnLimparSelecaoClick
-      end
       object gridTabelas: TStringGrid
         Left = 0
-        Top = 32
+        Top = 17
         Width = 418
-        Height = 275
-        Anchors = [akLeft, akTop, akRight, akBottom]
+        Height = 283
+        Align = alClient
         ColCount = 3
         DefaultRowHeight = 25
         FixedCols = 0
@@ -248,6 +197,8 @@ object frmGeradorClasses: TfrmGeradorClasses
         ParentFont = False
         TabOrder = 0
         OnMouseDown = gridTabelasMouseDown
+        ExplicitTop = 32
+        ExplicitHeight = 275
         ColWidths = (
           30
           200
@@ -256,13 +207,79 @@ object frmGeradorClasses: TfrmGeradorClasses
           25
           25)
       end
+      object pnl_opcoes_tabelas: TPanel
+        Left = 0
+        Top = 300
+        Width = 418
+        Height = 50
+        Align = alBottom
+        BevelOuter = bvNone
+        ParentBackground = False
+        TabOrder = 1
+        ExplicitLeft = -434
+        ExplicitWidth = 852
+        DesignSize = (
+          418
+          50)
+        object btnAtualizarTabelas: TSpeedButton
+          Left = 288
+          Top = 13
+          Width = 130
+          Height = 30
+          Cursor = crHandPoint
+          Anchors = [akRight, akBottom]
+          Caption = 'ATUALIZAR LISTA'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 8404992
+          Font.Height = -11
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          OnClick = btnAtualizarTabelasClick
+          ExplicitTop = 313
+        end
+        object btnLimparSelecao: TSpeedButton
+          Left = 8
+          Top = 13
+          Width = 130
+          Height = 30
+          Cursor = crHandPoint
+          Anchors = [akLeft, akBottom]
+          Caption = 'LIMPAR SELE'#199#195'O'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 8404992
+          Font.Height = -11
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          OnClick = btnLimparSelecaoClick
+          ExplicitTop = 313
+        end
+        object btnSelecionarTodas: TSpeedButton
+          Left = 148
+          Top = 13
+          Width = 130
+          Height = 30
+          Cursor = crHandPoint
+          Anchors = [akRight, akBottom]
+          Caption = 'SELECIONAR TODAS'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 8404992
+          Font.Height = -11
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          OnClick = btnSelecionarTodasClick
+          ExplicitTop = 313
+        end
+      end
     end
     object pnl_preview: TPanel
       Left = 458
       Top = 175
       Width = 418
       Height = 350
-      Anchors = [akTop, akRight, akBottom]
+      Anchors = [akLeft, akTop, akRight, akBottom]
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 3
@@ -334,8 +351,6 @@ object frmGeradorClasses: TfrmGeradorClasses
             ParentFont = False
             Layout = tlCenter
             WordWrap = True
-            ExplicitLeft = 24
-            ExplicitTop = 24
             ExplicitWidth = 208
             ExplicitHeight = 63
           end
@@ -368,7 +383,7 @@ object frmGeradorClasses: TfrmGeradorClasses
         ParentFont = False
       end
       object btnEscolherPasta: TSpeedButton
-        Left = 564
+        Left = 566
         Top = 5
         Width = 140
         Height = 40
@@ -392,7 +407,7 @@ object frmGeradorClasses: TfrmGeradorClasses
         Anchors = [akTop, akRight]
         Caption = 'GERAR CLASSES'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
+        Font.Color = 8404992
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = [fsBold]

@@ -54,6 +54,7 @@ type
     qryTabelas: TFDQuery;
     qryCampos: TFDQuery;
     SaveDialog: TSaveDialog;
+    pnl_opcoes_tabelas: TPanel;
     procedure btnCloseClick(Sender: TObject);
     procedure btnConectarClick(Sender: TObject);
     procedure btnAtualizarTabelasClick(Sender: TObject);
@@ -217,7 +218,8 @@ var
 begin
   gridTabelas.MouseToCell(X, Y, Col, Row);
 
-  if (Row = 0) or (Row >= gridTabelas.RowCount) then
+  // Se clicou fora das células válidas, sai
+  if (Row < 1) or (Row >= gridTabelas.RowCount) or (Col < 0) then
     Exit;
 
   NomeTabela := gridTabelas.Cells[1, Row];
