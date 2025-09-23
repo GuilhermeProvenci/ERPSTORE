@@ -10,11 +10,9 @@ object form_mensagem: Tform_mensagem
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poMainFormCenter
   OnKeyDown = FormKeyDown
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 13
   object pnl_fundo: TPanel
     AlignWithMargins = True
@@ -347,7 +345,7 @@ object form_mensagem: Tform_mensagem
         Left = 75
         Top = 0
         Width = 95
-        Height = 49
+        Height = 30
         Cursor = crHandPoint
         Margins.Left = 15
         Margins.Top = 0
@@ -362,7 +360,6 @@ object form_mensagem: Tform_mensagem
         Font.Style = []
         ParentFont = False
         Layout = tlCenter
-        ExplicitHeight = 30
       end
     end
     object btn_sim: TButton

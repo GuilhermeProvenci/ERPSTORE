@@ -8,6 +8,9 @@ uses
   Vcl.ExtCtrls;
 
 type
+  TMensagemTipo = (mtAviso, mtDelete, mtConfirmacao, mtErro);
+
+type
   Tform_mensagem = class(TForm)
     pnl_fundo: TPanel;
     pnl_topo: TPanel;
@@ -24,7 +27,7 @@ type
   private
     { Private declarations }
   public
-    sTipo : String;
+    Tipo: TMensagemTipo;
     { Public declarations }
   end;
 
@@ -39,85 +42,59 @@ uses unit_funcoes;
 
 procedure Tform_mensagem.btn_naoClick(Sender: TObject);
 begin
-  //ARMAZENA A RESPOSTA NAO NA VARIAVEL
-  var_gbl_resposta_msg := false;
-
-    // Define o resultado como "mrNo"
   ModalResult := mrNo;
-
-
-  form_mensagem.Close;
 end;
 
 procedure Tform_mensagem.btn_simClick(Sender: TObject);
 begin
-  //ARMAZENA A RESPOSTA SIM NA VARIAVEL
-  var_gbl_resposta_msg := TRUE;
-
-   // Define o resultado como "mrYes"
   ModalResult := mrYes;
-
-  form_mensagem.Close;
 end;
 
-procedure Tform_mensagem.FormKeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
+procedure Tform_mensagem.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
-  //se pressionou o enter executa o click do botao SIM
-  if key = VK_RETURN then
-    btn_SimClick(Self)
-  else
-  //se pressionou o esc executa o click do botao NAO
-  if key = VK_ESCAPE then
-    btn_naoClick(Self);
-
+  if Key = VK_RETURN then
+    btn_sim.Click
+  else if Key = VK_ESCAPE then
+    btn_nao.Click;
 end;
 
 procedure Tform_mensagem.FormShow(Sender: TObject);
 begin
-  //seleciona o icone e o tipo de mensagem de acordo com o valor da variavel sTipo
-  IF UpperCase ( sTipo )= 'AVISO'  then
-  BEGIN
+  case Tipo of
+    mtAviso:
+      begin
+        lbl_titulo.Caption := 'ATENÇÃO - AVISO';
+        btn_sim.Left := btn_nao.Left;
+        btn_nao.Visible := False;
+        btn_sim.Caption := 'OK (ENTER)';
+        img_icone.Picture.LoadFromFile(ExtractFilePath(Application.ExeName) + '\MENSAGEM\aviso.png');
+      end;
 
-    lbl_titulo.Caption := 'ATENÇÃO - AVISO';
+    mtDelete:
+      begin
+        lbl_titulo.Caption := 'CONFIRMAÇÃO DE EXCLUSÃO NECESSÁRIA';
+        btn_sim.Caption := 'SIM (ENTER)';
+        btn_nao.Visible := True;
+        img_icone.Picture.LoadFromFile(ExtractFilePath(Application.ExeName) + '\MENSAGEM\delete.png');
+      end;
 
-    btn_sim.Left       := btn_nao.Left; //POSICIONA O BOTAO SIM POIS SO ELE IRA APARECER
-    btn_nao.Visible    := false;
+    mtConfirmacao:
+      begin
+        lbl_titulo.Caption := 'CONFIRMAÇÃO NECESSÁRIA';
+        btn_sim.Caption := 'SIM (ENTER)';
+        btn_nao.Visible := True;
+        img_icone.Picture.LoadFromFile(ExtractFilePath(Application.ExeName) + '\MENSAGEM\confirmacao.png');
+      end;
 
-    btn_sim.caption    := 'OK ( ENTER )';
-    img_icone.Picture.LoadFromFile( ExtractFilePath ( Application.ExeName ) + '\MENSAGEM\aviso.png' );
-
-  END ELSE
-  IF UpperCase ( sTipo )= 'DELETE'  then
-  BEGIN
-
-    lbl_titulo.Caption := 'CONFIRMAÇÃO DE EXCLUSÃO NECESSÁRIA';
-    btn_sim.caption    := 'SIM ( ENTER )';
-    btn_nao.Visible    := true;
-    img_icone.Picture.LoadFromFile( ExtractFilePath ( Application.ExeName ) + '\MENSAGEM\delete.png' );
-
-  END ELSE
-  IF UpperCase ( sTipo )= 'CONFIRMACAO'  then
-  BEGIN
-
-    lbl_titulo.Caption := 'CONFIRMAÇÃO NECESSÁRIA';
-    btn_nao.Visible    := TRUE;
-    btn_sim.caption    := 'SIM ( ENTER )';
-    img_icone.Picture.LoadFromFile( ExtractFilePath ( Application.ExeName ) + '\MENSAGEM\confirmacao.png' );
-
-  END ELSE
-  IF UpperCase ( sTipo )= 'ERRO'  then
-  BEGIN
-
-    lbl_titulo.Caption := 'ERRO NA OPERAÇÃO';
-
-    btn_sim.Left       := btn_nao.Left; //POSICIONA O BOTAO SIM POIS SO ELE IRA APARECER
-    btn_nao.Visible    := false;
-
-    btn_sim.caption    := 'OK ( ENTER )';
-    img_icone.Picture.LoadFromFile( ExtractFilePath ( Application.ExeName ) + '\MENSAGEM\erro.png' );
-
-  END;
+    mtErro:
+      begin
+        lbl_titulo.Caption := 'ERRO NA OPERAÇÃO';
+        btn_sim.Left := btn_nao.Left;
+        btn_nao.Visible := False;
+        btn_sim.Caption := 'OK (ENTER)';
+        img_icone.Picture.LoadFromFile(ExtractFilePath(Application.ExeName) + '\MENSAGEM\erro.png');
+      end;
+  end;
 end;
 
 end.

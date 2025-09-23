@@ -274,7 +274,7 @@ object form_configuracao_servidor: Tform_configuracao_servidor
         Left = 15
         Top = 0
         Width = 229
-        Height = 48
+        Height = 21
         Margins.Left = 15
         Margins.Top = 0
         Margins.Right = 0
@@ -288,7 +288,6 @@ object form_configuracao_servidor: Tform_configuracao_servidor
         Font.Style = []
         ParentFont = False
         Layout = tlCenter
-        ExplicitHeight = 21
       end
       object btn_fechar: TSpeedButton
         Left = 698

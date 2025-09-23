@@ -106,7 +106,7 @@ object frmBaseSearch: TfrmBaseSearch
         Left = 15
         Top = 0
         Width = 104
-        Height = 56
+        Height = 30
         Cursor = crHandPoint
         Margins.Left = 15
         Margins.Top = 0
@@ -121,7 +121,6 @@ object frmBaseSearch: TfrmBaseSearch
         Font.Style = []
         ParentFont = False
         Layout = tlCenter
-        ExplicitHeight = 30
       end
       object pnlSeparator: TPanel
         Left = 0
@@ -153,7 +152,7 @@ object frmBaseSearch: TfrmBaseSearch
         Left = 538
         Top = 0
         Width = 285
-        Height = 38
+        Height = 13
         Margins.Left = 0
         Margins.Top = 0
         Margins.Right = 10
@@ -167,14 +166,13 @@ object frmBaseSearch: TfrmBaseSearch
         Font.Style = []
         ParentFont = False
         Layout = tlCenter
-        ExplicitHeight = 13
       end
       object lblDelete: TLabel
         AlignWithMargins = True
         Left = 10
         Top = 0
         Width = 405
-        Height = 38
+        Height = 13
         Margins.Left = 10
         Margins.Top = 0
         Margins.Right = 0
@@ -192,7 +190,6 @@ object frmBaseSearch: TfrmBaseSearch
         ParentColor = False
         ParentFont = False
         Layout = tlCenter
-        ExplicitHeight = 13
       end
     end
     object pnlSearch: TPanel
@@ -333,7 +330,7 @@ object frmBaseSearch: TfrmBaseSearch
           Left = 15
           Top = 0
           Width = 213
-          Height = 41
+          Height = 30
           Margins.Left = 15
           Margins.Top = 0
           Margins.Right = 0
@@ -347,7 +344,6 @@ object frmBaseSearch: TfrmBaseSearch
           Font.Style = []
           ParentFont = False
           Layout = tlCenter
-          ExplicitHeight = 30
         end
       end
     end

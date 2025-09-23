@@ -18,6 +18,7 @@ type
     procedure LoadFromID(AID: Integer);
     procedure Save;
     procedure Delete;
+    procedure Validate;
   end;
 
 type
@@ -35,6 +36,11 @@ end;
 procedure TBaseObject.SetID(AID: Integer);
 begin
   FID := AID;
+end;
+
+procedure TBaseObject.Validate;
+begin
+//
 end;
 
 procedure TBaseObject.LoadFromID(AID: Integer);
@@ -82,6 +88,9 @@ var
   prop: TRttiProperty;
   fields, values, setFields: string;
 begin
+  //Todo:
+  Validate;
+
   qry := TFDQuery.Create(nil);
   try
     qry.Connection := form_conexao.FDConnection;

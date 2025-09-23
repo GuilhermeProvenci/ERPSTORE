@@ -46,9 +46,6 @@ type
     pnl_tab_estados: TPanel;
     img_tab_estados: TImage;
     lbl_tab_estados: TLabel;
-    pnl_tab_Condicional: TPanel;
-    img_tab_Condicional: TImage;
-    lbl_tab_Condicional: TLabel;
     pnl_barra_separadora: TPanel;
     Shape1: TShape;
     Shape2: TShape;
@@ -62,12 +59,15 @@ type
     pnl_botao_vendas: TPanel;
     img_botao_vendas: TImage;
     lbl_botao_vendas: TLabel;
+    pnl_tab_Condicional: TPanel;
+    img_tab_Condicional: TImage;
+    lbl_tab_Condicional: TLabel;
+    procedure MouseEnterDefault(Sender: TObject);
     procedure img_botao_sairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure pnl_menulateralMouseEnter(Sender: TObject);
     procedure pnl_fundoMouseEnter(Sender: TObject);
-    procedure pnl_botao_notasMouseEnter(Sender: TObject);
     procedure pnl_botao_configuracoesClick(Sender: TObject);
     procedure pnl_botao_cadastrosClick(Sender: TObject);
     procedure pnl_config_servidorClick(Sender: TObject);
@@ -160,7 +160,7 @@ begin
   pnl_botaoClick(Sender, Tform_consulta_estoque);
 end;
 
-procedure Tform_principal.pnl_botao_notasMouseEnter(Sender: TObject);
+procedure Tform_principal.MouseEnterDefault(Sender: TObject);
 begin
   //expande o menu lateral
   pnl_menulateral.Width := 155;

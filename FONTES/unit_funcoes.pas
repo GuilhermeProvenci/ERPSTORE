@@ -8,7 +8,7 @@ uses
   Vcl.Forms, Vcl.ExtCtrls, Vcl.Graphics, Vcl.StdCtrls,
   Vcl.DBCtrls, Vcl.Mask, Winapi.Windows, Vcl.DBGrids, Vcl.Grids, Data.DB, FireDAC.Comp.Client,
   System.Classes, Vcl.Controls,
-  System.SysUtils;
+  System.SysUtils, unit_mensagem;
 
 type
   TFieldValue = record
@@ -21,7 +21,7 @@ type
   procedure ValidarCampoObrigatorios ( Form : TForm );
   procedure MudarBotao ( Form: Tform; Botao : TPanel );
   function Criptografia( Senha: string ): string;
-  function CriarMensagem ( Tipo, MSG : String ) : boolean;
+  function CriarMensagem (Tipo: TMensagemTipo; const MSG: String): Boolean;
   function StringReplaceAll(const Texto: string; const CaracteresRemover: string): string;
 
   procedure prcDrawColumnCell( Sender: TObject; const Rect: TRect;
@@ -38,12 +38,11 @@ type
   ECustomError = class(Exception);
 
 VAR //variaveis globais
-  var_gbl_resposta_msg : Boolean;
   Var_gbl_versao :String;
 
 implementation
 
-uses unit_mensagem, Vcl.Dialogs, Vcl.ComCtrls, System.Math,
+uses Vcl.Dialogs, Vcl.ComCtrls, System.Math,
   System.Rtti;
 
 //function getQry(sql: String; qryName: String='qryGetQry'; iComp: TObject=nil): TsgQuery;
@@ -414,7 +413,7 @@ begin
          ( ( form.Components[i] as TEdit ).Enabled ) and
          ( ( form.Components[i] as TEdit ).Text = '' ) then //se ele estiver habilitado
       begin
-         CriarMensagem ('aviso','O Campo ' + ( form.Components[i] as TEdit ).Hint +
+         CriarMensagem (mtAviso,'O Campo ' + ( form.Components[i] as TEdit ).Hint +
                          ' � de preenchimento obrigat�rio!'); //avisa o usuario
 
         ( form.Components[i] as TEdit ).SetFocus; //poe o foco no componente
@@ -430,7 +429,7 @@ begin
          ( ( form.Components[i] as TDBEdit ).Enabled ) and
          ( ( form.Components[i] as TDBEdit ).Text = '' ) then //se ele estiver habilitado
       begin
-         CriarMensagem ('aviso','O Campo ' + ( form.Components[i] as TDBEdit ).Hint +
+         CriarMensagem (mtAviso,'O Campo ' + ( form.Components[i] as TDBEdit ).Hint +
                          ' � de preenchimento obrigat�rio!'); //avisa o usuario
 
         ( form.Components[i] as TDBEdit ).SetFocus; //poe o foco no componente
@@ -447,7 +446,7 @@ begin
          ( ( form.Components[i] as TComboBox ).Enabled ) and
          ( ( form.Components[i] as TComboBox ).Text = '' ) then //se ele estiver habilitado
       begin
-         CriarMensagem ('aviso','O Campo ' + ( form.Components[i] as TComboBox ).Hint +
+         CriarMensagem (mtAviso,'O Campo ' + ( form.Components[i] as TComboBox ).Hint +
                          ' � de preenchimento obrigat�rio!'); //avisa o usuario
 
         ( form.Components[i] as TComboBox ).SetFocus; //poe o foco no componente
@@ -463,7 +462,7 @@ begin
          ( ( form.Components[i] as TDBComboBox ).Enabled ) and
          ( ( form.Components[i] as TDBComboBox ).Text = '' ) then //se ele estiver habilitado
       begin
-         CriarMensagem ('aviso','O Campo ' + ( form.Components[i] as TDBComboBox ).Hint +
+         CriarMensagem (mtAviso,'O Campo ' + ( form.Components[i] as TDBComboBox ).Hint +
                          ' � de preenchimento obrigat�rio!'); //avisa o usuario
 
         ( form.Components[i] as TDBComboBox ).SetFocus; //poe o foco no componente
@@ -479,7 +478,7 @@ begin
          ( ( form.Components[i] as TDBlookUpComboBox ).Enabled ) and
          ( ( form.Components[i] as TDBlookUpComboBox ).Text = '' ) then //se ele estiver habilitado
       begin
-         CriarMensagem ('aviso','O Campo ' + ( form.Components[i] as TDBlookUpComboBox ).Hint +
+         CriarMensagem (mtAviso,'O Campo ' + ( form.Components[i] as TDBlookUpComboBox ).Hint +
                          ' � de preenchimento obrigat�rio!'); //avisa o usuario
 
         ( form.Components[i] as TDBlookUpComboBox ).SetFocus; //poe o foco no componente
@@ -495,7 +494,7 @@ begin
          ( ( form.Components[i] as TMemo ).Enabled ) and
          ( ( form.Components[i] as TMemo ).Text = '' ) then //se ele estiver habilitado
       begin
-         CriarMensagem ('aviso','O Campo ' + ( form.Components[i] as TMemo ).Hint +
+         CriarMensagem (mtAviso,'O Campo ' + ( form.Components[i] as TMemo ).Hint +
                          ' � de preenchimento obrigat�rio!'); //avisa o usuario
 
         ( form.Components[i] as TMemo ).SetFocus; //poe o foco no componente
@@ -511,7 +510,7 @@ begin
          ( ( form.Components[i] as TMaskEdit ).Enabled ) and
          ( RemoveCaracteres ( ( form.Components[i] as TMaskEdit ).Text ) = '' ) then //se ele estiver habilitado
       begin
-         CriarMensagem ('aviso','O Campo ' + ( form.Components[i] as TMaskEdit ).Hint +
+         CriarMensagem (mtAviso,'O Campo ' + ( form.Components[i] as TMaskEdit ).Hint +
                          ' � de preenchimento obrigat�rio!'); //avisa o usuario
 
         ( form.Components[i] as TMaskEdit ).SetFocus; //poe o foco no componente
@@ -524,48 +523,42 @@ begin
   end; //fim do for que percorre os componentes
 
 end;
-procedure MudarBotao ( Form: Tform; Botao : TPanel );
+procedure MudarBotao(Form: TForm; Botao: TPanel);
 var
   i: Integer;
-
+  Lbl: TLabel;
 begin
-  //percorre todos os componentes do formulario
-  for i:= 0 to Form.ComponentCount - 1 do
+  for i := 0 to Form.ComponentCount - 1 do
   begin
-     //selecionando os label tag <> de 0, indicando que sao labels dos botoes
-     if ( Form.Components[i] is TLabel ) and
-        ( ( Form.Components[i] as TLabel ).Tag > 0 ) then
-     begin
-
-       //se a tag do label =  a do botao focado entao mud a cor
-       if ( Botao as TPanel ).Tag = ( Form.Components[i] as TLabel ).Tag then
-       begin
-         ( Form.Components[i] as TLabel ).Font.Color := $000080FF;
-         ( Form.Components[i] as TLabel ).Font.Style := [fsBold];
-       end else //nao tem a mesma tage entao � label dos outros botoes
-       begin
-         ( Form.Components[i] as TLabel ).Font.Color := clWhite;
-         ( Form.Components[i] as TLabel ).Font.Style := [];
-       end;
-
-     end;
-
-
-    //voltar a cor original de todos os outros botoes
-    if ( Form.Components[i] is TPanel ) and
-       (
-         ( ( ( Form.Components[i] as TPanel ).Parent ).Name = 'pnl_menulateral' ) or
-         ( ( ( Form.Components[i] as TPanel ).Parent ).Name = 'pnl_submenu_config' ) or
-         ( ( ( Form.Components[i] as TPanel ).Parent ).Name = 'pnl_submenu_tabelas' )
-       ) then
+    if (Form.Components[i] is TPanel) then
     begin
-       ( Form.Components[i] as TPanel ).Color := $00191919;
+      if SameText((Form.Components[i] as TPanel).Parent.Name, 'pnl_menulateral')
+      or SameText((Form.Components[i] as TPanel).Parent.Name, 'pnl_submenu_config')
+      or SameText((Form.Components[i] as TPanel).Parent.Name, 'pnl_submenu_tabelas') then
+      begin
+        (Form.Components[i] as TPanel).Color := $00191919;
+      end;
     end;
 
+    if (Form.Components[i] is TLabel) then
+    begin
+      Lbl := Form.Components[i] as TLabel;
+      Lbl.Font.Color := clWhite;
+      Lbl.Font.Style := [];
+    end;
   end;
 
-  //muda a cor do panel focado para um tom mais escuro
-  ( Botao as TPanel ).Color      := $00141414;
+  //destaque no painel focado
+  Botao.Color := $00141414;
+
+  //todos os labels dentro do painel
+  for i := 0 to Botao.ControlCount - 1 do
+    if Botao.Controls[i] is TLabel then
+    begin
+      Lbl := Botao.Controls[i] as TLabel;
+      Lbl.Font.Color := $000080FF;
+      Lbl.Font.Style := [fsBold];
+    end;
 end;
 
 //funcao que gera uma sequencia de caracteres a partir de uma chave
@@ -599,36 +592,19 @@ begin
   Result := Senha;
 end;
 
-
-function CriarMensagem ( Tipo, MSG : String ) : boolean;
+function CriarMensagem(Tipo: TMensagemTipo; const MSG: String): Boolean;
 begin
-
-  //inicializa o retorno da funcao
   Result := False;
-
-  Try
-    //cria o form mensagem
-    form_mensagem       := TForm_mensagem.Create ( nil );
-
-    //passa para o form o tipo de mensagem e o texto que deseja mostrar
-    form_mensagem.sTipo := Tipo;
-    form_mensagem.lbl_descricao.caption := MSG;
-
-    // mostra o form
+  form_mensagem := Tform_mensagem.Create(nil);
+  try
+    form_mensagem.Tipo := Tipo;
+    form_mensagem.lbl_descricao.Caption := MSG;
     form_mensagem.ShowModal;
-
-    //retorna para funcao a resposta SIM OU NAO do usuario
-    Result := var_gbl_resposta_msg;
-
-    //reinicializa o valor da variavel
-    var_gbl_resposta_msg := False;
-  Finally
-
-    //libera o form da memoria
-    FreeandNil (form_mensagem);
-
-  End;
-
+    if form_mensagem.ModalResult = mrYes then
+      Result := true;
+  finally
+    FreeAndNil(form_mensagem);
+  end;
 end;
 
 function StringReplaceAll(const Texto: string; const CaracteresRemover: string): string;

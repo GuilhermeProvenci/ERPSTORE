@@ -55,7 +55,7 @@ implementation
 
 {$R *.dfm}
 
-uses unit_principal, unit_conexao, unit_funcoes;
+uses unit_principal, unit_conexao, unit_funcoes, unit_mensagem;
 
 procedure Tform_configuracao_servidor.btn_fecharClick(Sender: TObject);
 begin
@@ -89,7 +89,7 @@ begin
     //nao conseguiu conectar, parametros do arquivo ini errados
     on e:Exception do
     begin
-      CriarMensagem('erro','Não foi possível conectar ao Banco de Dados, motivo:'+
+      CriarMensagem(mtErro,'Não foi possível conectar ao Banco de Dados, motivo:'+
                     e.Message);
 
       Abort;
@@ -107,7 +107,7 @@ begin
   //e depois grava o novo arquivo ini
   Try
     form_conexao.GravarArquivoINI;
-    CriarMensagem('Aviso','Conexao Realizada com Sucesso, arquivo Gravado! O Sistema deve ser Reiniciado!');
+    CriarMensagem(mtAviso,'Conexao Realizada com Sucesso, arquivo Gravado! O Sistema deve ser Reiniciado!');
     form_configuracao_servidor.Close;
     Application.Terminate;
   Except
@@ -115,7 +115,7 @@ begin
     //erro na gravação do arquivo ini
     on e:Exception do
     begin
-      CriarMensagem('erro','Não foi possível Gravar o Arquivo .INI, motivo: ' + e.Message);
+      CriarMensagem(mtErro,'Não foi possível Gravar o Arquivo .INI, motivo: ' + e.Message);
       Abort;
     end;
 

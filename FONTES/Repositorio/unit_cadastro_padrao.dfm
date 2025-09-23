@@ -36,7 +36,7 @@ object frmBaseRegister: TfrmBaseRegister
         Left = 15
         Top = 0
         Width = 88
-        Height = 48
+        Height = 21
         Margins.Left = 15
         Margins.Top = 0
         Margins.Right = 0
@@ -50,7 +50,6 @@ object frmBaseRegister: TfrmBaseRegister
         Font.Style = []
         ParentFont = False
         Layout = tlCenter
-        ExplicitHeight = 21
       end
       object btnClose: TSpeedButton
         Left = 790

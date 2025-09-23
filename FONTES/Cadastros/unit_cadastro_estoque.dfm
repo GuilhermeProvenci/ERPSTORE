@@ -21,6 +21,7 @@ inherited form_cadastro_estoque: Tform_cadastro_estoque
       ExplicitWidth = 722
       inherited lblTitle: TLabel
         Width = 178
+        Height = 48
         Caption = 'CADASTRO DE ESTOQUE'
         StyleElements = [seFont, seClient, seBorder]
         ExplicitWidth = 178

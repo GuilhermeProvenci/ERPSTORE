@@ -78,7 +78,7 @@ implementation
 
 {$R *.dfm}
 
-uses unit_funcoes, uBaseInterfaces, unit_principal;
+uses unit_funcoes, uBaseInterfaces, unit_principal, unit_mensagem;
 
 procedure TfrmBaseSearch.OpenRegisterForm(AMode: TFormMode; AObjectID: Integer = 0);
 var
@@ -190,7 +190,7 @@ procedure TfrmBaseSearch.gridRegisterKeyDown(Sender: TObject;
 begin
   //se pressionou a tecla delete dentro do dbgrid entao chama o delete do dataset
   if ( Key = VK_DELETE ) and ( not ( ds_consulta.DataSet.IsEmpty ) ) and
-     ( CriarMensagem('CONFIRMAÇÃO','Tem Certeza que deseja EXCLUIR essa Informação?') ) then
+     ( CriarMensagem(mtConfirmacao,'Tem Certeza que deseja EXCLUIR essa Informação?') ) then
     ds_consulta.DataSet.Delete;
 end;
 

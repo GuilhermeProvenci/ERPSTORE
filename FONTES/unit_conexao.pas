@@ -38,7 +38,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses unit_funcoes, unit_configuracao_servidor;
+uses unit_funcoes, unit_configuracao_servidor, unit_mensagem;
 
 {$R *.dfm}
 
@@ -65,7 +65,7 @@ begin
       //nao conseguiu conectar, parametros do arquivo ini errados
       on e:Exception do
       begin
-        CriarMensagem('erro','Não foi possível conectar ao Banco de Dados, motivo:'+
+        CriarMensagem(mtErro,'Não foi possível conectar ao Banco de Dados, motivo:'+
                       e.Message);
 
         //criar a tela de configurar servidor
@@ -81,7 +81,7 @@ begin
   end else //fim do lerarquivoini
   begin
     //nao leu o arquivo ini entao avisa o usuario
-    CriarMensagem('erro','Não foi possível ler o arquivo de configuração do Banco de Dados');
+    CriarMensagem(mtErro,'Não foi possível ler o arquivo de configuração do Banco de Dados');
 
 
     //criar a tela de configurar servidor

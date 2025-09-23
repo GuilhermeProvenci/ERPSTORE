@@ -10,6 +10,7 @@ type
     procedure LoadFromID(AID: Integer);
     procedure Save;
     procedure Delete;
+    procedure Validate;
     function GetTableName: string;
   end;
 

@@ -50,7 +50,7 @@ implementation
 
 {$R *.dfm}
 
-uses unit_funcoes, unit_conexao, Vcl.DBCtrls, Variants;
+uses unit_funcoes, unit_conexao, Vcl.DBCtrls, Variants, unit_mensagem;
 
 // ========================================
 // MÉTODO OPENOBJECT - SEM SHOWMODAL
@@ -180,12 +180,12 @@ begin
   case FFormMode of
     fmInsert:
     begin
-      if not CriarMensagem('CONFIRMACAO', 'Confirma a inclusão do novo registro?') then
+      if not CriarMensagem(mtConfirmacao, 'Confirma a inclusão do novo registro?') then
         Result := False;
     end;
     fmEdit:
     begin
-      if not CriarMensagem('CONFIRMACAO', 'Confirma as alterações realizadas?') then
+      if not CriarMensagem(mtConfirmacao, 'Confirma as alterações realizadas?') then
         Result := False;
     end;
   end;
@@ -314,8 +314,8 @@ begin
     FObjectInstance.Save;
 
     case FFormMode of
-      fmInsert: CriarMensagem('AVISO', 'Registro incluído com sucesso');
-      fmEdit:   CriarMensagem('AVISO', 'Registro alterado com sucesso');
+      fmInsert: CriarMensagem(mtAviso, 'Registro incluído com sucesso');
+      fmEdit:   CriarMensagem(mtAviso, 'Registro alterado com sucesso');
     end;
 
     Self.Close;
@@ -339,7 +339,7 @@ begin
     fmEdit:   mensagem := 'Tem certeza que deseja sair sem salvar as alterações?';
   end;
 
-  if CriarMensagem('CONFIRMACAO', mensagem) = True then
+  if CriarMensagem(mtConfirmacao, mensagem) = True then
     Self.Close;
 end;
 

@@ -35,10 +35,13 @@ type
     pnl_barra_validade: TPanel;
     dsEstoque: TDataSource;
     procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
+    FEstoque : TEstoque;
   public
     { Public declarations }
+    property Estoque: TEstoque read FEstoque write FEstoque;
   end;
 var
   form_cadastro_estoque: Tform_cadastro_estoque;
@@ -50,9 +53,14 @@ uses unit_conexao;
 {$R *.dfm}
 
 
+procedure Tform_cadastro_estoque.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  inherited;
+  FreeAndNil(Estoque);
+end;
+
 procedure Tform_cadastro_estoque.FormCreate(Sender: TObject);
-var
-  Estoque: TEstoque;
 begin
   inherited;
 
@@ -66,7 +74,6 @@ begin
 
   cmbProduto_id.DataSource := dsEstoque;
   cmbProduto_id.DataField  := 'Produto_Id';
-
 end;
 
 initialization

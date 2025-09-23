@@ -36,6 +36,9 @@ var
 
 implementation
 
+uses
+  unit_mensagem;
+
 {$R *.dfm}
 
 
@@ -55,7 +58,7 @@ begin
 //  if Assigned(Relatorio) then
 //    Relatorio.Print
 //  else
-    CriarMensagem('aviso', 'Consulta não possui Relatório');
+    CriarMensagem(mtAviso, 'Consulta não possui Relatório');
 
   //TESTE DINAMICO//
 //  DataSource := form_conexao_tabelas.GetDataSourceByTableName(Table);
