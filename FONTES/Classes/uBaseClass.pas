@@ -49,6 +49,8 @@ var
   ctx: TRttiContext;
   typ: TRttiType;
   prop: TRttiProperty;
+  field: TField;
+  val: TValue;
 begin
   qry := TFDQuery.Create(nil);
   try
@@ -57,7 +59,8 @@ begin
     qry.ParamByName('id').AsInteger := AID;
     qry.Open;
 
-    if qry.Eof then Exit;
+    if qry.Eof then
+      Exit;
 
     ctx := TRttiContext.Create;
     try
@@ -66,8 +69,30 @@ begin
       begin
         if prop.IsWritable then
         begin
-          if qry.FieldDefs.IndexOf(prop.Name) <> -1 then
-            prop.SetValue(Self, TValue.FromVariant(qry.FieldByName(prop.Name).Value));
+          field := qry.FindField(prop.Name);
+          if Assigned(field) then
+          begin
+            if field.IsNull then
+            begin
+              // Se for nulo, atribui um "valor padrão" dependendo do tipo
+              case prop.PropertyType.TypeKind of
+                tkInteger, tkInt64: val := TValue.From<Integer>(0);
+                tkFloat:            val := TValue.From<Double>(0);
+                tkUString, tkString, tkLString, tkWString: val := TValue.From<string>('');
+                tkEnumeration:
+                  if prop.PropertyType.Handle = TypeInfo(Boolean) then
+                    val := TValue.From<Boolean>(False)
+                  else
+                    Continue
+              else
+                Continue; // outros tipos, não trata
+              end;
+            end
+            else
+              val := TValue.FromVariant(field.Value);
+
+            prop.SetValue(Self, val);
+          end;
         end;
       end;
     finally
@@ -79,6 +104,7 @@ begin
     qry.Free;
   end;
 end;
+
 
 procedure TBaseObject.Save;
 var

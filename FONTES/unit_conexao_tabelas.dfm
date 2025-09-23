@@ -1,414 +1,562 @@
 object form_conexao_tabelas: Tform_conexao_tabelas
-  Height = 485
-  Width = 871
+  Height = 800
+  Width = 1200
   object qryConsultaClientes: TFDQuery
     Connection = form_conexao.FDConnection
     SQL.Strings = (
-      'select *'
-      'from clientes'
-      '')
+      'SELECT * FROM clientes ORDER BY nome')
     Left = 32
     Top = 40
     object qryConsultaClientesid: TFDAutoIncField
       FieldName = 'id'
+    end
+    object qryConsultaClientescodigo_cliente: TStringField
+      FieldName = 'codigo_cliente'
     end
     object qryConsultaClientesnome: TStringField
       FieldName = 'nome'
       Required = True
       Size = 255
     end
+    object qryConsultaClientescpf_cnpj: TStringField
+      FieldName = 'cpf_cnpj'
+    end
     object qryConsultaClientestelefone: TStringField
       FieldName = 'telefone'
-      Size = 15
+      Required = True
+      Size = 50
     end
-    object qryConsultaClientesendereco: TStringField
-      AutoGenerateValue = arDefault
+    object qryConsultaClientesemail: TStringField
+      FieldName = 'email'
+      Size = 255
+    end
+    object qryConsultaClientesendereco: TMemoField
       FieldName = 'endereco'
-      Origin = 'endereco'
-      Size = 255
-    end
-    object qryConsultaClientesclassificacao: TStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'classificacao'
-      Origin = 'classificacao'
-      Size = 10
-    end
-  end
-  object qryConsultaProdutos: TFDQuery
-    Connection = form_conexao.FDConnection
-    SQL.Strings = (
-      'select *'
-      'from produtos'
-      ''
-      '')
-    Left = 40
-    Top = 112
-    object qryConsultaProdutosid: TFDAutoIncField
-      FieldName = 'id'
-      Origin = 'id'
-      ProviderFlags = [pfInWhere, pfInKey]
-    end
-    object qryConsultaProdutosnome: TStringField
-      FieldName = 'nome'
-      Origin = 'nome'
       Required = True
-      Size = 255
-    end
-    object qryConsultaProdutostamanho: TStringField
-      FieldName = 'tamanho'
-      Origin = 'tamanho'
-      Required = True
-      Size = 5
-    end
-    object qryConsultaProdutospreco: TBCDField
-      FieldName = 'preco'
-      Origin = 'preco'
-      Required = True
-      Precision = 10
-      Size = 2
-    end
-  end
-  object qryConsultaEstoque: TFDQuery
-    Connection = form_conexao.FDConnection
-    SQL.Strings = (
-      'select * from estoque')
-    Left = 360
-    Top = 40
-    object qryConsultaEstoqueid: TFDAutoIncField
-      FieldName = 'id'
-      Origin = 'id'
-      ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = False
-    end
-    object qryConsultaEstoqueproduto_id: TIntegerField
-      FieldName = 'produto_id'
-      Origin = 'produto_id'
-      Required = True
-    end
-    object qryConsultaEstoquequantidade_em_estoque: TIntegerField
-      AutoGenerateValue = arDefault
-      FieldName = 'quantidade_em_estoque'
-      Origin = 'quantidade_em_estoque'
-    end
-    object qryConsultaEstoquequantidade_minima: TIntegerField
-      AutoGenerateValue = arDefault
-      FieldName = 'quantidade_minima'
-      Origin = 'quantidade_minima'
-    end
-    object qryConsultaEstoquepreco_custo: TBCDField
-      AutoGenerateValue = arDefault
-      FieldName = 'preco_custo'
-      Origin = 'preco_custo'
-      Precision = 10
-      Size = 2
-    end
-    object qryConsultaEstoquepreco_venda: TBCDField
-      AutoGenerateValue = arDefault
-      FieldName = 'preco_venda'
-      Origin = 'preco_venda'
-      Precision = 10
-      Size = 2
-    end
-    object qryConsultaEstoquelote: TStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'lote'
-      Origin = 'lote'
-      Size = 100
-    end
-    object qryConsultaEstoquedata_entrada: TDateField
-      FieldName = 'data_entrada'
-      Origin = 'data_entrada'
-      Required = True
-    end
-    object qryConsultaEstoquedata_validade: TDateField
-      AutoGenerateValue = arDefault
-      FieldName = 'data_validade'
-      Origin = 'data_validade'
-    end
-    object qryConsultaEstoquefornecedor: TStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'fornecedor'
-      Origin = 'fornecedor'
-      Size = 255
-    end
-    object qryConsultaEstoquelocalizacao: TStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'localizacao'
-      Origin = 'localizacao'
-      Size = 100
-    end
-    object qryConsultaEstoquestatus: TStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'status'
-      Origin = 'status'
-      FixedChar = True
-      Size = 9
-    end
-    object qryConsultaEstoqueobservacoes: TMemoField
-      AutoGenerateValue = arDefault
-      FieldName = 'observacoes'
-      Origin = 'observacoes'
       BlobType = ftMemo
     end
-    object qryConsultaEstoquedata_cadastro: TDateTimeField
-      AutoGenerateValue = arDefault
-      FieldName = 'data_cadastro'
-      Origin = 'data_cadastro'
+    object qryConsultaClientescep: TStringField
+      FieldName = 'cep'
+      Size = 10
     end
-    object qryConsultaEstoquedata_atualizacao: TDateTimeField
-      AutoGenerateValue = arDefault
-      FieldName = 'data_atualizacao'
-      Origin = 'data_atualizacao'
-    end
-    object qryConsultaEstoqueusuario_cadastro: TStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'usuario_cadastro'
-      Origin = 'usuario_cadastro'
+    object qryConsultaClientescidade: TStringField
+      FieldName = 'cidade'
       Size = 100
     end
-  end
-  object qryConsultaCST: TFDQuery
-    BeforeOpen = qryConsultaCSTBeforeOpen
-    Connection = form_conexao.FDConnection
-    Left = 792
-    Top = 56
-    object qryConsultaCSTID_CST: TIntegerField
-      FieldName = 'ID_CST'
-      Origin = 'ID_CST'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-      Required = True
+    object qryConsultaClientesestado: TStringField
+      FieldName = 'estado'
+      Size = 2
     end
-    object qryConsultaCSTFG_TIPO: TStringField
-      FieldName = 'FG_TIPO'
-      Origin = 'FG_TIPO'
-      Size = 10
+    object qryConsultaClientesclassificacao: TStringField
+      FieldName = 'classificacao'
+      Size = 8
     end
-    object qryConsultaCSTCD_CST: TStringField
-      FieldName = 'CD_CST'
-      Origin = 'CD_CST'
-      Size = 10
+    object qryConsultaClienteslimite_credito: TBCDField
+      FieldName = 'limite_credito'
+      Precision = 10
+      Size = 2
     end
-    object qryConsultaCSTDS_CST: TStringField
-      FieldName = 'DS_CST'
-      Origin = 'DS_CST'
-      Size = 255
+    object qryConsultaClientescredito_usado: TBCDField
+      FieldName = 'credito_usado'
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaClientesstatus: TStringField
+      FieldName = 'status'
+      Size = 8
+    end
+    object qryConsultaClientesdata_nascimento: TDateField
+      FieldName = 'data_nascimento'
+    end
+    object qryConsultaClientesobservacoes: TMemoField
+      FieldName = 'observacoes'
+      BlobType = ftMemo
+    end
+    object qryConsultaClientesdata_cadastro: TDateTimeField
+      FieldName = 'data_cadastro'
+    end
+    object qryConsultaClientesdata_atualizacao: TDateTimeField
+      FieldName = 'data_atualizacao'
+    end
+    object qryConsultaClientesusuario_cadastro: TStringField
+      FieldName = 'usuario_cadastro'
+      Size = 100
     end
   end
   object DataSourceClientes: TDataSource
     DataSet = qryConsultaClientes
-    Left = 128
+    Left = 160
     Top = 40
+  end
+  object qryConsultaCategorias: TFDQuery
+    Connection = form_conexao.FDConnection
+    SQL.Strings = (
+      'SELECT * FROM categorias ORDER BY nome')
+    Left = 32
+    Top = 120
+    object qryConsultaCategoriasid: TFDAutoIncField
+      FieldName = 'id'
+    end
+    object qryConsultaCategoriasnome: TStringField
+      FieldName = 'nome'
+      Required = True
+      Size = 100
+    end
+    object qryConsultaCategoriasdescricao: TMemoField
+      FieldName = 'descricao'
+      BlobType = ftMemo
+    end
+    object qryConsultaCategoriascategoria_pai_id: TIntegerField
+      FieldName = 'categoria_pai_id'
+    end
+    object qryConsultaCategoriasativo: TBooleanField
+      FieldName = 'ativo'
+    end
+    object qryConsultaCategoriasdata_cadastro: TDateTimeField
+      FieldName = 'data_cadastro'
+    end
+    object qryConsultaCategoriasdata_atualizacao: TDateTimeField
+      FieldName = 'data_atualizacao'
+    end
+  end
+  object DataSourceCategorias: TDataSource
+    DataSet = qryConsultaCategorias
+    Left = 160
+    Top = 120
+  end
+  object qryConsultaProdutos: TFDQuery
+    Connection = form_conexao.FDConnection
+    SQL.Strings = (
+      'SELECT * FROM produtos ORDER BY nome')
+    Left = 32
+    Top = 200
+    object qryConsultaProdutosid: TFDAutoIncField
+      FieldName = 'id'
+    end
+    object qryConsultaProdutoscodigo_produto: TStringField
+      FieldName = 'codigo_produto'
+      Size = 50
+    end
+    object qryConsultaProdutoscodigo_barras: TStringField
+      FieldName = 'codigo_barras'
+      Size = 50
+    end
+    object qryConsultaProdutosnome: TStringField
+      FieldName = 'nome'
+      Required = True
+      Size = 255
+    end
+    object qryConsultaProdutosdescricao: TMemoField
+      FieldName = 'descricao'
+      BlobType = ftMemo
+    end
+    object qryConsultaProdutoscategoria_id: TIntegerField
+      FieldName = 'categoria_id'
+    end
+    object qryConsultaProdutosmarca: TStringField
+      FieldName = 'marca'
+      Size = 100
+    end
+    object qryConsultaProdutostamanho: TStringField
+      FieldName = 'tamanho'
+      Required = True
+      Size = 10
+    end
+    object qryConsultaProdutoscor: TStringField
+      FieldName = 'cor'
+      Size = 50
+    end
+    object qryConsultaProdutospeso: TBCDField
+      FieldName = 'peso'
+      Precision = 8
+      Size = 3
+    end
+    object qryConsultaProdutosunidade_medida: TStringField
+      FieldName = 'unidade_medida'
+      Size = 10
+    end
+    object qryConsultaProdutospreco: TBCDField
+      FieldName = 'preco'
+      Required = True
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaProdutospreco_promocional: TBCDField
+      FieldName = 'preco_promocional'
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaProdutosativo: TBooleanField
+      FieldName = 'ativo'
+    end
+    object qryConsultaProdutosdestaque: TBooleanField
+      FieldName = 'destaque'
+    end
+    object qryConsultaProdutosobservacoes: TMemoField
+      FieldName = 'observacoes'
+      BlobType = ftMemo
+    end
+    object qryConsultaProdutosdata_cadastro: TDateTimeField
+      FieldName = 'data_cadastro'
+    end
+    object qryConsultaProdutosdata_atualizacao: TDateTimeField
+      FieldName = 'data_atualizacao'
+    end
+    object qryConsultaProdutosusuario_cadastro: TStringField
+      FieldName = 'usuario_cadastro'
+      Size = 100
+    end
   end
   object DataSourceProdutos: TDataSource
     DataSet = qryConsultaProdutos
     Left = 160
-    Top = 112
+    Top = 200
   end
-  object DataSourceCondicional: TDataSource
-    DataSet = qryConsultaCondicional
-    Left = 160
-    Top = 184
+  object qryConsultaEstoque: TFDQuery
+    Connection = form_conexao.FDConnection
+    SQL.Strings = (
+      'SELECT * FROM estoque')
+    Left = 320
+    Top = 40
+    object qryConsultaEstoqueid: TFDAutoIncField
+      FieldName = 'id'
+    end
+    object qryConsultaEstoqueproduto_id: TIntegerField
+      FieldName = 'produto_id'
+      Required = True
+    end
+    object qryConsultaEstoquequantidade_em_estoque: TIntegerField
+      FieldName = 'quantidade_em_estoque'
+    end
+    object qryConsultaEstoquequantidade_reservada: TIntegerField
+      FieldName = 'quantidade_reservada'
+    end
+    object qryConsultaEstoquequantidade_minima: TIntegerField
+      FieldName = 'quantidade_minima'
+    end
+    object qryConsultaEstoquepreco_custo: TBCDField
+      FieldName = 'preco_custo'
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaEstoquepreco_venda: TBCDField
+      FieldName = 'preco_venda'
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaEstoquelote: TStringField
+      FieldName = 'lote'
+      Size = 100
+    end
+    object qryConsultaEstoquedata_entrada: TDateField
+      FieldName = 'data_entrada'
+      Required = True
+    end
+    object qryConsultaEstoquedata_validade: TDateField
+      FieldName = 'data_validade'
+    end
+    object qryConsultaEstoquefornecedor: TStringField
+      FieldName = 'fornecedor'
+      Size = 255
+    end
+    object qryConsultaEstoquelocalizacao: TStringField
+      FieldName = 'localizacao'
+      Size = 100
+    end
+    object qryConsultaEstoquestatus: TStringField
+      FieldName = 'status'
+      Size = 9
+    end
+    object qryConsultaEstoqueobservacoes: TMemoField
+      FieldName = 'observacoes'
+      BlobType = ftMemo
+    end
+    object qryConsultaEstoquedata_cadastro: TDateTimeField
+      FieldName = 'data_cadastro'
+    end
+    object qryConsultaEstoquedata_atualizacao: TDateTimeField
+      FieldName = 'data_atualizacao'
+    end
+    object qryConsultaEstoqueusuario_cadastro: TStringField
+      FieldName = 'usuario_cadastro'
+      Size = 100
+    end
   end
   object dsEstoque: TDataSource
     DataSet = qryConsultaEstoque
-    Left = 464
+    Left = 448
     Top = 40
   end
-  object qryConsultaCondicional: TFDQuery
+  object qryConsultaCondicionais: TFDQuery
     Connection = form_conexao.FDConnection
     SQL.Strings = (
-      'select * from condicional')
-    Left = 40
-    Top = 192
-    object qryConsultaCondicionalID: TFDAutoIncField
-      FieldName = 'ID'
-      Origin = 'ID'
-      ProviderFlags = [pfInWhere, pfInKey]
+      'SELECT * FROM condicionais ORDER BY data_condicional DESC')
+    Left = 320
+    Top = 120
+    object qryConsultaCondicionaisid: TFDAutoIncField
+      FieldName = 'id'
     end
-    object qryConsultaCondicionalID_Cliente: TIntegerField
-      FieldName = 'ID_Cliente'
-      Origin = 'ID_Cliente'
+    object qryConsultaCondicionaisnumero_condicional: TStringField
+      FieldName = 'numero_condicional'
       Required = True
     end
-    object qryConsultaCondicionalNome_Cliente: TStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'Nome_Cliente'
-      Origin = 'Nome_Cliente'
+    object qryConsultaCondicionaiscliente_id: TIntegerField
+      FieldName = 'cliente_id'
+      Required = True
+    end
+    object qryConsultaCondicionaisdata_condicional: TDateField
+      FieldName = 'data_condicional'
+      Required = True
+    end
+    object qryConsultaCondicionaishora_condicional: TTimeField
+      FieldName = 'hora_condicional'
+    end
+    object qryConsultaCondicionaisdata_validade: TDateField
+      FieldName = 'data_validade'
+      Required = True
+    end
+    object qryConsultaCondicionaisvalor_subtotal: TBCDField
+      FieldName = 'valor_subtotal'
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaCondicionaisvalor_desconto: TBCDField
+      FieldName = 'valor_desconto'
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaCondicionaispercentual_desconto: TBCDField
+      FieldName = 'percentual_desconto'
+      Precision = 5
+      Size = 2
+    end
+    object qryConsultaCondicionaisvalor_total: TBCDField
+      FieldName = 'valor_total'
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaCondicionaisstatus: TStringField
+      FieldName = 'status'
+      Size = 9
+    end
+    object qryConsultaCondicionaisvendedor: TStringField
+      FieldName = 'vendedor'
+      Size = 100
+    end
+    object qryConsultaCondicionaisaprovador: TStringField
+      FieldName = 'aprovador'
+      Size = 100
+    end
+    object qryConsultaCondicionaisdata_aprovacao: TDateTimeField
+      FieldName = 'data_aprovacao'
+    end
+    object qryConsultaCondicionaismotivo_rejeicao: TMemoField
+      FieldName = 'motivo_rejeicao'
+      BlobType = ftMemo
+    end
+    object qryConsultaCondicionaisobservacoes: TMemoField
+      FieldName = 'observacoes'
+      BlobType = ftMemo
+    end
+    object qryConsultaCondicionaisvenda_gerada_id: TIntegerField
+      FieldName = 'venda_gerada_id'
+    end
+    object qryConsultaCondicionaisdata_cadastro: TDateTimeField
+      FieldName = 'data_cadastro'
+    end
+    object qryConsultaCondicionaisdata_atualizacao: TDateTimeField
+      FieldName = 'data_atualizacao'
+    end
+    object qryConsultaCondicionaisusuario_cadastro: TStringField
+      FieldName = 'usuario_cadastro'
+      Size = 100
+    end
+  end
+  object DataSourceCondicionais: TDataSource
+    DataSet = qryConsultaCondicionais
+    Left = 448
+    Top = 120
+  end
+  object qryConsultaCondicionaisItens: TFDQuery
+    Connection = form_conexao.FDConnection
+    SQL.Strings = (
+      'SELECT * FROM condicionais_itens'
+      'WHERE condicional_id = :condicional_id')
+    Left = 320
+    Top = 200
+    object qryConsultaCondicionaisItensid: TFDAutoIncField
+      FieldName = 'id'
+    end
+    object qryConsultaCondicionaisItenscondicional_id: TIntegerField
+      FieldName = 'condicional_id'
+      Required = True
+    end
+    object qryConsultaCondicionaisItensproduto_id: TIntegerField
+      FieldName = 'produto_id'
+      Required = True
+    end
+    object qryConsultaCondicionaisItensquantidade: TIntegerField
+      FieldName = 'quantidade'
+    end
+    object qryConsultaCondicionaisItenspreco_unitario: TBCDField
+      FieldName = 'preco_unitario'
+      Required = True
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaCondicionaisItensdesconto_item: TBCDField
+      FieldName = 'desconto_item'
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaCondicionaisItenssubtotal: TBCDField
+      FieldName = 'subtotal'
+      Required = True
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaCondicionaisItensobservacao: TStringField
+      FieldName = 'observacao'
       Size = 255
     end
+    object qryConsultaCondicionaisItensdata_cadastro: TDateTimeField
+      FieldName = 'data_cadastro'
+    end
+  end
+  object DataSourceCondicionaisItens: TDataSource
+    DataSet = qryConsultaCondicionaisItens
+    Left = 448
+    Top = 200
   end
   object qryConsultaVendas: TFDQuery
     Connection = form_conexao.FDConnection
     SQL.Strings = (
-      'select * from Vendas')
-    Left = 392
-    Top = 120
+      'SELECT * FROM vendas ORDER BY data_venda DESC')
+    Left = 600
+    Top = 40
     object qryConsultaVendasid: TFDAutoIncField
       FieldName = 'id'
-      Origin = 'id'
-      ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = False
     end
     object qryConsultaVendascliente_id: TIntegerField
       FieldName = 'cliente_id'
-      Origin = 'cliente_id'
       Required = True
     end
     object qryConsultaVendasnumero_venda: TStringField
       FieldName = 'numero_venda'
-      Origin = 'numero_venda'
       Required = True
+    end
+    object qryConsultaVendastipo_origem: TStringField
+      FieldName = 'tipo_origem'
+      Size = 11
+    end
+    object qryConsultaVendascondicional_origem_id: TIntegerField
+      FieldName = 'condicional_origem_id'
     end
     object qryConsultaVendasdata_venda: TDateField
       FieldName = 'data_venda'
-      Origin = 'data_venda'
       Required = True
     end
     object qryConsultaVendashora_venda: TTimeField
-      AutoGenerateValue = arDefault
       FieldName = 'hora_venda'
-      Origin = 'hora_venda'
     end
     object qryConsultaVendasvalor_subtotal: TBCDField
-      AutoGenerateValue = arDefault
       FieldName = 'valor_subtotal'
-      Origin = 'valor_subtotal'
       Precision = 10
       Size = 2
     end
     object qryConsultaVendasvalor_desconto: TBCDField
-      AutoGenerateValue = arDefault
       FieldName = 'valor_desconto'
-      Origin = 'valor_desconto'
       Precision = 10
       Size = 2
     end
     object qryConsultaVendaspercentual_desconto: TBCDField
-      AutoGenerateValue = arDefault
       FieldName = 'percentual_desconto'
-      Origin = 'percentual_desconto'
       Precision = 5
       Size = 2
     end
     object qryConsultaVendasvalor_total: TBCDField
-      AutoGenerateValue = arDefault
       FieldName = 'valor_total'
-      Origin = 'valor_total'
       Precision = 10
       Size = 2
     end
     object qryConsultaVendasforma_pagamento: TStringField
       FieldName = 'forma_pagamento'
-      Origin = 'forma_pagamento'
       Required = True
-      FixedChar = True
       Size = 14
     end
     object qryConsultaVendasstatus_venda: TStringField
-      AutoGenerateValue = arDefault
       FieldName = 'status_venda'
-      Origin = 'status_venda'
-      FixedChar = True
       Size = 9
     end
     object qryConsultaVendasvendedor: TStringField
-      AutoGenerateValue = arDefault
       FieldName = 'vendedor'
-      Origin = 'vendedor'
       Size = 100
     end
     object qryConsultaVendasobservacoes: TMemoField
-      AutoGenerateValue = arDefault
       FieldName = 'observacoes'
-      Origin = 'observacoes'
       BlobType = ftMemo
     end
     object qryConsultaVendasdata_cadastro: TDateTimeField
-      AutoGenerateValue = arDefault
       FieldName = 'data_cadastro'
-      Origin = 'data_cadastro'
     end
     object qryConsultaVendasdata_atualizacao: TDateTimeField
-      AutoGenerateValue = arDefault
       FieldName = 'data_atualizacao'
-      Origin = 'data_atualizacao'
     end
     object qryConsultaVendasusuario_cadastro: TStringField
-      AutoGenerateValue = arDefault
       FieldName = 'usuario_cadastro'
-      Origin = 'usuario_cadastro'
       Size = 100
     end
   end
   object DataSourceVendas: TDataSource
     DataSet = qryConsultaVendas
-    Left = 548
-    Top = 120
+    Left = 728
+    Top = 40
   end
-  object qryConsultaCondicionalPendente: TFDQuery
-    Active = True
+  object qryConsultaVendasItens: TFDQuery
     Connection = form_conexao.FDConnection
     SQL.Strings = (
-      'SELECT'
-      '  condicionalPendente.id,'
-      '  clientes.nome,'
-      '  condicionalPendente.id_produto,'
-      '  produtos.Nome,'
-      '  condicionalPendente.quantidade,'
-      '  condicionalPendente.observacao'
-      'FROM'
-      '  condicionalPendente'
-      'INNER JOIN'
-      
-        '  condicional ON condicionalPendente.id_condicional = condiciona' +
-        'l.id'
-      'INNER JOIN'
-      '  clientes ON condicional.ID_Cliente = clientes.ID'
-      'INNER JOIN'
-      '  produtos ON condicionalPendente.id_produto = produtos.id')
-    Left = 32
-    Top = 288
-    object qryConsultaCondicionalPendenteid: TFDAutoIncField
+      'SELECT * FROM vendas_itens'
+      'WHERE venda_id = :venda_id')
+    Left = 600
+    Top = 120
+    object qryConsultaVendasItensid: TFDAutoIncField
       FieldName = 'id'
-      Origin = 'ID'
-      ProviderFlags = [pfInWhere, pfInKey]
     end
-    object qryConsultaCondicionalPendentenome: TStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'nome'
-      Origin = 'nome'
-      ProviderFlags = []
-      ReadOnly = True
-      Size = 255
-    end
-    object qryConsultaCondicionalPendenteid_produto: TIntegerField
-      FieldName = 'id_produto'
-      Origin = 'id_produto'
+    object qryConsultaVendasItensvenda_id: TIntegerField
+      FieldName = 'venda_id'
       Required = True
     end
-    object qryConsultaCondicionalPendenteNome_1: TStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'Nome_1'
-      Origin = 'nome'
-      ProviderFlags = []
-      ReadOnly = True
-      Size = 255
+    object qryConsultaVendasItensproduto_id: TIntegerField
+      FieldName = 'produto_id'
+      Required = True
     end
-    object qryConsultaCondicionalPendentequantidade: TIntegerField
-      AutoGenerateValue = arDefault
+    object qryConsultaVendasItensquantidade: TIntegerField
       FieldName = 'quantidade'
-      Origin = 'Quantidade'
     end
-    object qryConsultaCondicionalPendenteobservacao: TStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'observacao'
-      Origin = 'observacao'
-      Size = 255
+    object qryConsultaVendasItenspreco_unitario: TBCDField
+      FieldName = 'preco_unitario'
+      Required = True
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaVendasItensdesconto_item: TBCDField
+      FieldName = 'desconto_item'
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaVendasItenssubtotal: TBCDField
+      FieldName = 'subtotal'
+      Required = True
+      Precision = 10
+      Size = 2
+    end
+    object qryConsultaVendasItensdata_cadastro: TDateTimeField
+      FieldName = 'data_cadastro'
     end
   end
-  object DataSourceCondicionalPendente: TDataSource
-    DataSet = qryConsultaCondicionalPendente
-    Left = 152
-    Top = 288
+  object DataSourceVendasItens: TDataSource
+    DataSet = qryConsultaVendasItens
+    Left = 728
+    Top = 120
   end
 end
