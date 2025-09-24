@@ -12,6 +12,9 @@
         <Projects Include="GeradorClasses\GeradorClasses.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="GeradorForms\FormGeneratorProject.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -47,14 +50,23 @@
     <Target Name="GeradorClasses:Make">
         <MSBuild Projects="GeradorClasses\GeradorClasses.dproj" Targets="Make"/>
     </Target>
+    <Target Name="FormGeneratorProject">
+        <MSBuild Projects="GeradorForms\FormGeneratorProject.dproj"/>
+    </Target>
+    <Target Name="FormGeneratorProject:Clean">
+        <MSBuild Projects="GeradorForms\FormGeneratorProject.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FormGeneratorProject:Make">
+        <MSBuild Projects="GeradorForms\FormGeneratorProject.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="ERPSTORE;LibGPL;GeradorClasses"/>
+        <CallTarget Targets="ERPSTORE;LibGPL;GeradorClasses;FormGeneratorProject"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="ERPSTORE:Clean;LibGPL:Clean;GeradorClasses:Clean"/>
+        <CallTarget Targets="ERPSTORE:Clean;LibGPL:Clean;GeradorClasses:Clean;FormGeneratorProject:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="ERPSTORE:Make;LibGPL:Make;GeradorClasses:Make"/>
+        <CallTarget Targets="ERPSTORE:Make;LibGPL:Make;GeradorClasses:Make;FormGeneratorProject:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
